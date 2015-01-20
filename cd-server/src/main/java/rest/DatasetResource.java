@@ -11,18 +11,34 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+
+import core.JSONLDSerializer;
+
 /**
  * Root resource (exposed at "myresource" path)
  */
 @Path("dataset")
 public class DatasetResource {
-
+	JSONLDSerializer serialize=new JSONLDSerializer();
     /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "text/plain" media type.
      *
      * @return String that will be returned as a text/plain response.
      */
+	@Path("getvoid")
+    @GET
+    @Produces({"application/ld+json"})
+    public Response getVoid() {
+	Model m=ModelFactory.createDefaultModel();
+	m.read("http://vocab.deri.ie/void");
+	String jsonld=serialize.getJSONLD(m);
+	
+	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema").entity(jsonld).build();
+      
+    }
 	@Path("getDataSchema")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
