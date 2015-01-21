@@ -14,7 +14,7 @@ public class JSONLDSerializer {
 	
 	
 	
-	public String getJSONLD (Model m){
+	public static String getJSONLD (Model m){
 		
 		ByteArrayOutputStream output = new ByteArrayOutputStream ();
 		m.write(output,"JSON-LD");
@@ -45,7 +45,7 @@ public class JSONLDSerializer {
 		m.read("http://www.w3.org/ns/prov");
 		
 		JSONLDSerializer serializer=new JSONLDSerializer();
-		String result=serializer.getJSONLD(m);
+		String result=JSONLDSerializer.getJSONLD(m);
 		serializer.test(result);
 		
 		

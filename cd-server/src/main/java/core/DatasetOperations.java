@@ -28,5 +28,22 @@ public class DatasetOperations {
 		
 	}
 	
+	public static String getDataSetSchema(){
+		Model m=Tools.getModel("http://vocab.deri.ie/void");
+		Model resourceDesc=Tools.getResourceDescription(Prefixes.prefixes.get("void")+"DatasetDescription", m);
+		
+		return JSONLDSerializer.getJSONLD(resourceDesc);
+		
+		
+		
+		
+		
+	}
+	
+	public static void main (String args[]){
+		System.out.println("Result is:"+DatasetOperations.getDataSetSchema());
+		
+	}
+	
 	
 }
