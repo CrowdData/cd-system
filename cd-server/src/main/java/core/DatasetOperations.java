@@ -41,7 +41,7 @@ public class DatasetOperations {
 	}
 	
 	public static void main (String args[]){
-		System.out.println("Result is:"+DatasetOperations.getDataSetSchema());
+		System.out.println("Result i:"+DatasetOperations.getDataSetSchema());
 		
 	}
 	
