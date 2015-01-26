@@ -28,7 +28,24 @@ public class Tools {
 		//String jsonld=serialize.getJSONLD(m);
 	}
 	
-	
+	public static String getDataSetSchema(String prefix,String resource, String vocabulary){
+		Model m=Tools.getModel(vocabulary);
+		Model resourceDesc=Tools.getResourceDescription(Prefixes.prefixes.get(prefix)+resource, m);
+		
+		return JSONLDSerializer.getJSONLD(resourceDesc);
+		
+		
+		
+	}
+	public static String getDataSetSchema(String resource, String vocabulary){
+		Model m=Tools.getModel(vocabulary);
+		Model resourceDesc=Tools.getResourceDescription(resource, m);
+		
+		return JSONLDSerializer.getJSONLD(resourceDesc);
+		
+		
+		
+	}
 	
 	public static Model getResourceDescription(String resourceURI,Model m){
 		Resource res=ResourceFactory.createResource(resourceURI);
@@ -72,7 +89,11 @@ public class Tools {
 		
 		
 		
-		
+		public static void main (String args[]){
+			
+		//	System.out.println(Tools.getDataSetSchema("dcterms", "description", "http://purl.org/dc/terms/"));
+			System.out.println(Tools.getDataSetSchema("http://purl.org/dc/elements/1.1/description","http://purl.org/dc/elements/1.1/"));
+		}
 		
 		
 		

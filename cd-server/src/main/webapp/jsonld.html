@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Example Script for querying CD SPARQL Endpoint</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+<script type="text/javascript">
+  //<![CDATA[
+ var queryFormTextArea;
+ $(document).ready(function(){
+ 
+  
+  });
+ 
+function getJSONLD() {
+//reset the table before the call
+$("#results").empty();
+var queryUrl="http://crowddata.abdn.ac.uk:8080/crowddata/1/tools/getjsonld?url="+escape(ontology_id.value);
+ //clear the query form
+ 
+ console.log(queryUrl);
+ $.ajax({
+  type: "GET",
+  dataType: "application/ld+json",
+  url: queryUrl,	
+  success:function(data) {    
+    // get the table element
+ var table = $("#results").append(data);              	
+  },
+ error: function(xhr,textStatus, errorThrown) { 
+        alert("Error:"+textStatus); alert("Error"+ errorThrown); 
+    }
+});
+}
+</script>    
+</head>
+
+<body>
+    
+    <input type="url" id="ontology_id" name="ontology_id">
+    <input type="button" id="submitBtn" value="Send Query" onclick="return getJSONLD();"/>
+   
+   
+<div id="results"></div>
+
+
+</body>
+</html>

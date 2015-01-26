@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Example Script for querying CD SPARQL Endpoint</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+<script type="text/javascript">
+  //<![CDATA[
+ var queryFormTextArea;
+ $(document).ready(function(){
+ 
+ queryFormTextArea=document.getElementById('queryArea');
+ queryFormTextArea.value=example;
+  
+  });
+  var example="SELECT ?name ?lat ?long \
+WHERE\
+{ \
+?stop a naptan:BusStop ; \
+dc:identifier ?name; \
+geo:lat ?lat; \
+geo:long ?long .\
+}";
+//These are prefixed to the query from textarea
+ 
+    var prefixes="PREFIX dc: <http://purl.org/dc/elements/1.1/>\
+PREFIX db: <http://crowddata.abdn.ac.uk:8080/d2rq/resource>\
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>\
+PREFIX meta: <http://www4.wiwiss.fu-berlin.de/bizer/d2r-server/metadata#>\
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
+PREFIX time: <http://www.w3.org/TR/owl-time/>\
+PREFIX naptan: <http://transport.data.gov.uk/def/naptan/>\
+PREFIX d2r: <http://sites.wiwiss.fu-berlin.de/suhl/bizer/d2r-server/config.rdf#>\
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\
+PREFIX map: <http://crowddata.abdn.ac.uk:8080/d2rq/resource/#>\
+PREFIX owl: <http://www.w3.org/2002/07/owl#>\
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
+PREFIX vocab: <http://crowddata.abdn.ac.uk:8080/d2rq/resource/vocab/>\
+PREFIX cd: <http://crowddata.abdn.ac.uk/vocab/0.1/>\ ";
+  
+//Table generating functions attributed to Ric Roberts
+  function getTableHeaders(headerVars) {
+  var trHeaders = $("<tr></tr>");
+  for(var i in headerVars) {
+    trHeaders.append( $("<th>" + headerVars[i] + "</th>") );
+  }
+  return trHeaders;
+}
+
+function getTableRow(headerVars, rowData) {
+  var tr = $("<tr></tr>");
+  for(var i in headerVars) {
+    tr.append(getTableCell(headerVars[i], rowData));
+  }
+  return tr;
+}
+
+function getTableCell(fieldName, rowData) {
+  var td = $("<td></td>");
+  var fieldData = rowData[fieldName];
+  td.html(fieldData["value"]);
+  return td;
+}
+  
+
+function getCD() {
+console.log(prefixes);
+//reset the table before the call
+$("#results").empty();
+var queryUrl="http://crowddata.abdn.ac.uk:8080/d2rq/sparql?callback=?&format=json&query="+escape(prefixes+queryFormTextArea.value);
+ //clear the query form
+ 
+ console.log(queryUrl);
+ $.ajax({
+  dataType: "jsonp",
+  url: queryUrl,	
+  success:function(data) {    
+    // get the table element
+ var table = $("#results");              
+
+    // get the sparql variables from the 'head' of the data.
+    var headerVars = data.head.vars; 
+
+    // using the vars, make some table headers and add them to the table;
+    var trHeaders = getTableHeaders(headerVars);
+    table.append(trHeaders);  
+
+    // grab the actual results from the data.                                          
+    var bindings = data.results.bindings;
+
+    // for each result, make a table row and add it to the table.
+    for(rowIdx in bindings){
+      table.append(getTableRow(headerVars, bindings[rowIdx]));
+    } 
+	
+  },
+ error: function(xhr,textStatus, errorThrown) { 
+        alert("Error:"+textStatus); alert("Error"+ errorThrown); 
+    }
+});
+
+}
+
+</script>    
+</head>
+
+<body>
+    
+    <textarea id="queryArea" placeholder="Enter your sparql query" rows="10" cols="50"></textarea>
+    <input type="button" id="submitBtn" value="Send Query" onclick="return getCD();"/>
+   
+   
+<table id="results"></table>
+
+
+</body>
+</html>

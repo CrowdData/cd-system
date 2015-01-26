@@ -13,6 +13,7 @@ static{
 		prefixes.put("xsd", "http://www.w3.org/2001/XMLSchema#");
 		prefixes.put("owl","http://www.w3.org/2002/07/owl#");
 		prefixes.put("void", "http://rdfs.org/ns/void#");
+		prefixes.put("dcterms", "http://purl.org/dc/terms/");
 	
 	
 	

@@ -43,9 +43,6 @@ public class DatasetResource {
     @GET
     @Produces({"application/ld+json"})
     public Response getDatasetSchema() {
-		
-		
-		
 	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema").entity(DatasetOperations.getDataSetSchema()).build();
       
     }

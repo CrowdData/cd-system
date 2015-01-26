@@ -30,7 +30,7 @@ public class DatasetOperations {
 	
 	public static String getDataSetSchema(){
 		Model m=Tools.getModel("http://vocab.deri.ie/void");
-		Model resourceDesc=Tools.getResourceDescription(Prefixes.prefixes.get("void")+"DatasetDescription", m);
+		Model resourceDesc=Tools.getResourceDescription(Prefixes.prefixes.get("void")+"Dataset", m);
 		
 		return JSONLDSerializer.getJSONLD(resourceDesc);
 		
@@ -39,6 +39,9 @@ public class DatasetOperations {
 		
 		
 	}
+
+		
+	
 	
 
 	
