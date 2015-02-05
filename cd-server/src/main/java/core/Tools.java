@@ -45,7 +45,48 @@ public class Tools {
 		
 		
 		
-	}
+	}/*
+		returns- Model, collection of triples of properties, which has resourceURI as their rdfs:domain
+	 */
+	public static Model getDomainResources(String resourceURI,Model m){
+		Resource res=ResourceFactory.createResource(resourceURI);
+		System.out.println(resourceURI);
+		Model out=ModelFactory.createDefaultModel();
+		
+	 		ParameterizedSparqlString query=new ParameterizedSparqlString();
+	 	query.setCommandText( ""
+	 				+ "SELECT ?property "
+	 				+ "WHERE {"
+	 				+ " ?property rdfs:domain ?resource ."
+	 				+ "   }");
+	 	 query.setParam("resource",res);
+	 		 query.setNsPrefixes(Prefixes.prefixes);
+	 		
+	 		System.out.println(query.asQuery().toString());
+	 	QueryExecution qExec=QueryExecutionFactory.create(query.asQuery(),m);	
+	 		   
+	 	ResultSet rs = qExec.execSelect()	 			;
+	 		     try {
+	 		        while(rs.hasNext()){
+	 		      
+	 		        	QuerySolution cap=rs.next();
+	 		        String resource=cap.getResource("property").toString();
+	 		        System.out.println(resource);
+	 		        out.add(getResourceDescription(resource,m));	
+	 		        }
+	 		       
+	 		     }
+	 		  
+	 		        catch(Exception e){
+	 		        	e.printStackTrace();
+	 		        
+	 		        }		     
+	 		      finally { qExec.close();}
+	 		    return out;
+
+		
+	
+}
 	
 	public static Model getResourceDescription(String resourceURI,Model m){
 		Resource res=ResourceFactory.createResource(resourceURI);
@@ -91,8 +132,8 @@ public class Tools {
 		
 		public static void main (String args[]){
 			
-		//	System.out.println(Tools.getDataSetSchema("dcterms", "description", "http://purl.org/dc/terms/"));
-			System.out.println(Tools.getDataSetSchema("http://purl.org/dc/elements/1.1/description","http://purl.org/dc/elements/1.1/"));
+		//	System.out.println(Tools.getDomainResources("http, "http://purl.org/dc/terms/"));
+		//	System.out.println(Tools.getDataSetSchema("http://purl.org/dc/elements/1.1/description","http://purl.org/dc/elements/1.1/"));
 		}
 		
 		

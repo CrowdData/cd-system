@@ -6,6 +6,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -13,6 +14,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 import core.JSONLDSerializer;
 import core.Prefixes;
+import core.Repository;
 import core.Tools;
 @Path("tools")
 public class ToolsResources {
@@ -40,6 +42,9 @@ public class ToolsResources {
       
     }
 	
+	
+	
+	
 	public String getDataSetSchema(String prefix,String resource, String vocabulary){
 		Model m=Tools.getModel(vocabulary);
 		Model resourceDesc=Tools.getResourceDescription(Prefixes.prefixes.get(prefix)+resource, m);
@@ -49,5 +54,7 @@ public class ToolsResources {
 		
 		
 	}	
+	
+	
 	
 }
