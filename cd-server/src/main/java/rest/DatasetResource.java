@@ -84,7 +84,7 @@ public class DatasetResource {
 	@Path("get")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public Response getDataset(String json) {
+    public Response getDataset() {
 	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/get").entity("Dataset retrieved").build();
       
     }

@@ -11,7 +11,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import core.SchemaHandler;
+import core.Tools;
 @Path("user")
 public class PersonResource {
 
@@ -29,18 +33,35 @@ public class PersonResource {
 	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema").entity(jsonld).build();
       
     }
+	
+	
+	@Path("generateid")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response generateId(){
+		
+		JSONObject response=new JSONObject();
+		response.put("id", Tools.generateID());
+		return Response.ok(response).build();
+		
+	}
 
 	@Path("create")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createDataset() {
-	URI u=null;
-		try {
-	u=	new URI("http://crowddata.abdn.ac.uk:8080/crowddata/dataset");
-	} catch (URISyntaxException e) {
-		e.printStackTrace();
-	}
-		return	Response.created(u).header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/create").entity("Resource Created").build();
+    public Response createDataset(String jsonObject) {
+		try{
+		JSONObject obj=new JSONObject(jsonObject);
+		// TODO: get key id from json;
+		// TODO: get key jsonld
+		// TODO: parse jsonld to model
+		// TODO: store user in user dedicated repository?
+		
+		}
+		catch(JSONException e){
+			return Response.serverError().entity(new JSONObject("{\"error:\" \"Check JSON Syntax could not be parsed\"}")).build();
+		}
+		return	Response.ok().entity("Link to user profile?").build();
       
     }
 	

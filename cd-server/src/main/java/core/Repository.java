@@ -1,6 +1,5 @@
 package core;
 
-import org.apache.jena.fuseki.EmbeddedFusekiServer;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.DatasetAccessor;
@@ -12,7 +11,7 @@ import com.hp.hpl.jena.tdb.TDBFactory;
 
 public class Repository {
 	
-	static DatasetAccessor DS;
+	private static DatasetAccessor DS;
 	
 	static{
 		//Connect with the repository

@@ -53,12 +53,13 @@ public class SchemaHandler {
 	private static Vector<OntModel> getImports(Model m){
 		Vector<OntModel> imports=new Vector<OntModel>();
 		//create ontology from data model to get imports
-		OntModel model = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM, m);
+		OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM_RDFS_INF, m);
+		model.write(System.out,"TTL");
 		ExtendedIterator<OntModel> it=model.listSubModels(true);
 		while(it.hasNext()){
 			imports.add(it.next());
 		}
-		
+		System.out.println("The imports size:"+imports.size());
 	return imports;
 		
 	}

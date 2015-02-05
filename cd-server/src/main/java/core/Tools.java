@@ -3,6 +3,7 @@ package core;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 import com.hp.hpl.jena.ontology.OntModel;
@@ -20,7 +21,11 @@ import com.hp.hpl.jena.rdf.model.Statement;
 public class Tools {
 
 	
-	
+	public static String generateID(){
+		
+		return UUID.randomUUID().toString();
+		
+	}
 	public static Model getModel(String url){
 		Model m=ModelFactory.createDefaultModel();
 		m.read(url);
