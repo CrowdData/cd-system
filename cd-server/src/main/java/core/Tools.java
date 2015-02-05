@@ -136,7 +136,7 @@ public class Tools {
 		
 		
 		public static void main (String args[]){
-			
+			System.out.println(Tools.generateID());
 		//	System.out.println(Tools.getDomainResources("http, "http://purl.org/dc/terms/"));
 		//	System.out.println(Tools.getDataSetSchema("http://purl.org/dc/elements/1.1/description","http://purl.org/dc/elements/1.1/"));
 		}

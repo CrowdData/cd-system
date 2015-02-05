@@ -42,7 +42,8 @@ public class PersonResource {
 		
 		JSONObject response=new JSONObject();
 		response.put("id", Tools.generateID());
-		return Response.ok(response).build();
+		
+		return Response.ok(response.toString()).build();
 		
 	}
 
@@ -59,9 +60,9 @@ public class PersonResource {
 		
 		}
 		catch(JSONException e){
-			return Response.serverError().entity(new JSONObject("{\"error:\" \"Check JSON Syntax could not be parsed\"}")).build();
+			return Response.serverError().entity(new JSONObject("{\"error:\" \"Check JSON Syntax could not be parsed\"}").toString()).build();
 		}
-		return	Response.ok().entity("Link to user profile?").build();
+		return	Response.ok().entity("{\"user_uri\":\"uri/to/user/profile\"").build();
       
     }
 	
