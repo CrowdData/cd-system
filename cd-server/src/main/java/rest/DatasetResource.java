@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
-import core.DatasetOperations;
 import core.JSONLDSerializer;
 import core.SchemaHandler;
 
