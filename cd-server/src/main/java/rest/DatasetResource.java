@@ -8,6 +8,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -15,6 +16,8 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 import core.JSONLDSerializer;
+import core.NGHandler;
+import core.Repository;
 import core.SchemaHandler;
 
 /**
@@ -84,7 +87,16 @@ public class DatasetResource {
 	@Path("get")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public Response getDataset() {
+    public Response getDataset(@QueryParam("ds") String dsID) {
+		
+	String ds= NGHandler.getMetadataString(dsID);
+	if(Repository.exists(dsID)){
+	//	Repository.getQuery(query)
+	}
+	
+		
+		
+		
 	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/get").entity("Dataset retrieved").build();
       
     }

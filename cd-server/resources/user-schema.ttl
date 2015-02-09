@@ -1,0 +1,31 @@
+# baseURI: http://crowddata.abdn.ac.uk/ontologies/users/user-schema
+# imports: http://xmlns.com/foaf/0.1/
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix user-schema: <http://crowddata.abdn.ac.uk/ontologies/users/user-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://crowddata.abdn.ac.uk/ontologies/users/user-schema>
+  rdf:type owl:Ontology ;
+  owl:imports <http://xmlns.com/foaf/0.1/> ;
+  owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
+.
+<http://xmlns.com/foaf/0.1/Agent>
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://xmlns.com/foaf/0.1/based_near> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://xmlns.com/foaf/0.1/depiction> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://xmlns.com/foaf/0.1/name> ;
+    ] ;
+.

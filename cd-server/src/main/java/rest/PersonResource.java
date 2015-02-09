@@ -19,6 +19,7 @@ import core.Tools;
 @Path("user")
 public class PersonResource {
 
+	
 	@Path("getDataSchema")
     @GET
     @Produces({"application/ld+json"})
@@ -27,10 +28,11 @@ public class PersonResource {
 		// return getDescriptor(descriptor uri)
 		//return model getOntology PropertiesClassess( Model descriptor)
 		//
-		String URI="http://crowddata.abdn.ac.uk/descriptions/person.ttl";
+	
 		
-		String jsonld=SchemaHandler.getSchema(URI);
-	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema").entity(jsonld).build();
+		
+		
+	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema").entity("").build();
       
     }
 	

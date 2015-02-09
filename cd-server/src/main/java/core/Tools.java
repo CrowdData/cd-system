@@ -93,6 +93,34 @@ public class Tools {
 	
 }
 	
+	
+	public static String getNamespace(String uri) {	 
+		 if (uri.contains("#")) {
+			 return uri.substring(0,uri.lastIndexOf("#")-1);
+		 }
+		 if (uri.contains("/")) {
+			 return uri.substring(0,uri.lastIndexOf("/")-1);
+		 }
+		 return uri;
+	}
+	
+	public static Model getDescribeFromModel(String resourceURI, Model m){
+		Resource res=ResourceFactory.createResource(resourceURI);
+		Model out=ModelFactory.createDefaultModel();
+		ParameterizedSparqlString query=new ParameterizedSparqlString();
+	 	query.setCommandText( ""
+	 				+ "DESCRIBE ?resource "
+	 				+ "WHERE {"
+	 				+ " ?resource ?p ?o ."
+	 				+ "   }");
+	 	 query.setParam("resource",res);
+	 //	 query.setNsPrefixes(Prefixes.prefixes);
+	 	QueryExecution qExec=QueryExecutionFactory.create(query.asQuery(),m);	
+	 	qExec.execDescribe(out);
+	 	return out;
+		
+	}
+	
 	public static Model getResourceDescription(String resourceURI,Model m){
 		Resource res=ResourceFactory.createResource(resourceURI);
 		System.out.println(resourceURI);
@@ -133,10 +161,10 @@ public class Tools {
 	
 }
 		
-		
+
 		
 		public static void main (String args[]){
-			System.out.println(Tools.generateID());
+			System.out.println(Tools.getNamespace("http://asd#"));
 		//	System.out.println(Tools.getDomainResources("http, "http://purl.org/dc/terms/"));
 		//	System.out.println(Tools.getDataSetSchema("http://purl.org/dc/elements/1.1/description","http://purl.org/dc/elements/1.1/"));
 		}

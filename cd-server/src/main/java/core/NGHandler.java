@@ -16,7 +16,10 @@ public static String getSchemaString(String datasetID){
 	return Strings.DEFAULT_URI+datasetID+"/schema/";
 }
 public  static String getDataString(String datasetID){
-	return Strings.DEFAULT_URI+datasetID+"/data/";
+	return Strings.DEFAULT_URI+datasetID+"/data/";		
+}
+public  static String getKAString(String datasetID){
+	return Strings.DEFAULT_URI+datasetID+"/ka/";
 }
 	
 

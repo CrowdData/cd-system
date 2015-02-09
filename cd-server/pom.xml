@@ -32,7 +32,7 @@
 		<configuration>
 			<url>http://crowddata.abdn.ac.uk:8080/manager/text</url>
 			<server>TomcatServer</server>
-			<path>/crowddata</path>
+			<path>/test</path>
 		</configuration>
 	</plugin>
             
@@ -61,7 +61,12 @@
             <!-- use the following artifactId if you don't need servlet 2.x compatibility -->
             <!-- artifactId>jersey-container-servlet</artifactId -->
         </dependency>
- 
+ <dependency>
+	<groupId>junit</groupId>
+	<artifactId>junit</artifactId>
+	<version>4.11</version>
+</dependency>
+        
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-moxy</artifactId>

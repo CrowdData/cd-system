@@ -1,5 +1,6 @@
 package core;
 
+import java.util.HashMap;
 import java.util.Vector;
 
 import com.hp.hpl.jena.ontology.OntModel;
@@ -12,16 +13,37 @@ import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public class SchemaHandler {
 
+private static HashMap<String,String> dataModelCache;	
+	
+	static{
+		dataModelCache=new HashMap<String,String>();
+		dataModelCache.put("http://xmlns.com/foaf/0.1/Person", "http://crowddata.abdn.ac.uk/descriptions/person.ttl");
+		dataModelCache.put("http://rdfs.org/ns/void#Dataset", "http://crowddata.abdn.ac.uk/descriptions/datasetDescription.ttl");
+	}
+	
+public void addDataModel(String uri, String location){
+	dataModelCache.put(uri, location);
+	
+}
+private String getDataModel(String URI){
+	
+	if(dataModelCache.containsKey(URI)){
+		return dataModelCache.get(URI);
+		
+	}
+	return null;
+	
+}
+
+
+
 	
 	
-	
-	
-	
-	
-	public static String getSchema(String dataModelString){
+	public static String getSchema(String URI){
+		/*
 		Model schema=ModelFactory.createDefaultModel();
 		
-		Model dataModel=getDataModel(dataModelString);
+		Model dataModel=getDataModel(URI);
 		
 		Vector<OntModel> imports=getImports(dataModel);
 		
@@ -32,15 +54,18 @@ public class SchemaHandler {
 			schema.add(o);
 		}
 		String output=JSONLDSerializer.getJSONLD(schema);
+		*/
+		return null;
 		
-		return output;
-		
-		
+	}
 		
 		
 		
 	}
 	
+	
+	
+	/*
 	private static Model getDataModel(String dataModel){
 		
 		Model m=Tools.getModel(dataModel);
@@ -67,6 +92,5 @@ public class SchemaHandler {
 	public static void main (String[] args){
 		SchemaHandler.getDataModel("yaayy");
 		
-	}
+	}*/
 	
-}

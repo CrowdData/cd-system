@@ -1,0 +1,31 @@
+# baseURI: http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements
+# imports: http://rdfs.org/ns/void
+
+@prefix form-requirements: <http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements>
+  rdf:type owl:Ontology ;
+  owl:imports <http://rdfs.org/ns/void> ;
+  owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
+.
+form-requirements:PropertyDescription
+  rdf:type rdfs:Class ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty rdfs:label ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty rdfs:comment ;
+    ] ;
+.
+form-requirements:dataset
+  rdf:type owl:ObjectProperty ;
+  rdfs:range rdfs:Resource ;
+.

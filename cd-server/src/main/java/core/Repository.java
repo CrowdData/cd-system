@@ -4,10 +4,19 @@ package core;
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.DatasetAccessor;
 import com.hp.hpl.jena.query.DatasetAccessorFactory;
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.ReadWrite;
+import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.sparql.modify.UpdateProcessRemote;
 import com.hp.hpl.jena.tdb.TDBFactory;
+import com.hp.hpl.jena.update.UpdateExecutionFactory;
+import com.hp.hpl.jena.update.UpdateFactory;
+import com.hp.hpl.jena.update.UpdateRequest;
 
 public class Repository {
 	
@@ -15,7 +24,7 @@ public class Repository {
 	
 	static{
 		//Connect with the repository
-		createFusekiAccessor();
+		createFusekiAccessors();
 	}
 	/*
 	public static void createFuseki(){
@@ -31,10 +40,11 @@ public class Repository {
 	*/
 	
 	
-	public static void createFusekiAccessor(){
-		System.out.println("Creating accessor...");
+	public static void createFusekiAccessors(){
+		System.out.println("Creating accessor for model...");
 		DS=DatasetAccessorFactory.createHTTP(Strings.FUSEKI_SERVICE_URI);
 		System.out.println("Created...");
+	
 	}
 	
 	public static void addModel(Model m){
@@ -58,14 +68,40 @@ public class Repository {
 		DS.putModel(namedGraph,m);
 	}
 	
+	public static void updateQuery(String query){
+	UpdateRequest update=UpdateFactory.create(query);
+	UpdateExecutionFactory.createRemote(update, Strings.FUSEKI_UPDATE_URI).execute();
+	
+		
+	}
+	public static ResultSet selectQuery(String queryString){
+	Query query=QueryFactory.create(queryString);
+	QueryExecution qexec= QueryExecutionFactory.sparqlService(Strings.FUSEKI_QUERY_URI, query);
+	return qexec.execSelect();	
+		
+	}
+	
+
 	
 	
+	public static String buildRepetativeQuery(String sparqlQuery,
+			String... params) {
+		StringBuilder sparql = new StringBuilder();
+		for (String param : params) {
+			sparql.append(String.format(sparqlQuery, param));
+		}
+		return sparql.toString();
+	}
 	
 	
 	public static void main (String args[]){
-	
-		Repository.addModel(ModelFactory.createDefaultModel(), NGHandler.getDataString("deman"));
-		System.out.println(Repository.exists(NGHandler.getDataString("deman")));
+		String query="INSERT INTO GRAPH <%s> {<%s> <http://crowddata.abdn.ac.uk/user> .}";
+		String s=buildRepetativeQuery(query,"http://newgraph.com");
+		System.out.println(s);
+		
+		//Repository.updateQuery("CLEAR ALL");
+		//Repository.addModel(Tools.getModel("http://crowddata.abdn.ac.uk/descriptions/datasetDescription.ttl"), "http://crowddata.abdn.ac.uk/descriptions/datasetDescription.ttl/");
+		//System.out.println(Repository.exists("http://crowddata.abdn.ac.uk/descriptions/datasetDescription.ttl/"));
 		
 	}
 

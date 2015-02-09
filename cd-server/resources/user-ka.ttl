@@ -1,0 +1,47 @@
+# baseURI: http://crowddata.abdn.ac.uk/ontologies/users/ka/user-ka
+# imports: http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements
+# imports: http://crowddata.abdn.ac.uk/ontologies/users/user-schema
+
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix form-requirements: <http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix user-ka: <http://crowddata.abdn.ac.uk/ontologies/users/ka/user-ka#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://crowddata.abdn.ac.uk/ontologies/users/ka/user-ka>
+  rdf:type owl:Ontology ;
+  owl:imports <http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements> ;
+  owl:imports <http://crowddata.abdn.ac.uk/ontologies/users/user-schema> ;
+  owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
+.
+user-ka:agentName
+  rdf:type form-requirements:PropertyDescription ;
+  form-requirements:dataset user-ka:userDataset ;
+  dcterms:description "Provide a description of the full name of the person"^^xsd:string ;
+  void:class <http://xmlns.com/foaf/0.1/Agent> ;
+  void:property <http://xmlns.com/foaf/0.1/name> ;
+  rdfs:label "The name of the agent (person, organisation, etc.)"^^xsd:string ;
+.
+user-ka:userBasedNear
+  rdf:type form-requirements:PropertyDescription ;
+  form-requirements:dataset user-ka:userDataset ;
+  dcterms:description "Provide a description of the full name of the person"^^xsd:string ;
+  void:class <http://xmlns.com/foaf/0.1/Agent> ;
+  void:property <http://xmlns.com/foaf/0.1/based_near> ;
+  rdfs:label "The name of the agent (person, organisation, etc.)"^^xsd:string ;
+.
+user-ka:userDataset
+  rdf:type void:Dataset ;
+  void:uriSpace "http://crowddata.abdn.ac.uk/data/datasets/user"^^xsd:string ;
+.
+user-ka:userDepiction
+  rdf:type form-requirements:PropertyDescription ;
+  form-requirements:dataset user-ka:userDataset ;
+  dcterms:description "Provide a link to the image used to depict this agent"^^xsd:string ;
+  void:class <http://xmlns.com/foaf/0.1/Agent> ;
+  void:property <http://xmlns.com/foaf/0.1/based_near> ;
+  rdfs:label "The image depicting the user"^^xsd:string ;
+.
