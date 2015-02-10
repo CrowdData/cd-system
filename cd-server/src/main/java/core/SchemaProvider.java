@@ -12,7 +12,7 @@ public class SchemaProvider {
 	
 public static void main(String args[]){
 	
-	new SchemaProvider().getSchema("http://http://xmlns.com/foaf/0.1/Person", "user");
+	new SchemaProvider().getSchema("http://xmlns.com/foaf/0.1/Person", "user");
 	
 }
 

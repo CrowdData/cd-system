@@ -18,7 +18,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import core.JSONLDSerializer;
 import core.NGHandler;
 import core.Repository;
-import core.SchemaHandler;
+import core.SchemaProvider;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -47,7 +47,7 @@ public class DatasetResource {
     @Produces({"application/ld+json"})
     public Response getDatasetSchema() {
 		String URI="http://crowddata.abdn.ac.uk/descriptions/datasetDescription.ttl";
-		String jsonld=SchemaHandler.getSchema(URI);
+		String jsonld=SchemaProvider.getSchema(URI);
 		
 	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema").entity(jsonld).build();
       

@@ -96,10 +96,10 @@ public class Tools {
 	
 	public static String getNamespace(String uri) {	 
 		 if (uri.contains("#")) {
-			 return uri.substring(0,uri.lastIndexOf("#")-1);
+			 return uri.substring(0,uri.lastIndexOf("#"));
 		 }
 		 if (uri.contains("/")) {
-			 return uri.substring(0,uri.lastIndexOf("/")-1);
+			 return uri.substring(0,uri.lastIndexOf("/")+1);
 		 }
 		 return uri;
 	}
@@ -164,7 +164,7 @@ public class Tools {
 
 		
 		public static void main (String args[]){
-			System.out.println(Tools.getNamespace("http://asd#"));
+			System.out.println(Tools.getNamespace("http://xmlns.com/foaf/0.1/Person"));
 		//	System.out.println(Tools.getDomainResources("http, "http://purl.org/dc/terms/"));
 		//	System.out.println(Tools.getDataSetSchema("http://purl.org/dc/elements/1.1/description","http://purl.org/dc/elements/1.1/"));
 		}
