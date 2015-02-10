@@ -21,60 +21,67 @@ import core.Prefixes;
 import core.Repository;
 import core.ResourceProvider;
 import core.Tools;
+
 @Path("tools")
 public class ToolsResources {
 
-	
-	
-	
-	
-	@Path("getjsonld")
-    @GET
-    @Produces({"application/ld+json"})
-    public Response getVoid(@QueryParam("url") String url) {
-		String s=URLDecoder.decode(url);
-		System.out.println(s);
-		
-		Model output=ModelFactory.createDefaultModel();
-		if(Prefixes.isBlacklisted(url)){
-			return Response.noContent().entity("BlackListed").build();
+	@Path("getschema")
+	@GET
+	@Produces({ "application/ld+json" })
+	public Response getSchema(@QueryParam("url") String url,
+			@QueryParam("ds") String dsID) {
+		if (url == null) {
+			throw new NullPointerException("Class URI must be provided");
 		}
-		
-			
-	String namespace=Tools.getNamespace(url);
-	System.out.println("Namespace:"+namespace);
-	
-	Model schema=ModelFactory.createDefaultModel();
-	schema.read(namespace);
-	Model describeOutput=Tools.getDescribeFromModel(url, schema);
-	//Check for additional schema?
-	//Check for KA location
+		try {
+			URL urldec = new URL(url);
+		}// throws Malformed exception if wrong
+		catch (MalformedURLException e) {
 
-	
-	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema").header("Access-Control-Allow-Origin", "*")
-            .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").entity("JSONLD:").build();
-      
-    }
-	
-	
+			return Response.serverError()
+					.entity("resource parameter must be a valid URI").build();
+		}
+		String s = URLDecoder.decode(url);
+
+		Model output = ModelFactory.createDefaultModel();
+		if (Prefixes.isBlacklisted(url)) {
+			return Response.serverError().entity("This Class is too generic")
+					.build();
+		}
+
+		return Response
+				.ok()
+				.header("Target",
+						"http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema")
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods",
+						"GET, POST, DELETE, PUT").entity("JSONLD:").build();
+
+	}
+
 	@Path("get")
 	@GET
 	@Produces({"application/ld+json"})
-	public Response getResource(@QueryParam("resource") String resourceURI,@QueryParam("ds") String dsID){
+	public Response getResource(@QueryParam("resource") String resourceURI,@QueryParam("ds") String dsID) {
 		
 		if(resourceURI==null){
 		
-			throw new NullPointerException("Resource URI must be provided");
+			throw new 
+			IllegalArgumentException("Resource URI must be provided");
+		}
+		
+		try {
+			URL urldec = new URL(resourceURI);
+		}// throws Malformed exception if wrong
+		catch (MalformedURLException e) {
+
+			return Response.serverError()
+					.entity("resource parameter must be a valid URI").build();
 		}
 		
 		String encodedURI=URLDecoder.decode(resourceURI);
-		try{
-		URL url=new URL(encodedURI);
-		}//throws Malformed exception if wrong
-		catch(MalformedURLException e){
-			
-			return Response.serverError().entity("resource parameter must be a valid URI").build();
-		}
+	
+		
 		
 		Model m;
 		if(dsID==null){
@@ -92,18 +99,15 @@ public class ToolsResources {
 		
 		
 	}
-	
-	
-	public String getDataSetSchema(String prefix,String resource, String vocabulary){
-		Model m=Tools.getModel(vocabulary);
-		Model resourceDesc=Tools.getResourceDescription(Prefixes.prefixes.get(prefix)+resource, m);
-		
+
+	public String getDataSetSchema(String prefix, String resource,
+			String vocabulary) {
+		Model m = Tools.getModel(vocabulary);
+		Model resourceDesc = Tools.getResourceDescription(
+				Prefixes.prefixes.get(prefix) + resource, m);
+
 		return JSONLDSerializer.getJSONLD(resourceDesc);
-		
-		
-		
-	}	
-	
-	
-	
+
+	}
+
 }

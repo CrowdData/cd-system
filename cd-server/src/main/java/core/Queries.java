@@ -1,5 +1,8 @@
 package core;
 
+import com.hp.hpl.jena.query.ParameterizedSparqlString;
+import com.hp.hpl.jena.query.ResultSet;
+
 public class Queries {
 
 	
@@ -12,7 +15,17 @@ public class Queries {
 	String SELECT_EVERYTING="SELECT * FROM NAMED ?graph";
 	
 	
-	static String SELECT_DESCRIBE_QUERY="SELECT ?p1 ?o1 ?s2 ?p2  WHERE {{ GRAPH ?graph {" + 
+	static String SELECT_RESOURCE=
+			"SELECT ?res\r\n" + 
+			"WHERE{\r\n" + 
+			"GRAPH ?graph{\r\n" + 
+			"?res ?prop ?obj .\r\n" + 
+			"}}\r\n" + 
+			"";
+	
+	
+	static String SELECT_DESCRIBE_QUERY=
+	"SELECT ?p1 ?o1 ?s2 ?p2  WHERE {{ GRAPH ?graph {" + 
 			" " + 
 			"?resource ?p1 ?o1 .} " + 
 			"} " + 
@@ -25,4 +38,24 @@ public class Queries {
 			"";
 	
 	
+
+
+
+
+
+public static ResultSet describeQuery(String resource, String DS){
+	ParameterizedSparqlString query = new ParameterizedSparqlString();
+	query.setCommandText(Queries.SELECT_DESCRIBE_QUERY);
+
+		query.setIri("resource", resource);				//tied to SELECT DESCRIBE QUERY
+		query.setIri("graph", DS);   			//tied to SELECT DESCRIBE QUERY
+
+		System.out.println(query.toString());
+	return Repository.selectQuery(query.asQuery().toString());
+	
+	
+	
+}
+
+
 }

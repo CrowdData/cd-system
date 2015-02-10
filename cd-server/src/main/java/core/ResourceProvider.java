@@ -18,17 +18,8 @@ public class ResourceProvider {
 
 	public Model getResource(String uri, String dsID) {
 		String dataNG = NGHandler.getDataString(dsID);
-
-		ParameterizedSparqlString query = new ParameterizedSparqlString();
-		query.setCommandText(Queries.SELECT_DESCRIBE_QUERY);
-
-		query.setIri("resource", uri);
-		query.setIri("graph", dataNG);
-
-		System.out.println(query.toString());
-		ResultSet result = Repository.selectQuery(query.asQuery().toString());
-
-		return parseDescribe(result, uri);
+		
+		return ResultSetParser.parseDescribe(Queries.describeQuery(uri, dataNG),uri);  //the uri is passed as a hack to identify resource
 
 	}
 
@@ -47,35 +38,9 @@ public class ResourceProvider {
 		// query fuseki server
 		ResultSet result = Repository.selectQuery(query.asQuery().toString());
 
-		return parseDescribe(result, uri);
+		return ResultSetParser.parseDescribe(result, uri);
 	}
-
-	private Model parseDescribe(ResultSet result, String resourceURI) {
-
-		Model resourceDescription = ModelFactory.createDefaultModel();
-		while (result.hasNext()) {
-			QuerySolution sol = result.next();
-			// if first union graph
-			if (sol.contains("p1")) {
-				Statement s = ResourceFactory.createStatement(ResourceFactory
-						.createResource(resourceURI), ResourceFactory
-						.createProperty(sol.get("p1").toString()), sol
-						.get("o1"));
-				resourceDescription.add(s);
-			}
-			// if second union graph
-			if (sol.contains("s2")) {
-				Statement s = ResourceFactory.createStatement(sol
-						.getResource("s2"), ResourceFactory.createProperty(sol
-						.get("p2").toString()), ResourceFactory
-						.createResource(resourceURI));
-				resourceDescription.add(s);
-			}
-		}
-
-		return resourceDescription;
-
-	}
+	
 
 	public static void main(String[] args) {
 		new ResourceProvider().getResource(

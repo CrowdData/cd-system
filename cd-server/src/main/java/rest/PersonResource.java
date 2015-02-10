@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import core.SchemaHandler;
+import core.SchemaProvider;
 import core.Tools;
 @Path("user")
 public class PersonResource {
