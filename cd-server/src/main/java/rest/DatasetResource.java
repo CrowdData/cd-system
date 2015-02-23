@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
-import core.JSONLDSerializer;
+import core.RDFSerializer;
 import core.NGHandler;
 import core.Repository;
 import core.SchemaProvider;
@@ -37,11 +37,12 @@ public class DatasetResource {
     public Response getVoid() {
 	Model m=ModelFactory.createDefaultModel();
 	m.read("http://vocab.deri.ie/void");
-	String jsonld=JSONLDSerializer.getJSONLD(m);
+	String jsonld=RDFSerializer.getJSONLD(m,"JSON-LD");
 	
 	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema").entity(jsonld).build();
       
     }
+	/*
 	@Path("getDataSchema")
     @GET
     @Produces({"application/ld+json"})
@@ -51,7 +52,7 @@ public class DatasetResource {
 		
 	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema").entity(jsonld).build();
       
-    }
+    }*/
 	
 	
 	

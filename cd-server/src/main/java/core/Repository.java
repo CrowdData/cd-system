@@ -81,6 +81,13 @@ public class Repository {
 		
 	}
 	
+	public static Model getModel(String namedGraph){
+		
+		return DS.getModel(namedGraph);
+		
+		
+	}
+	
 
 	
 	
@@ -95,13 +102,13 @@ public class Repository {
 	
 	
 	public static void main (String args[]){
-		String query="INSERT INTO GRAPH <%s> {<%s> <http://crowddata.abdn.ac.uk/user> .}";
-		String s=buildRepetativeQuery(query,"http://newgraph.com");
-		System.out.println(s);
+		//String query="INSERT INTO GRAPH <%s> {<%s> <http://crowddata.abdn.ac.uk/user> .}";
+		//String s=buildRepetativeQuery(query,"http://newgraph.com");
+		///System.out.println(s);
 		
 		//Repository.updateQuery("CLEAR ALL");
-		//Repository.addModel(Tools.getModel("http://crowddata.abdn.ac.uk/descriptions/datasetDescription.ttl"), "http://crowddata.abdn.ac.uk/descriptions/datasetDescription.ttl/");
-		//System.out.println(Repository.exists("http://crowddata.abdn.ac.uk/descriptions/datasetDescription.ttl/"));
+		Repository.addModel(Tools.getModel("http://crowddata.abdn.ac.uk/descriptions/datasetDescription.ttl"), "http://test");
+		System.out.println(Repository.exists("http://test"));
 		
 	}
 

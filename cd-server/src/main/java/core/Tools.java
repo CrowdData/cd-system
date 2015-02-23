@@ -33,6 +33,21 @@ public class Tools {
 		//String jsonld=serialize.getJSONLD(m);
 	}
 	
+	
+	
+	
+	public static String getNamespace(String uri) {	 
+		 if (uri.contains("#")) {
+			 return uri.substring(0,uri.lastIndexOf("#"));
+		 }
+		 if (uri.contains("/")) {
+			 return uri.substring(0,uri.lastIndexOf("/")+1);
+		 }
+		 return uri;
+	}
+	
+	
+	/*
 	public static String getDataSetSchema(String prefix,String resource, String vocabulary){
 		Model m=Tools.getModel(vocabulary);
 		Model resourceDesc=Tools.getResourceDescription(Prefixes.prefixes.get(prefix)+resource, m);
@@ -50,9 +65,9 @@ public class Tools {
 		
 		
 		
-	}/*
+	} */    /*
 		returns- Model, collection of triples of properties, which has resourceURI as their rdfs:domain
-	 */
+	 
 	public static Model getDomainResources(String resourceURI,Model m){
 		Resource res=ResourceFactory.createResource(resourceURI);
 		System.out.println(resourceURI);
@@ -93,73 +108,9 @@ public class Tools {
 	
 }
 	
-	
-	public static String getNamespace(String uri) {	 
-		 if (uri.contains("#")) {
-			 return uri.substring(0,uri.lastIndexOf("#"));
-		 }
-		 if (uri.contains("/")) {
-			 return uri.substring(0,uri.lastIndexOf("/")+1);
-		 }
-		 return uri;
-	}
-	
-	public static Model getDescribeFromModel(String resourceURI, Model m){
-		Resource res=ResourceFactory.createResource(resourceURI);
-		Model out=ModelFactory.createDefaultModel();
-		ParameterizedSparqlString query=new ParameterizedSparqlString();
-	 	query.setCommandText( ""
-	 				+ "DESCRIBE ?resource "
-	 				+ "WHERE {"
-	 				+ " ?resource ?p ?o ."
-	 				+ "   }");
-	 	 query.setParam("resource",res);
-	 //	 query.setNsPrefixes(Prefixes.prefixes);
-	 	QueryExecution qExec=QueryExecutionFactory.create(query.asQuery(),m);	
-	 	qExec.execDescribe(out);
-	 	return out;
-		
-	}
-	
-	public static Model getResourceDescription(String resourceURI,Model m){
-		Resource res=ResourceFactory.createResource(resourceURI);
-		System.out.println(resourceURI);
-		Model out=ModelFactory.createDefaultModel();
-		
-	 		ParameterizedSparqlString query=new ParameterizedSparqlString();
-	 	query.setCommandText( ""
-	 				+ "SELECT ?p ?o "
-	 				+ "WHERE {"
-	 				+ " ?resource ?p ?o ."
-	 				+ "   }");
-	 	 query.setParam("resource",res);
-	 		 query.setNsPrefixes(Prefixes.prefixes);
-	 		
-	 		System.out.println(query.asQuery().toString());
-	 	QueryExecution qExec=QueryExecutionFactory.create(query.asQuery(),m);	
-	 		   
-	 	ResultSet rs = qExec.execSelect()	 			;
-	 		     try {
-	 		        while(rs.hasNext()){
-	 		      
-	 		        	QuerySolution cap=rs.next();
-	 		        Statement s=	ResourceFactory.createStatement(res, ResourceFactory.createProperty(cap.get("p").toString()), cap.get("o"));
-	 		        	out.add(s);
-	 		        	
-	 		        }
-	 		       
-	 		     }
-	 		  
-	 		        catch(Exception e){
-	 		        	e.printStackTrace();
-	 		        
-	 		        }		     
-	 		      finally { qExec.close();}
-	 		    return out;
 
-		
 	
-}
+	
 		
 
 		
@@ -171,7 +122,7 @@ public class Tools {
 		
 		
 		
-		
+		*/
 	}
 	
 	

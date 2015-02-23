@@ -16,10 +16,11 @@ import javax.ws.rs.core.Response;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
-import core.JSONLDSerializer;
 import core.Prefixes;
+import core.RDFSerializer;
 import core.Repository;
 import core.ResourceProvider;
+import core.SchemaProvider;
 import core.Tools;
 
 @Path("tools")
@@ -33,6 +34,9 @@ public class ToolsResources {
 		if (url == null) {
 			throw new NullPointerException("Class URI must be provided");
 		}
+		if(dsID==null){
+			throw new NullPointerException("Dataset ID must be provided");
+		}
 		try {
 			URL urldec = new URL(url);
 		}// throws Malformed exception if wrong
@@ -42,20 +46,22 @@ public class ToolsResources {
 					.entity("resource parameter must be a valid URI").build();
 		}
 		String s = URLDecoder.decode(url);
-
+		System.out.println("This after decode :"+s);
 		Model output = ModelFactory.createDefaultModel();
-		if (Prefixes.isBlacklisted(url)) {
+		if (Prefixes.isBlacklisted(s)) {
 			return Response.serverError().entity("This Class is too generic")
 					.build();
 		}
-
+		
+		output=SchemaProvider.getSchema(s, dsID);
+		String jsonld=RDFSerializer.getJSONLD(output, "JSON-LD");
 		return Response
 				.ok()
 				.header("Target",
 						"http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema")
 				.header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Methods",
-						"GET, POST, DELETE, PUT").entity("JSONLD:").build();
+						"GET, POST, DELETE, PUT").entity(jsonld).build();
 
 	}
 
@@ -93,13 +99,34 @@ public class ToolsResources {
 		if(m.isEmpty()){
 			return Response.status(Response.Status.NOT_FOUND).entity(String.format("The resource %s was not found",encodedURI)).build();
 		}
-		String jsonld=JSONLDSerializer.getJSONLD(m);
+		String jsonld=RDFSerializer.getJSONLD(m,"JSON-LD");
 		return Response.ok(jsonld).build();
 		
-		
-		
 	}
-
+	
+		@Path("add")
+	    @POST
+	    @Consumes({"text/turtle"})
+		@Produces({"application/ld+json"})
+	    public Response addTurtle(@QueryParam("ds") String ds,String data) {
+		
+		Model m=	RDFSerializer.inputToJSONLD(data, "TTL");
+		return Response.ok().entity(RDFSerializer.getJSONLD(m, "JSON-LD")).build();	
+	
+	    	
+	}
+		@Path("add")
+	    @POST
+	    @Consumes({"application/ld+json"})
+		@Produces({"application/ld+json"})
+	    public Response addJson(@QueryParam("ds") String ds,String data) {
+		
+		Model m=	RDFSerializer.inputToJSONLD(data, "TTL");
+		return Response.ok().entity(RDFSerializer.getJSONLD(m, "JSON-LD")).build();	
+	
+	    	
+	}
+/*
 	public String getDataSetSchema(String prefix, String resource,
 			String vocabulary) {
 		Model m = Tools.getModel(vocabulary);
@@ -109,5 +136,5 @@ public class ToolsResources {
 		return JSONLDSerializer.getJSONLD(resourceDesc);
 
 	}
-
+*/
 }

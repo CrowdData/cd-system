@@ -12,48 +12,66 @@ public class SchemaProvider {
 	
 public static void main(String args[]){
 	
-	new SchemaProvider().getSchema("http://xmlns.com/foaf/0.1/Person", "user");
+	new SchemaProvider().getSchema("http://xmlns.com/foaf/0.1/Agent", "user");
 	
 }
 
-public Model getSchema(String URI, String dsID){
+public static Model getSchema(String URI, String dsID){
 	//get namespace to read ontology	
 		String namespace=Tools.getNamespace(URI);
 		System.out.println("Namespace:"+namespace);
 		
 		Model schema=ModelFactory.createDefaultModel();
+		try{
 		schema.read(namespace);
+		}
+		catch(Exception e){
+			IllegalArgumentException ex=new IllegalArgumentException("Something went wrong when reading external ontology");
+			ex.setStackTrace(e.getStackTrace());
+			throw ex;
+		}
+		System.out.println("Namespace to read schema:"+namespace);
 		if(schema.isEmpty()){
-			throw new NullPointerException("The ontology does not exist");
+			throw new NullPointerException("The ontology does not exist...");
 		}
 		
-		Model describedClass=Tools.getDescribeFromModel(URI, schema);
+		Model describedClass=Queries.getDescribeFromModel(URI, schema);
 		if(describedClass.isEmpty()){
-			throw new NullPointerException("The class is not described in ontology");
+			throw new NullPointerException("The class does not exist...");
 		}
 						
-		//Check for additional schema?
+		//Check for additional schema
 		Model schemaM=getSchemaDS(URI,dsID);
+		//Check for KA data
 		Model kaM=getKA(URI,dsID);
-		//Check for KA location
+	
 		
 		//add custom defined schema + what resources for describing class in context of dataset
 		describedClass.add(schemaM).add(kaM);
 		describedClass.write(System.out,"TTL");
+		
 		return describedClass;
 
 		
 }
 
-private Model getSchemaDS(String URI, String dsID){
+private static Model getSchemaDS(String URI, String dsID){
 	//create schemas named graph URI
 	String schemaNG = NGHandler.getSchemaString(dsID);
+	
+	/*
 	return ResultSetParser.parseDescribe(Queries.describeQuery(URI, schemaNG), URI);
+	*/
+	System.out.println(String.format("Contains Model %s %s",schemaNG,Repository.exists(schemaNG)));
+	
+	Model schemaM=Repository.getModel(schemaNG);
+	return Queries.getDescribeFromModel(URI, schemaM);
+	//Consider return whole schema to avoid complex querying or return whole schema and use describe argument
 
 }
 
-private Model getKA(String URI, String dsID){
-	String kaNG=NGHandler.getSchemaString(dsID);
+private static Model getKA(String URI, String dsID){
+	String kaNG=NGHandler.getKAString(dsID);
 	
 	ParameterizedSparqlString query = new ParameterizedSparqlString();
 	query.setCommandText(Queries.SELECT_RESOURCE);
@@ -61,13 +79,13 @@ private Model getKA(String URI, String dsID){
 	query.setIri("graph", kaNG);
 	query.setIri("prop", Prefixes.prefixes.get("void")+"class");   //may change for now, ugly workaround
 	query.setIri("obj", URI);
-	
+	System.out.println(query.asQuery().toString());
 	ResultSet result= Repository.selectQuery(query.asQuery().toString());
 	ArrayList<String> resources=ResultSetParser.getResourceList(result, "res");
 	
 	Model m=ModelFactory.createDefaultModel();
 	for(int i=0; i<resources.size();i++){
-		ResultSetParser.parseDescribe(Queries.describeQuery(resources.get(i), kaNG),resources.get(i));
+		m.add(ResultSetParser.parseDescribe(Queries.describeQuery(resources.get(i), kaNG),resources.get(i)));
 	}
 	
 	
@@ -75,15 +93,15 @@ private Model getKA(String URI, String dsID){
 	
 }
 
+}
 
 
 
 
-
-	
+	/*
 	
 	public static String getSchema(String URI){
-		/*
+		
 		Model schema=ModelFactory.createDefaultModel();
 		
 		Model dataModel=getDataModel(URI);
@@ -97,14 +115,14 @@ private Model getKA(String URI, String dsID){
 			schema.add(o);
 		}
 		String output=JSONLDSerializer.getJSONLD(schema);
-		*/
+		
 		return null;
 		
 	}
+		*/
 		
 		
-		
-	}
+	
 	
 	
 	
