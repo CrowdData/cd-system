@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import com.hp.hpl.jena.datatypes.RDFDatatype;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
+import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -49,6 +50,10 @@ public class RDFormParser {
 		getComments(base,resource,false,"http://xmlns.com/foaf/0.1/name");
 		
 		
+		OntProperty p=base.getOntProperty("someProp");
+		
+		
+		
 		
 	}
 	
@@ -58,6 +63,8 @@ public class RDFormParser {
 	
 	
 	public static JSONObject getRootTemplate(String resource,ArrayList<HashMap<String,RDFNode>> root,ArrayList<HashMap<String,RDFNode>> rootComments){
+		//derived properties to be constructed from who know where. 
+		HashSet<String> properties=new HashSet<String>();
 		JSONObject rootTemplate=new JSONObject();
 		rootTemplate.put("id", resource);		//id as a resource for convention
 		rootTemplate.put("type", "group");		//all roots mustbe group
@@ -74,12 +81,13 @@ public class RDFormParser {
 		}
 		
 		
-		HashSet<String> properties=new HashSet<String>();
+
 		//internal properties 
 		for(HashMap<String,RDFNode> bindings: root){
 			
 		if (bindings.get("restrictionProperty")!=null){
 			properties.add(bindings.get("restrictionProperty").asResource().getURI());
+	
 		}
 			
 		}
@@ -93,7 +101,7 @@ public class RDFormParser {
 		for(String item: properties){
 		  items.put(item);	
 		}
-		rootTemplate.put("items", items);
+		rootTemplate.put("items", resource+items);
 		
 		return rootTemplate;
 	}
