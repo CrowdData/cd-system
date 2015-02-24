@@ -79,7 +79,7 @@ public class ResultSetParser {
 	 * Given result set and list of parameters of the expected resource this method returns
 	 * List of Hashmaps of binded values as RDFNode - The method does not handle anonymous resources
 	 */
-	public static ArrayList<HashMap<String,RDFNode>> getBindings(ResultSet result, ArrayList<String> params){
+	public static ArrayList<HashMap<String,RDFNode>> getBindings(ResultSet result, String[] params){
 		ArrayList<HashMap<String,RDFNode>> resources=new ArrayList<HashMap<String,RDFNode>>();
 		
 		while(result.hasNext()){
