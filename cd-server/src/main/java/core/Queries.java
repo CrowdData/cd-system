@@ -87,7 +87,7 @@ public class Queries {
 			"" + 
 			"";
 	
-	static String ASK_EXISTS="ASK {?resource a rdfs:Resource .}";
+	static String ASK_EXISTS="ASK {?resource ?p ?o .}";
 
 
 

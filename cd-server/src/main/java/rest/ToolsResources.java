@@ -1,23 +1,30 @@
 package rest;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 
+import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 import org.json.JSONObject;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
+import core.ErrorMessage;
 import core.NGHandler;
 import core.Prefixes;
 import core.RDFSerializer;
@@ -76,7 +83,7 @@ public class ToolsResources {
 		if(resourceURI==null){
 		
 			throw new 
-			IllegalArgumentException("Resource URI must be provided");
+			IllegalArgumentException("Resource URI 'resource' must be provided");
 		}
 		
 		try {
@@ -84,8 +91,7 @@ public class ToolsResources {
 		}// throws Malformed exception if wrong
 		catch (MalformedURLException e) {
 
-			return Response.serverError()
-					.entity("resource parameter must be a valid URI").build();
+			throw new IllegalArgumentException("Resource must be valid URI");
 		}
 		
 		String encodedURI=URLDecoder.decode(resourceURI);
