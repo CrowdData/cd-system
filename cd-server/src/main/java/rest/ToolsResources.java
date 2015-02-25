@@ -13,9 +13,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONObject;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
+import core.NGHandler;
 import core.Prefixes;
 import core.RDFSerializer;
 import core.Repository;
@@ -26,10 +29,10 @@ import core.Tools;
 @Path("tools")
 public class ToolsResources {
 
-	@Path("getschema")
+	@Path("get/schema")
 	@GET
 	@Produces({ "application/ld+json" })
-	public Response getSchema(@QueryParam("url") String url,
+	public Response getSchema(@QueryParam("resource") String url,
 			@QueryParam("ds") String dsID) {
 		if (url == null) {
 			throw new NullPointerException("Class URI must be provided");
@@ -53,7 +56,7 @@ public class ToolsResources {
 					.build();
 		}
 		
-		output=SchemaProvider.getSchema(s, dsID);
+		output=SchemaProvider.getResourceSchema(s, dsID);
 		String jsonld=RDFSerializer.getJSONLD(output, "JSON-LD");
 		return Response
 				.ok()
@@ -65,7 +68,7 @@ public class ToolsResources {
 
 	}
 
-	@Path("get")
+	@Path("get/resource")
 	@GET
 	@Produces({"application/ld+json"})
 	public Response getResource(@QueryParam("resource") String resourceURI,@QueryParam("ds") String dsID) {
@@ -104,28 +107,102 @@ public class ToolsResources {
 		
 	}
 	
-		@Path("add")
+		@Path("upload.turtle")
 	    @POST
 	    @Consumes({"text/turtle"})
-		@Produces({"application/ld+json"})
+		@Produces(MediaType.TEXT_PLAIN)
 	    public Response addTurtle(@QueryParam("ds") String ds,String data) {
-		
-		Model m=	RDFSerializer.inputToJSONLD(data, "TTL");
-		return Response.ok().entity(RDFSerializer.getJSONLD(m, "JSON-LD")).build();	
+		addData(ds,data,"TTL");
+		return Response.ok().entity("Done").build();	
 	
 	    	
 	}
-		@Path("add")
+		@Path("upload.ldjson")
 	    @POST
 	    @Consumes({"application/ld+json"})
-		@Produces({"application/ld+json"})
+		@Produces(MediaType.TEXT_PLAIN)
 	    public Response addJson(@QueryParam("ds") String ds,String data) {
-		
-		Model m=	RDFSerializer.inputToJSONLD(data, "TTL");
-		return Response.ok().entity(RDFSerializer.getJSONLD(m, "JSON-LD")).build();	
+		addData(ds,data,"JSON-LD");
+		return Response.ok().entity("Done").build();	
 	
 	    	
 	}
+		@Path("upload.rdfxml")
+	    @POST
+	    @Consumes({"application/rdf+xml"})
+		@Produces(MediaType.TEXT_PLAIN)
+	    public Response addRDFXML(@QueryParam("ds") String ds,String data) {
+		addData(ds,data,"RDF/XML");
+		return Response.ok().entity("Done").build();	
+	
+	    	
+	}
+		@Path("upload.rdfjson")
+	    @POST
+	    @Consumes({"application/rdf+json"})
+		@Produces(MediaType.TEXT_PLAIN)
+	    public Response addJsonRDF(@QueryParam("ds") String ds,String data) {
+		addData(ds,data,"RDF/JSON");
+		return Response.ok().entity("Done").build();	
+	
+	    	
+	}
+		@Path("generate/id")
+	    @GET
+		@Produces(MediaType.APPLICATION_JSON)
+	    public Response generateResource(@QueryParam("ds") String ds) {
+			if(ds==null){
+				throw new NullPointerException("Provide target dataset ID 'ds' for the resource to be generated from");
+			}
+			else{
+			String genRes=	ResourceProvider.generateResourceString(ds);
+			JSONObject o=new JSONObject();
+			o.put("id", genRes);
+			return Response.ok().entity(o.toString()).build();	
+			}
+		
+	
+	
+	    	
+	}
+		@Path("get/namedgraph")
+	    @GET
+		@Produces(MediaType.APPLICATION_JSON)
+	    public Response getNamed(@QueryParam("ds") String ds) {
+			if(ds==null){
+				throw new NullPointerException("Provide target dataset ID 'ds'");
+			}
+			else{
+			String genRes=	NGHandler.getDataString(ds);
+			if(Repository.exists(genRes)){
+			JSONObject o=new JSONObject();
+			o.put("graph", genRes);
+			return Response.ok().entity(o.toString()).build();	
+			}
+			else{
+				throw new NullPointerException("This dataset is empty");
+			}
+			}
+		
+	
+	
+	    	
+	}
+		public void addData(String ds,String data, String format){
+			if(ds==null){
+				throw new IllegalArgumentException("Dataset ID parameter 'ds' must be provided");
+			}
+			Model m=	RDFSerializer.inputToJSONLD(data, format);
+			if(m.isEmpty()){
+				throw new IllegalArgumentException("Could not parse data{"+data+"}");
+			}
+			Repository.addModel(m,NGHandler.getDataString(ds));
+		}
+	
+		
+		
+	
+		
 /*
 	public String getDataSetSchema(String prefix, String resource,
 			String vocabulary) {

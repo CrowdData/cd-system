@@ -1,5 +1,8 @@
 package core;
 
+import java.util.ArrayList;
+
+import com.hp.hpl.jena.datatypes.RDFDatatype;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
@@ -24,7 +27,7 @@ public class ResourceProvider {
 	}
 
 	/*
-	 * This method searches for a resource in the whole model
+	 * This method searches for a resource in the whole dataset
 	 * 
 	 * @param uri - Resource uri
 	 */
@@ -41,12 +44,27 @@ public class ResourceProvider {
 		return ResultSetParser.parseDescribe(result, uri);
 	}
 	
-
-	public static void main(String[] args) {
-		new ResourceProvider().getResource(
-				"http://crowddata.abdn.ac.uk/data/datasets/user/1", "user");
-		new ResourceProvider()
-				.getResource("http://crowddata.abdn.ac.uk/data/datasets/user/1");
+	
+	public static String generateResourceString(String ds){
+		
+	//	String data=NGHandler.getDataString(ds);
+		String resource="nores";
+		boolean exist=true;
+		int i=1;
+		while(exist){			
+		resource=NGHandler.getResourceString(ds, ""+i++);
+			
+			ArrayList<Triplet<String,String,RDFDatatype>> binds=new ArrayList<Triplet<String,String,RDFDatatype>>();
+			binds.add(new Triplet<String,String,RDFDatatype>("resource",resource,null));
+			exist=Queries.ask(Queries.ASK_EXISTS,binds);
+		}
+		return resource;
 	}
+	
+	public static void main(String args[]){
+		ResourceProvider.generateResourceString("datast");
+	}
+	}
+	
 
-}
+

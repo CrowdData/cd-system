@@ -22,7 +22,7 @@ public class ResourceProviderTest {
 		
 		
 	}
-	
+	/*
 	@Test
 	public void test1(){
 		
@@ -41,7 +41,7 @@ public class ResourceProviderTest {
 	Assert.assertTrue(m1.containsResource(ResourceFactory.createResource("http://crowddata.abdn.ac.uk/data/datasets/user/1")));
 	Assert.assertTrue(m1.contains(null, null, "Test User 1"));
 	
-	}
+	}*/
 	@Test
 	public void test3(){
 		

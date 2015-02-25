@@ -23,6 +23,8 @@ public  static String getKAString(String datasetID){
 }
 
 
-
+public static String getResourceString(String datasetID,String resID){
+	return Strings.DEFAULT_URI+datasetID+"/resource/"+resID;
+}
 
 }

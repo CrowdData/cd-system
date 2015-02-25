@@ -80,6 +80,12 @@ public class Repository {
 	return qexec.execSelect();	
 		
 	}
+	public static boolean askQuery(String queryString){
+		Query query=QueryFactory.create(queryString);
+		QueryExecution qexec= QueryExecutionFactory.sparqlService(Strings.FUSEKI_QUERY_URI, query);
+		return qexec.execAsk();	
+			
+		}
 	
 	public static Model getModel(String namedGraph){
 		
@@ -99,16 +105,28 @@ public class Repository {
 		}
 		return sparql.toString();
 	}
-	
+	public static void loadTest(){
+		String schemaDS=NGHandler.getSchemaString("user");
+		String schemaKA=NGHandler.getKAString("user");
+		Model userds=ModelFactory.createDefaultModel();
+		Model userka=ModelFactory.createDefaultModel();
+		userds.read("http://localhost/ontologies/user-schema.ttl");
+		userka.read("http://localhost/ontologies/user-ka.ttl");
+		putModel(userka,schemaKA);
+		putModel(userds,schemaDS);
+		
+		
+		
+	}
 	
 	public static void main (String args[]){
 		//String query="INSERT INTO GRAPH <%s> {<%s> <http://crowddata.abdn.ac.uk/user> .}";
 		//String s=buildRepetativeQuery(query,"http://newgraph.com");
 		///System.out.println(s);
-		
+		Repository.loadTest();
 		//Repository.updateQuery("CLEAR ALL");
-		Repository.addModel(Tools.getModel("http://crowddata.abdn.ac.uk/descriptions/datasetDescription.ttl"), "http://test");
-		System.out.println(Repository.exists("http://test"));
+		//Repository.addModel(Tools.getModel("http://crowddata.abdn.ac.uk/descriptions/datasetDescription.ttl"), "http://test");
+		//System.out.println(Repository.exists("http://test"));
 		
 	}
 

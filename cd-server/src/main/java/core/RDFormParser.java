@@ -18,7 +18,11 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 public class RDFormParser {
 
 	
-	
+	/*
+	 * ------------------------------------------
+	 * Rewritten see NewFormParser.java
+	 * ------------------------------------------
+	 */
 
 	
 	

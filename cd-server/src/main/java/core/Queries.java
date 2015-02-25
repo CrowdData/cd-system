@@ -87,7 +87,7 @@ public class Queries {
 			"" + 
 			"";
 	
-	
+	static String ASK_EXISTS="ASK {?resource a rdfs:Resource .}";
 
 
 
@@ -126,23 +126,32 @@ public static Model getDescribeFromModel(String resourceURI, Model m){
  	return out;
 	
 }
+public static boolean ask(String queryString,ArrayList<Triplet<String,String,RDFDatatype>>params){
+	ParameterizedSparqlString query=new ParameterizedSparqlString();
+ 	query.setCommandText(queryString);
+ 	populateQuery(query,params);
+ 	return Repository.askQuery(query.asQuery().toString());
+}
 
+public static void populateQuery(ParameterizedSparqlString query,ArrayList<Triplet<String,String,RDFDatatype>> params){
+	for(Triplet<String,String,RDFDatatype> triplet: params){
+	 	//datatype exist assume it's literal
+	 		if(triplet.getDatatype()!=null){
+	 		query.setLiteral(triplet.getBind(),triplet.getObject(),triplet.getDatatype());
+	 	}
+	 		//otherwise its a resource or uri
+	 		else{	
+	 		query.setIri(triplet.getBind(), triplet.getObject());	 		
+	 	}
+	 	}
+	 	 
+	 	 query.setNsPrefixes(Prefixes.prefixes);
+}
 public static ResultSet selectQueryModel(Model m,String queryTemplate,ArrayList<Triplet<String,String,RDFDatatype>>params){
 	ParameterizedSparqlString query=new ParameterizedSparqlString();
  	query.setCommandText(queryTemplate);	 	
  	
- 	for(Triplet<String,String,RDFDatatype> triplet: params){
- 	//datatype exist assume it's literal
- 		if(triplet.getDatatype()!=null){
- 		query.setLiteral(triplet.getBind(),triplet.getObject(),triplet.getDatatype());
- 	}
- 		//otherwise its a resource or uri
- 		else{	
- 		query.setIri(triplet.getBind(), triplet.getObject());	 		
- 	}
- 	}
- 	 
- 	 query.setNsPrefixes(Prefixes.prefixes);
+ 	populateQuery(query,params);
  	//if no model query goes to FUSEKI TDB endpoint
  	 if(m==null){
  		return Repository.selectQuery(query.asQuery().toString());

@@ -26,33 +26,97 @@ public class NewFormParser {
 
 	
 	public JSONArray templates=new JSONArray();
-	static boolean first=true;
-	
+	//check for first root call
+	boolean first=true;
+	boolean domains=true;
 	OntModel model;
 	
-	public void initModel(){		
-		loadSchemas("ds");
+	String datasetNS;
+	String rootUri;
+	//prop used when root contains object property with define range or restriction
+	OntClass previousClass=null;
+	
+	public NewFormParser(String uri,String ds,boolean domains){
+		datasetNS=ds;
+		rootUri=uri;
+		this.domains=domains;
+		
+		
+		
+	}
+	public static JSONObject getTemplates(String uri,String ds,boolean domains){
+		
+		JSONObject root=new JSONObject();
+		root.put("root", uri);
+		
+		
+		NewFormParser parser=new NewFormParser(uri,ds,domains);
+		
+		parser.initModel();
+		
+		//recursive
+		parser.convertClass(uri, ds, null, null);	
+		
+		
+		System.out.println(parser.getJSONTemplate().toString(5));
+		JSONArray templateArray=parser.getJSONTemplate();
+		//add automatic sort for each
+		for(int i=0;i<templateArray.length();i++){
+			templateArray.getJSONObject(i).put("automatic", "true");
+		}
+		root.put("templates", templateArray);
+		return root;
+		
 	}
 	
+	public JSONArray getJSONTemplate(){
+		return templates;	
+	}
+	
+	public void initModel(){		
+		String schemaDS=NGHandler.getSchemaString(datasetNS);
+		String schemaKA=NGHandler.getKAString(datasetNS);
+		Model intermediate=ModelFactory.createDefaultModel();
+		if(Repository.exists(schemaDS)){
+			intermediate.add(Repository.getModel(schemaDS));
+			
+		}
+		else{
+			throw new IllegalArgumentException(String.format("Schema for %s dataset doesn't exist",datasetNS));
+		}
+		if(Repository.exists(schemaKA)){
+			intermediate.add(Repository.getModel(schemaKA));
+		}
+		//imports are handled by making inference graph
+		
+		model=ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_RDFS_INF, intermediate);
+		model.writeAll(System.out,"TTL");
+		
+		
+	}
+
 	public void convertClass(String uri,String ds,String id,OntProperty prop){
 		JSONObject template=new JSONObject();
 		OntClass c=null;
+		c=model.getOntClass(uri);
+	    if(c==null){
+	    	throw new NullPointerException("The class doesn't exist");
+	    }
 		if(first){
 			template.put("id", uri);
+			previousClass=c;     //point has cardinality
 			first=false;
 		}
 		else{
 			template.put("id", id);
+			System.out.println("Check card for class"+c.getURI()+" and prop: "+prop.getURI());
+			JSONObject cardinality=getCardinality(previousClass,prop);
+			if(cardinality.has("min")||cardinality.has("max")||cardinality.has("pref")){
+				template.put("cardinality", cardinality);
+			}
 		}
 		
-		
-	    if(model.containsResource(ResourceFactory.createResource(uri))){
-	    	System.out.println("Model contains resource"+uri);
-	    	c=model.getOntClass(uri);
-	    }
-	    else{
-	    	throw new NullPointerException("The class doesn't exist");
-	    }
+	    
 		
 		
 		template.put("type", "group");
@@ -61,7 +125,7 @@ public class NewFormParser {
 		JSONObject constraints=new JSONObject();
 		constraints.put("rdfs:type", uri);
 		template.put("constraints",constraints);
-		template.put("nodetype", "URI");
+		template.put("nodetype", "RESOURCE");
 		
 		JSONArray items=new JSONArray();
 		for(OntProperty p : getProperties(c)){
@@ -74,10 +138,45 @@ public class NewFormParser {
 			
 		
 	}
+	
+	public JSONObject getCardinality(OntClass c, OntProperty p){
+		JSONObject j=new JSONObject();
+		
+		ExtendedIterator<OntClass> superclasses=c.listSuperClasses();
+		while(superclasses.hasNext()){
+			OntClass superclass=superclasses.next();
+			if(superclass.isRestriction()){
+				if(superclass.asRestriction().getOnProperty().equals(p)){
+					if(superclass.asRestriction().isCardinalityRestriction()){
+						int card=superclass.asRestriction().asCardinalityRestriction().getCardinality();			
+						j.put("min", card);
+						j.put("max", card);
+						j.put("pref", card);
+					}
+					if(superclass.asRestriction().isMaxCardinalityRestriction()){
+						int max=superclass.asRestriction().asMaxCardinalityRestriction().getMaxCardinality();
+						j.put("max", max);
+					}
+					if(superclass.asRestriction().isMinCardinalityRestriction()){
+						int min=superclass.asRestriction().asMinCardinalityRestriction().getMinCardinality();
+						j.put("min", min);
+					}
+			}
+			}
+		}
+		return j;
+				
+				
+						
+			
+				
+	}
+	
 	public String createID(OntProperty p,OntClass c, String ds){
 		
 		return p.getLabel(null)+"_"+c.getLabel(null)+"_"+ds;
 	}
+	
 	public HashSet<OntProperty> getProperties(OntClass c){
 		HashSet<OntProperty> properties=new HashSet<OntProperty>();
 		ExtendedIterator<OntClass> superclasses=c.listSuperClasses();
@@ -91,7 +190,8 @@ public class NewFormParser {
 			
 			
 		}
-		
+		if(domains){
+			
 		ExtendedIterator<OntProperty> allproperties=model.listOntProperties();
 		while(allproperties.hasNext()){
 			OntProperty prop=allproperties.next();
@@ -102,13 +202,14 @@ public class NewFormParser {
 			
 			
 		}
+		}
 
 		return properties;
 	}
 	
 	
 /*
- * If there is no range or restriction imposed on the property treated as literal!	
+ * If there is no range or restriction imposed on the property treated as literal(even when it's object property)!	
  */
 public void convertProperty(OntProperty p,OntClass c, String ds){
 	JSONObject template=new JSONObject();
@@ -117,7 +218,10 @@ public void convertProperty(OntProperty p,OntClass c, String ds){
 	Description propDesc=getPropertyDescription(p,c,ds);
 	template.put("label", propDesc.label);
 	template.put("description", propDesc.description);
-	
+	JSONObject cardinality=getCardinality(c,p);
+	if(cardinality.has("max")||cardinality.has("min")){
+		template.put("cardinality", cardinality);
+	}
 	
 	Resource range=getRange(c,p);
 	if(range==null){
@@ -132,9 +236,16 @@ public void convertProperty(OntProperty p,OntClass c, String ds){
 		
 		
 	}
-	// blacklist to prevent infinite loop
+	// blacklist to generic types
 	else if(range!=null && p.isObjectProperty()&&!Prefixes.isBlacklisted(range.getURI())){
-		
+		//If range of the class is the class itself the parser goes to infinite loop
+		//If so create TEXT item with URI 
+		if(range.getURI().equals(c.getURI())){
+			template.put("type", "text");
+			template.put("nodetype", "URI");
+			templates.put(template);
+			return;
+		}
 		convertClass(range.getURI(),ds,createID(p,c,ds),p);
 		return;
 		
@@ -168,7 +279,7 @@ public Resource getRange(OntClass c, OntProperty p){
 		
 		
 	}
-	//get associated range if not overriden
+	//get associated range if no all valuesfrom restriction found
 	return p.getRange();
 	
 }
@@ -242,10 +353,8 @@ return ResultSetParser.getBindings(r, Queries.TEMPLATE_SELECT_COMMENTS);
 }
 public static void main (String[] args){
 	
-	NewFormParser parser=new NewFormParser();
-	parser.initModel();
-	parser.convertClass("http://xmlns.com/foaf/0.1/Agent", "someds","root");
-	System.out.println(parser.templates.toString(5));
+	NewFormParser.getTemplates("http://xmlns.com/foaf/0.1/Agent", "user",true);
+	
 	
 }
 	

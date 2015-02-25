@@ -12,11 +12,11 @@ public class SchemaProvider {
 	
 public static void main(String args[]){
 	
-	new SchemaProvider().getSchema("http://xmlns.com/foaf/0.1/Agent", "user");
+	new SchemaProvider().getResourceSchema("http://xmlns.com/foaf/0.1/Person", "user");
 	
 }
 
-public static Model getSchema(String URI, String dsID){
+public static Model getResourceSchema(String URI, String dsID){
 	//get namespace to read ontology	
 		String namespace=Tools.getNamespace(URI);
 		System.out.println("Namespace:"+namespace);
