@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import org.glassfish.jersey.server.JSONP;
 import org.json.JSONObject;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -155,6 +156,7 @@ public class ToolsResources {
 	}
 		@Path("generate/id")
 	    @GET
+	  //  @JSONP (queryParam="callback")
 		@Produces(MediaType.APPLICATION_JSON)
 	    public Response generateResource(@QueryParam("ds") String ds) {
 			if(ds==null){

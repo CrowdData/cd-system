@@ -5,6 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.jena.riot.RiotException;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
@@ -34,6 +36,7 @@ public class RDFSerializer {
 		Model m=ModelFactory.createDefaultModel();
 		m.read(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)),null,type);
 		m.write(System.out,"JSON-LD");
+		
 		return m;
 	}
 	

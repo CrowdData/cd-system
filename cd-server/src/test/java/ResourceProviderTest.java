@@ -15,7 +15,7 @@ public class ResourceProviderTest {
 	public void testResourceProvider(){
 
 	Model m1=	new ResourceProvider().getResource(
-			"http://crowddata.abdn.ac.uk/data/datasets/user/nonexistinguser");
+			"http://crowddata.abdn.ac.uk/data/datasets/test/nonexistinguser");
 	Assert.assertFalse(m1.containsResource(ResourceFactory.createResource("http://crowddata.abdn.ac.uk/data/datasets/user/1")));
 	Assert.assertFalse(m1.contains(null, null, "Test User 1"));
 	
