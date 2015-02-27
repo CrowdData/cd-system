@@ -1,0 +1,16 @@
+
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix form-requirements: <http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix user-ka: <http://crowddata.abdn.ac.uk/ontologies/users/ka/user-ka#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<http://crowddata.abdn.ac.uk/datasets/test/resource/1> a rdfs:Resource;
+rdfs:label "test1"; 
+.
+
+

@@ -97,14 +97,7 @@ public class Repository {
 
 	
 	
-	public static String buildRepetativeQuery(String sparqlQuery,
-			String... params) {
-		StringBuilder sparql = new StringBuilder();
-		for (String param : params) {
-			sparql.append(String.format(sparqlQuery, param));
-		}
-		return sparql.toString();
-	}
+
 	public static void loadTest(){
 		String schemaDS=NGHandler.getSchemaString("user");
 		String schemaKA=NGHandler.getKAString("user");

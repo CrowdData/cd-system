@@ -26,6 +26,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 import core.ErrorMessage;
+import core.Message;
 import core.NGHandler;
 import core.Prefixes;
 import core.RDFSerializer;
@@ -36,7 +37,11 @@ import core.Tools;
 
 @Path("tools")
 public class ToolsResources {
+int ACCEPTED=Response.Status.ACCEPTED.getStatusCode();
+int CREATED=Response.Status.CREATED.getStatusCode();
+int OK=Response.Status.OK.getStatusCode();
 
+	
 	@Path("get/schema")
 	@GET
 	@Produces({ "application/ld+json" })
@@ -117,41 +122,40 @@ public class ToolsResources {
 		@Path("upload.turtle")
 	    @POST
 	    @Consumes({"text/turtle"})
-		@Produces(MediaType.TEXT_PLAIN)
+		@Produces(MediaType.APPLICATION_JSON)
 	    public Response addTurtle(@QueryParam("ds") String ds,String data) {
 		addData(ds,data,"TTL");
-		return Response.ok().entity("Done").build();	
+		return Response.ok().entity(new Message(ACCEPTED,"Data added to"+NGHandler.getDataString(ds))).build();	
 	
 	    	
 	}
 		@Path("upload.ldjson")
 	    @POST
 	    @Consumes({"application/ld+json"})
-		@Produces(MediaType.TEXT_PLAIN)
+		@Produces(MediaType.APPLICATION_JSON)
 	    public Response addJson(@QueryParam("ds") String ds,String data) {
 		addData(ds,data,"JSON-LD");
-		return Response.ok().entity("Done").build();	
+		return Response.ok().entity(new Message(ACCEPTED,"Data added to"+NGHandler.getDataString(ds))).build();	
 	
 	    	
 	}
 		@Path("upload.rdfxml")
 	    @POST
 	    @Consumes({"application/rdf+xml"})
-		@Produces(MediaType.TEXT_PLAIN)
+		@Produces(MediaType.APPLICATION_JSON)
 	    public Response addRDFXML(@QueryParam("ds") String ds,String data) {
 		addData(ds,data,"RDF/XML");
-		return Response.ok().entity("Done").build();	
+		return Response.ok().entity(new Message(ACCEPTED,"Data added to"+NGHandler.getDataString(ds))).build();	
 	
 	    	
 	}
 		@Path("upload.rdfjson")
 	    @POST
 	    @Consumes({"application/rdf+json"})
-		@Produces(MediaType.TEXT_PLAIN)
+		@Produces(MediaType.APPLICATION_JSON)
 	    public Response addJsonRDF(@QueryParam("ds") String ds,String data) {
 		addData(ds,data,"RDF/JSON");
-		return Response.ok().entity("Done").build();	
-	
+		return Response.ok().entity(new Message(ACCEPTED,"Data added to"+NGHandler.getDataString(ds))).build();	
 	    	
 	}
 		@Path("generate/id")
@@ -196,7 +200,7 @@ public class ToolsResources {
 	
 	    	
 	}
-		public void addData(String ds,String data, String format){
+		public static void addData(String ds,String data, String format){
 			if(ds==null){
 				throw new IllegalArgumentException("Dataset ID parameter 'ds' must be provided");
 			}
