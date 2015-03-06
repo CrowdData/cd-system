@@ -10,21 +10,24 @@ import org.json.JSONObject;
 import pojo.Description;
 
 import com.hp.hpl.jena.datatypes.RDFDatatype;
+import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.ontology.OntResource;
+import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.RDFList;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import com.hp.hpl.jena.vocabulary.XSD;
 
-public class NewFormParser {
+public class CopyOfNewFormParser {
 
 	
 	public JSONArray templates=new JSONArray();
@@ -38,7 +41,7 @@ public class NewFormParser {
 	//prop used when root contains object property with define range or restriction
 	OntClass previousClass=null;
 	
-	public NewFormParser(String uri,String ds,boolean domains){
+	public CopyOfNewFormParser(String uri,String ds,boolean domains){
 		datasetNS=ds;
 		rootUri=uri;
 		this.domains=domains;
@@ -52,7 +55,7 @@ public class NewFormParser {
 		root.put("root", uri);
 		
 		
-		NewFormParser parser=new NewFormParser(uri,ds,domains);
+		CopyOfNewFormParser parser=new CopyOfNewFormParser(uri,ds,domains);
 		
 		parser.initModel();
 		
@@ -96,6 +99,9 @@ public class NewFormParser {
 		
 		
 	}
+	public boolean isSame(JSONObject o ){
+		return o.getString("value").equals(o.getString("label"));
+	}
 
 	public void convertClass(String uri,String ds,String id,OntProperty prop){
 		JSONObject template=new JSONObject();
@@ -116,19 +122,31 @@ public class NewFormParser {
 			if(cardinality.has("min")||cardinality.has("max")||cardinality.has("pref")){
 				template.put("cardinality", cardinality);
 			}
+			template.put("property", prop.getURI());
 		}
 		
 	    
 		
 		
 		template.put("type", "group");
+		template.put("nodetype", "RESOURCE");
+		JSONArray choices=getOneOf(c);
+		if(choices.length()!=0){
+			template.put("type", "choice");
+			template.put("choices", choices);
+			if(isSame(choices.getJSONObject(0))){
+				template.put("nodetype","ONLY_LITERAL");
+			}
+		}
+		
+		
 		template.put("label", getClassDescription(c,ds).label);
 		template.put("description", getClassDescription(c,ds).description);
 		JSONObject constraints=new JSONObject();
 		constraints.put("rdfs:type", uri);
 		template.put("constraints",constraints);
-		template.put("nodetype", "RESOURCE");
 		
+		if(template.getString("type").equals("group")){
 		JSONArray items=new JSONArray();
 		for(OntProperty p : getProperties(c)){
 			items.put(createID(p,c,ds));
@@ -136,6 +154,7 @@ public class NewFormParser {
 			
 		}
 		template.put("items", items);
+		}
 		templates.put(template);
 			
 		
@@ -224,6 +243,14 @@ public void convertProperty(OntProperty p,OntClass c, String ds){
 	if(cardinality.has("max")||cardinality.has("min")){
 		template.put("cardinality", cardinality);
 	}
+	if(isChoice(p.getURI(), c.getURI())){
+		System.out.println("Property is choice.");
+		JSONArray array=getChoices(p.getURI(), c.getURI());
+		template.put("choices", array);
+		
+		
+		
+	}
 	
 	Resource range=getRange(c,p);
 	if(range==null){
@@ -265,6 +292,39 @@ public void convertProperty(OntProperty p,OntClass c, String ds){
 
 public boolean isDatatypeResource(Resource range){
 	return range.getURI().contains(XSD.getURI());
+}
+public JSONArray getOneOf(OntClass c){
+	JSONArray a=new JSONArray();
+	ExtendedIterator<OntClass> superclasses=c.listEquivalentClasses();
+	while(superclasses.hasNext()){
+		OntClass superclass=superclasses.next();
+		if(superclass.isEnumeratedClass()){
+			RDFList l=superclass.asEnumeratedClass().getOneOf();
+			for(int i=0;i<l.size();i++){
+				JSONObject j=new JSONObject();
+				if(l.get(i).isURIResource()){
+					
+					j.put("value", l.get(i).asResource().getURI());
+				String label=	model.getOntResource(l.get(i).asResource().getURI()).getLabel(null);
+					System.out.println("LABEL is:"+label);
+					j.put("label", label);
+				}
+				else if(l.get(i).isLiteral()){
+					j.put("value", l.get(i).asLiteral().getString());
+					j.put("label", l.get(i).asLiteral().getString());
+				}
+				else{
+					throw new NullPointerException("This shouuld not happen GET one off");
+				}
+				
+				a.put(j);
+				
+			}
+		}
+	
+	
+}
+	return a;
 }
 
 public Resource getRange(OntClass c, OntProperty p){
@@ -353,9 +413,78 @@ return ResultSetParser.getBindings(r, Queries.TEMPLATE_SELECT_COMMENTS);
 	
 	
 }
+public boolean isChoice(String property, String resource){
+	ArrayList<Parameter> param=new ArrayList<Parameter>();
+	param.add(new Parameter("classType","http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#PropertyDescription",null));
+	param.add(new Parameter("property",property,null));
+	param.add(new Parameter("resource",resource,null));
+	param.add(new Parameter("choice","true",XSDDatatype.XSDboolean));
+	return Queries.ask(model,Queries.TEMPLATE_ASK_CHOICE,param);
+	//check query , check ontology boolean have no quotes. 
+}
+
+public JSONArray getChoices(String property, String resource){
+	ArrayList<Parameter> param=new ArrayList<Parameter>();
+	param.add(new Parameter("property",property,null));
+	param.add(new Parameter("resource",resource,null));
+	ResultSet r= Queries.selectQueryModel(model,Queries.TEMPLATE_SELECT_QUERY_ENDPOINT,param);
+	if(r.hasNext()){		
+	QuerySolution sol=r.next();
+	String query=sol.get("query").asLiteral().getString();
+	String endpoint=sol.get("endpoint").asLiteral().getString();
+	
+	return getChoiceArray(query,endpoint);	
+		
+	}
+	throw new NullPointerException ("Sparql Query and Endpoint Not Found for property"+property+" resource"+resource);
+}
+
+
+private JSONArray getChoiceArray(String query, String endpoint){
+	
+	JSONArray choices=new JSONArray();
+	
+	ResultSet r=Repository.selectQuery(query, endpoint);
+	if(!r.hasNext()){
+		throw new NullPointerException (String.format("No choice binding find in %s for query %s",endpoint,query));
+	}
+	
+	while(r.hasNext()){
+		QuerySolution s=r.next();
+		JSONObject obj=new JSONObject();
+		RDFNode value=s.getResource("value");
+		RDFNode label=s.getResource("label");
+		if(value==null || label==null){
+			throw new NullPointerException("Label or Value is empty check you sparql query and ensure it contains label value bindings.");
+		}
+		if(value.isResource()){
+			obj.put("value", value.asResource().getURI());
+		}
+		if(value.isLiteral()){
+			obj.put("value",value.asLiteral().getLexicalForm());
+			System.out.println("Choice Lexical Form of value"+obj.getString("value"));
+		}
+		if(label.isResource()){
+			obj.put("label", value.asResource().getURI());
+		}
+		if(label.isLiteral()){
+			obj.put("label",value.asLiteral().getLexicalForm());
+			System.out.println("Choice Lexical Form of value"+obj.getString("value"));
+		}
+		
+		choices.put(obj);
+	}
+	return choices;
+	
+	
+	
+	
+}
+
+
 public static void main (String[] args){
 	
-	System.out.println(NewFormParser.getTemplates("http://crowddata.abdn.ac.uk/datasets/testdemand/schema/Demand", "testdemand",true).toString(5));
+	System.out.println(CopyOfNewFormParser.getTemplates("http://crowddata.abdn.ac.uk/datasets/testdemand/schema/Demand", "testdemand",true).toString(5));
 	
 	
 }

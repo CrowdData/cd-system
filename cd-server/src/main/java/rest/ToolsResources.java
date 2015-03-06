@@ -22,11 +22,12 @@ import javax.ws.rs.ext.Provider;
 import org.glassfish.jersey.server.JSONP;
 import org.json.JSONObject;
 
+import pojo.ErrorMessage;
+import pojo.Message;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
-import core.ErrorMessage;
-import core.Message;
 import core.NGHandler;
 import core.Prefixes;
 import core.RDFSerializer;
@@ -155,7 +156,8 @@ int OK=Response.Status.OK.getStatusCode();
 		@Produces(MediaType.APPLICATION_JSON)
 	    public Response addJsonRDF(@QueryParam("ds") String ds,String data) {
 		addData(ds,data,"RDF/JSON");
-		return Response.ok().entity(new Message(ACCEPTED,"Data added to"+NGHandler.getDataString(ds))).build();	
+		Message m=new Message(ACCEPTED,"Data added to"+NGHandler.getDataString(ds));
+		return Response.ok().entity(m).build();	
 	    	
 	}
 		@Path("generate/id")

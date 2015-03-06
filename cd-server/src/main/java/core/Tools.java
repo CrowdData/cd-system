@@ -2,8 +2,11 @@ package core;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import org.apache.commons.codec.binary.Base64;
 
 
 import com.hp.hpl.jena.ontology.OntModel;
@@ -20,12 +23,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
 
 public class Tools {
 
-	
-	public static String generateID(){
-		
-		return UUID.randomUUID().toString();
-		
-	}
+
 	public static Model getModel(String url){
 		Model m=ModelFactory.createDefaultModel();
 		m.read(url);
@@ -34,7 +32,14 @@ public class Tools {
 	}
 	
 	
-	
+	public static String generateID(){
+		UUID uuid=UUID.randomUUID();
+	      ByteBuffer buffer = ByteBuffer.wrap(new byte[16]);
+          buffer.putLong(uuid.getMostSignificantBits());
+          buffer.putLong(uuid.getLeastSignificantBits());
+          return Base64.encodeBase64URLSafeString(buffer.array());
+	}
+
 	
 	public static String getNamespace(String uri) {	 
 		 if (uri.contains("#")) {
@@ -123,6 +128,14 @@ public class Tools {
 		
 		
 		*/
-	}
 	
+public static void main(String[]args){
+	
+	System.out.println(Tools.generateID());
+	
+	
+	
+}
+	
+}
 	

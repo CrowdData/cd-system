@@ -1,4 +1,4 @@
-package core;
+package pojo;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -9,6 +9,7 @@ public class Message {
 	String message;
 	
 public Message(){}
+
 public Message(int status, String message){
 	this.message =message;
 	this.status=status;

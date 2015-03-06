@@ -2,6 +2,9 @@ package core;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.hp.hpl.jena.datatypes.RDFDatatype;
 import com.hp.hpl.jena.query.ParameterizedSparqlString;
 import com.hp.hpl.jena.query.QueryExecution;
@@ -39,6 +42,29 @@ public class Queries {
 			"}\r\n" + 
 			"\r\n" + 
 			"";
+	
+	static String TEMPLATE_ASK_CHOICE="ASK \r\n" + 
+			"WHERE{\r\n" + 
+			"?b0 a ?classType .\r\n" + 
+			"?b0 void:class ?resource .\r\n" + 
+			"?b0 void:property ?property .\r\n" + 
+			"?b0 cd:isChoice ?choice .\r\n" + 
+			"OPTIONAL{?b0 cd:sparqlQuery ?query .} \r\n" + 
+			"OPTIONAL{?b0 cd:sparqlEndpoint ?endpoint .} \r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"";
+	
+	static String TEMPLATE_SELECT_QUERY_ENDPOINT="SELECT ?query ?endpoint \r\n" + 
+			"WHERE{\r\n" + 
+			"?b0 void:class ?resource .\r\n" + 
+			"?b0 void:property ?property .\r\n" + 
+			"?b0 cd:sparqlQuery ?query .} \r\n" + 
+			"?b0 cd:sparqlEndpoint ?endpoint .} \r\n" + 
+			"}\r\n" + 
+			"\r\n" + 
+			"";
+	
 	
 	
 	static String SELECT_EVERYTHING="SELECT * \r\n" + 
@@ -88,6 +114,16 @@ public class Queries {
 			"";
 	
 	static String ASK_EXISTS="ASK {?resource ?p ?o .}";
+	
+	
+	static String getBuses="PREFIX dc: <http://purl.org/dc/elements/1.1/> "+
+            "PREFIX naptan: <http://transport.data.gov.uk/def/naptan/> "+
+			"SELECT ?label ?value " + 
+			"               WHERE " + 
+			"               { " + 
+			"               ?value a naptan:BusStop ; " + 
+			"               dc:identifier ?label; " + 
+			"               }";
 
 
 
@@ -98,6 +134,7 @@ public class Queries {
  */
 public static ResultSet describeQuery(String resource, String DS){
 	ParameterizedSparqlString query = new ParameterizedSparqlString();
+	
 	query.setCommandText(Queries.SELECT_DESCRIBE_QUERY);
 
 		query.setIri("resource", resource);				//tied to SELECT DESCRIBE QUERY
@@ -110,6 +147,7 @@ public static ResultSet describeQuery(String resource, String DS){
 	
 }
 
+
 /*
  * Original describe query, describing resource from the Model 
  */
@@ -121,33 +159,39 @@ public static Model getDescribeFromModel(String resourceURI, Model m){
  	 query.setParam("resource",res);
  	 
  //	 query.setNsPrefixes(Prefixes.prefixes);
+ 	 
  	QueryExecution qExec=QueryExecutionFactory.create(query.asQuery(),m);	
  	qExec.execDescribe(out);
  	return out;
 	
 }
-public static boolean ask(String queryString,ArrayList<Triplet<String,String,RDFDatatype>>params){
+public static boolean ask(Model m,String queryString,ArrayList<Parameter>params){
 	ParameterizedSparqlString query=new ParameterizedSparqlString();
  	query.setCommandText(queryString);
  	populateQuery(query,params);
+ 	if(m!=null){
+ 		QueryExecution qExec=QueryExecutionFactory.create(query.asQuery(),m);	
+ 	 	return qExec.execAsk();
+ 	}
+ 	
  	return Repository.askQuery(query.asQuery().toString());
 }
 
-public static void populateQuery(ParameterizedSparqlString query,ArrayList<Triplet<String,String,RDFDatatype>> params){
-	for(Triplet<String,String,RDFDatatype> triplet: params){
+public static void populateQuery(ParameterizedSparqlString query,ArrayList<Parameter> params){
+	for(Parameter triplet: params){
 	 	//datatype exist assume it's literal
-	 		if(triplet.getDatatype()!=null){
-	 		query.setLiteral(triplet.getBind(),triplet.getObject(),triplet.getDatatype());
+	 		if(triplet.type!=null){
+	 		query.setLiteral(triplet.bind,triplet.value,triplet.type);
 	 	}
 	 		//otherwise its a resource or uri
 	 		else{	
-	 		query.setIri(triplet.getBind(), triplet.getObject());	 		
+	 		query.setIri(triplet.bind, triplet.value);	 		
 	 	}
 	 	}
 	 	 
 	 	 query.setNsPrefixes(Prefixes.prefixes);
 }
-public static ResultSet selectQueryModel(Model m,String queryTemplate,ArrayList<Triplet<String,String,RDFDatatype>>params){
+public static ResultSet selectQueryModel(Model m,String queryTemplate,ArrayList<Parameter>params){
 	ParameterizedSparqlString query=new ParameterizedSparqlString();
  	query.setCommandText(queryTemplate);	 	
  	
@@ -163,6 +207,7 @@ public static ResultSet selectQueryModel(Model m,String queryTemplate,ArrayList<
  	 }
 
 }
+
 
 /*
 public static Model getResourceDescription(String resourceURI,Model m){

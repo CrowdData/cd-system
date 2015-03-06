@@ -11,7 +11,8 @@ import javax.ws.rs.ext.Provider;
 
 import org.apache.log4j.Logger;
 
-import core.ErrorMessage;
+import pojo.ErrorMessage;
+
 
 @Provider 
 public class ThrowableExceptionMapper implements ExceptionMapper<Throwable> { 

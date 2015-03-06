@@ -50,13 +50,12 @@ public class ResourceProvider {
 	//	String data=NGHandler.getDataString(ds);
 		String resource="nores";
 		boolean exist=true;
-		int i=1;
+		
 		while(exist){			
-		resource=NGHandler.getResourceString(ds, ""+i++);
-			
-			ArrayList<Triplet<String,String,RDFDatatype>> binds=new ArrayList<Triplet<String,String,RDFDatatype>>();
-			binds.add(new Triplet<String,String,RDFDatatype>("resource",resource,null));
-			exist=Queries.ask(Queries.ASK_EXISTS,binds);
+		resource=NGHandler.getResourceString(ds, Tools.generateID());			
+			ArrayList<Parameter> binds=new ArrayList<Parameter>();
+			binds.add(new Parameter("resource",resource,null));
+			exist=Queries.ask(null,Queries.ASK_EXISTS,binds);
 		}
 		return resource;
 	}

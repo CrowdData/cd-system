@@ -110,8 +110,8 @@ public class RDFormParser {
 		return rootTemplate;
 	}
 	public static ArrayList<HashMap<String,RDFNode>> getRoot (String root,Model base){
-		ArrayList<Triplet<String,String,RDFDatatype>> bindings=new ArrayList<Triplet<String,String,RDFDatatype>>();
-		bindings.add(new Triplet<String,String,RDFDatatype>("resource",root,null));
+		ArrayList<Parameter> bindings=new ArrayList<Parameter>();
+		bindings.add(new Parameter("resource",root,null));
 		
 		ResultSet r=Queries.selectQueryModel(base, Queries.TEMPLATE_SELECT_RESTRICTIONS, bindings);
 		ArrayList<HashMap<String,RDFNode>> rootResults=ResultSetParser.getBindings(r, Queries.TEMPLATE_SELECT_RESTRICTIONS_BINDINGS);
@@ -125,16 +125,16 @@ public class RDFormParser {
 	 * Should work for both, property and class descriptions
 	 */
 	public static ArrayList<HashMap<String,RDFNode>> getComments(Model m,String resource,boolean parent,String property){
-	ArrayList<Triplet<String,String,RDFDatatype>> bindings=new ArrayList<Triplet<String,String,RDFDatatype>>();
+	ArrayList<Parameter> bindings=new ArrayList<Parameter>();
 	ResultSet r;
-	bindings.add(new Triplet<String,String,RDFDatatype>("resource",resource,null));
+	bindings.add(new Parameter("resource",resource,null));
 	if(!parent){
-	bindings.add(new Triplet<String,String,RDFDatatype>("classType","http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#PropertyDescription",null));
-	bindings.add(new Triplet<String,String,RDFDatatype>("property",property,null));
+	bindings.add(new Parameter("classType","http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#PropertyDescription",null));
+	bindings.add(new Parameter("property",property,null));
 	 r=Queries.selectQueryModel(m, Queries.TEMPLATE_SELECT_LABEL_COMMENT_PROPERTY, bindings);
 	}
 	else{
-		bindings.add(new Triplet<String,String,RDFDatatype>("classType","http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#ClassDescription",null));	
+		bindings.add(new Parameter("classType","http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#ClassDescription",null));	
 		 r=Queries.selectQueryModel(m, Queries.TEMPLATE_SELECT_LABEL_COMMENT, bindings);
 	}
 	

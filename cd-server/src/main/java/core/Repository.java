@@ -93,6 +93,11 @@ public class Repository {
 		
 		
 	}
+	public static ResultSet selectQuery(String queryString,String service){
+		Query query=QueryFactory.create(queryString);
+		QueryExecution qexec= QueryExecutionFactory.sparqlService(service, query);
+		return qexec.execSelect();
+	}
 	
 
 	
