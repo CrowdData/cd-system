@@ -17,10 +17,12 @@ static{
 		prefixes.put("void", "http://rdfs.org/ns/void#");
 		prefixes.put("dcterms", "http://purl.org/dc/terms/");
 		prefixes.put("cd", "http://crowddata.abdn.ac.uk/ontologies/cd/0.1/");
+		prefixes.put("afn", "http://jena.hpl.hp.com/ARQ/function#");
 		//blacklist for class description retrieval
 		blacklist.add("http://www.w3.org/2002/07/owl#");
 		blacklist.add("http://www.w3.org/2000/01/rdf-schema#");
 		blacklist.add("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		
 }
 
 

@@ -38,7 +38,7 @@ public class CopyOfNewFormParser {
 	
 	String datasetNS;
 	String rootUri;
-	//prop used when root contains object property with define range or restriction
+	//prop used when root contains object property with defined range or restriction
 	OntClass previousClass=null;
 	
 	public CopyOfNewFormParser(String uri,String ds,boolean domains){

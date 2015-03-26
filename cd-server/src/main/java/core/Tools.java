@@ -50,7 +50,14 @@ public class Tools {
 		 }
 		 return uri;
 	}
-	
+	public static ArrayList<Parameter> getParameters(Parameter... params){
+		ArrayList<Parameter> paraArray=new ArrayList<Parameter>();
+		for(Parameter p: params){
+			paraArray.add(p);
+		}
+		
+		return paraArray;
+	}
 	
 	/*
 	public static String getDataSetSchema(String prefix,String resource, String vocabulary){

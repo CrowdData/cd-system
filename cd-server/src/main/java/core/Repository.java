@@ -86,6 +86,12 @@ public class Repository {
 		return qexec.execAsk();	
 			
 		}
+	public static Model describeQuery(String queryString){
+		Query query=QueryFactory.create(queryString);
+		QueryExecution qexec= QueryExecutionFactory.sparqlService(Strings.FUSEKI_QUERY_URI, query);
+		return qexec.execDescribe();
+			
+		}
 	
 	public static Model getModel(String namedGraph){
 		

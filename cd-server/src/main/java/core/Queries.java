@@ -16,6 +16,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.update.UpdateAction;
 
 public class Queries {
 	//to get bindings for root element of parsing
@@ -149,9 +150,9 @@ public static ResultSet describeQuery(String resource, String DS){
 
 
 /*
- * Original describe query, describing resource from the Model 
+ * Original describe query, describing resource if model null query fuseki instance
  */
-public static Model getDescribeFromModel(String resourceURI, Model m){
+public static Model getDescribe(String resourceURI, Model m){
 	Resource res=ResourceFactory.createResource(resourceURI);
 	Model out=ModelFactory.createDefaultModel();
 	ParameterizedSparqlString query=new ParameterizedSparqlString();
@@ -159,9 +160,13 @@ public static Model getDescribeFromModel(String resourceURI, Model m){
  	 query.setParam("resource",res);
  	 
  //	 query.setNsPrefixes(Prefixes.prefixes);
- 	 
+ 	 if(m!=null){
  	QueryExecution qExec=QueryExecutionFactory.create(query.asQuery(),m);	
  	qExec.execDescribe(out);
+ 	 }
+ 	 else{
+ 		 out=Repository.describeQuery(query.asQuery().toString());
+ 	 }
  	return out;
 	
 }
@@ -178,6 +183,7 @@ public static boolean ask(Model m,String queryString,ArrayList<Parameter>params)
 }
 
 public static void populateQuery(ParameterizedSparqlString query,ArrayList<Parameter> params){
+	if(params!=null){
 	for(Parameter triplet: params){
 	 	//datatype exist assume it's literal
 	 		if(triplet.type!=null){
@@ -188,9 +194,11 @@ public static void populateQuery(ParameterizedSparqlString query,ArrayList<Param
 	 		query.setIri(triplet.bind, triplet.value);	 		
 	 	}
 	 	}
+	}
 	 	 
 	 	 query.setNsPrefixes(Prefixes.prefixes);
 }
+
 public static ResultSet selectQueryModel(Model m,String queryTemplate,ArrayList<Parameter>params){
 	ParameterizedSparqlString query=new ParameterizedSparqlString();
  	query.setCommandText(queryTemplate);	 	
@@ -206,6 +214,15 @@ public static ResultSet selectQueryModel(Model m,String queryTemplate,ArrayList<
  	return qExec.execSelect();
  	 }
 
+}
+public static void updateModel(Model m,String queryTemplate,ArrayList<Parameter>params){
+	ParameterizedSparqlString query=new ParameterizedSparqlString();
+ 	query.setCommandText(queryTemplate);	 
+ 	populateQuery(query,params);
+ 	UpdateAction.execute(query.asUpdate(), m);
+ 	
+	
+	
 }
 
 

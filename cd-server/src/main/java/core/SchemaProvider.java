@@ -35,7 +35,7 @@ public static Model getResourceSchema(String URI, String dsID){
 			throw new NullPointerException("The ontology does not exist...");
 		}
 		
-		Model describedClass=Queries.getDescribeFromModel(URI, schema);
+		Model describedClass=Queries.getDescribe(URI, schema);
 		if(describedClass.isEmpty()){
 			throw new NullPointerException("The class does not exist...");
 		}
@@ -65,7 +65,7 @@ private static Model getSchemaDS(String URI, String dsID){
 	System.out.println(String.format("Contains Model %s %s",schemaNG,Repository.exists(schemaNG)));
 	
 	Model schemaM=Repository.getModel(schemaNG);
-	return Queries.getDescribeFromModel(URI, schemaM);
+	return Queries.getDescribe(URI, schemaM);
 	//Consider return whole schema to avoid complex querying or return whole schema and use describe argument
 
 }
