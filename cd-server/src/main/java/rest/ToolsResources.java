@@ -1,15 +1,11 @@
 package rest;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.TimeZone;
 
-import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -17,19 +13,15 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
 
 import org.glassfish.jersey.server.JSONP;
 import org.json.JSONObject;
 
-import pojo.ErrorMessage;
+
 import pojo.Message;
 
-import com.hp.hpl.jena.datatypes.RDFDatatype;
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -80,7 +72,7 @@ int OK=Response.Status.OK.getStatusCode();
 		}
 		
 		output=SchemaProvider.getResourceSchema(s, dsID);
-		String jsonld=RDFSerializer.getJSONLD(output, "JSON-LD");
+		String jsonld=RDFSerializer.getRDFStringFromModel(output, "JSON-LD");
 		return Response
 				.ok()
 				.header("Target",
@@ -124,7 +116,7 @@ int OK=Response.Status.OK.getStatusCode();
 		if(m.isEmpty()){
 			return Response.status(Response.Status.NOT_FOUND).entity(String.format("The resource %s was not found",encodedURI)).build();
 		}
-		String jsonld=RDFSerializer.getJSONLD(m,"JSON-LD");
+		String jsonld=RDFSerializer.getRDFStringFromModel(m,"JSON-LD");
 		return Response.ok(jsonld).build();
 		
 	}
@@ -251,7 +243,7 @@ int OK=Response.Status.OK.getStatusCode();
 			if(ds==null){
 				throw new IllegalArgumentException("Dataset ID parameter 'ds' must be provided");
 			}
-			Model m=	RDFSerializer.inputToJSONLD(data, format);
+			Model m=	RDFSerializer.inputToRDFType(data, format);
 			if(m.isEmpty()){
 				throw new IllegalArgumentException("Could not parse data{"+data+"}");
 			}
@@ -262,7 +254,7 @@ int OK=Response.Status.OK.getStatusCode();
 			if(ds==null){
 				throw new IllegalArgumentException("Dataset ID parameter 'ds' must be provided");
 			}
-			Model m=	RDFSerializer.inputToJSONLD(data, format);
+			Model m=	RDFSerializer.inputToRDFType(data, format);
 			if(m.isEmpty()){
 				throw new IllegalArgumentException("Could not parse data{"+data+"}");
 			}
@@ -283,7 +275,7 @@ int OK=Response.Status.OK.getStatusCode();
 			if(ds==null){
 				throw new IllegalArgumentException("Dataset ID parameter 'ds' must be provided");
 			}
-			Model m=	RDFSerializer.inputToJSONLD(data, format);
+			Model m=	RDFSerializer.inputToRDFType(data, format);
 			if(m.isEmpty()){
 				throw new IllegalArgumentException("Could not parse data{"+data+"}");
 			}
@@ -312,7 +304,7 @@ int OK=Response.Status.OK.getStatusCode();
 		Model resourceDesc = Tools.getResourceDescription(
 				Prefixes.prefixes.get(prefix) + resource, m);
 
-		return JSONLDSerializer.getJSONLD(resourceDesc);
+		return JSONLDSerializer.getRDFStringFromModel(resourceDesc);
 
 	}
 */

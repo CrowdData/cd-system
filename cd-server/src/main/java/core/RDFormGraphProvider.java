@@ -13,10 +13,14 @@ private static Model getResourceData(String resource){
 	
 }
 
-public static void getGraph(String resource){
+public static String getGraph(String resource){
 	
 	Model m=getResourceData(resource);
+	if(m.isEmpty()){
+		throw new NullPointerException(String.format("The following resource %s was not found",resource));
+	}
 	m.write(System.out,"RDF/JSON");
+	return RDFSerializer.getRDFStringFromModel(m, "RDF/JSON");
 		
 	
 }

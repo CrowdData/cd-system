@@ -5,3 +5,4 @@ Bundle-SymbolicName: crowddata
 Bundle-Version: 1.0.0.qualifier
 Export-Package: core,
  rest
+Require-Bundle: org.junit

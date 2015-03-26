@@ -16,7 +16,7 @@ public class RDFSerializer {
 	
 	
 	
-	public static String getJSONLD (Model m,String type){
+	public static String getRDFStringFromModel (Model m,String type){
 		
 		ByteArrayOutputStream output = new ByteArrayOutputStream ();
 		m.write(output,type);
@@ -31,7 +31,7 @@ public class RDFSerializer {
 	}
 	
 	
-	public static Model inputToJSONLD(String input, String type){
+	public static Model inputToRDFType(String input, String type){
 		
 		Model m=ModelFactory.createDefaultModel();
 		m.read(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)),null,type);

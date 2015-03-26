@@ -8,13 +8,14 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 
 public class ResourceProvider {
 
 	/*
-	 * This method describes resource only within current graph
+	 * This method describes resource only within current graph's data
 	 * 
 	 * @param uri - Resource uri
 	 */
@@ -28,10 +29,12 @@ public class ResourceProvider {
 
 	/*
 	 * This method searches for a resource in the whole dataset
+	 * deprecated using Queries getDescribe now
 	 * 
 	 * @param uri - Resource uri
 	 */
 	public Model getResource(String uri) {
+		/*
 		ParameterizedSparqlString query = new ParameterizedSparqlString();
 		query.setCommandText(Queries.SELECT_DESCRIBE_QUERY);
 
@@ -41,10 +44,19 @@ public class ResourceProvider {
 		// query fuseki server
 		ResultSet result = Repository.selectQuery(query.asQuery().toString());
 
-		return ResultSetParser.parseDescribe(result, uri);
+		return ResultSetParser.parseDescribe(result, uri);*/
+		
+	return	Queries.getDescribe(uri, null);
+		
+		
 	}
 	
 	
+	
+	public static Resource generateResource(String datasetID) {
+	return ResourceFactory.createResource(generateResourceString(datasetID));
+		
+	}
 	public static String generateResourceString(String ds){
 		
 	//	String data=NGHandler.getDataString(ds);
