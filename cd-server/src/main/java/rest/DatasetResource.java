@@ -60,12 +60,12 @@ public class DatasetResource {
       
     }*/
 	
-	@GET
+	@POST
 	@Path("{datasetid}")
 	@JSONP(queryParam="callback")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getTemplate(@QueryParam("callback") String callback,@PathParam("ds") String ds, String jsonData ){
+	public Response getTemplate(@QueryParam("callback") String callback,@PathParam("datasetid") String ds, String jsonData ){
 		if(ds==null){
 			throw new NullPointerException("Provide target dataset ID 'ds");
 		}

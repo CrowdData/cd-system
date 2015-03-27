@@ -4,10 +4,8 @@ import org.json.JSONObject;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntResource;
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 
 public class CreateHandler {
@@ -16,7 +14,7 @@ public class CreateHandler {
 	OntModel resourceGraph=ModelFactory.createOntologyModel();
 	Property inDataset=ResourceFactory.createProperty("http://rdfs.org/ns/void#inDataset");
 	Property wasDerivedFrom=ResourceFactory.createProperty("http://www.w3.org/ns/prov#wasDerivedFrom");
-	
+	Property rdfTemplate=ResourceFactory.createProperty("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/rdfTemplate");
 	public JSONObject handleCreate(String datasetID, String resourceType){
 		JSONObject jsonResponse=new JSONObject();
 		
@@ -37,6 +35,7 @@ public class CreateHandler {
 		//set version to be 1?
 		individual.setVersionInfo("1");
 		individual.addProperty(inDataset, ResourceFactory.createResource(fullDatasetID));
+		individual.addProperty(rdfTemplate,RDFormTemplateProvider.getInstance().getURLLocation(resourceType));
 		
 		//output model as rdfjsonString and assing it to jsonResponse
 		JSONObject graph=new JSONObject(RDFSerializer.getRDFStringFromModel(resourceGraph, "RDF/JSON"));

@@ -34,13 +34,18 @@ public class RDFormTemplateProvider {
 	
 	public JSONObject getTemplate(String type){
 		
-		if(!templateMappings.containsKey(type)){
-			throw new NullPointerException("Requested template doesn't exist...");
-		}
-		
-		String urlLocation=templateMappings.get(type);
+
+		String urlLocation=getURLLocation(type);
 		String templateJson=URLReader.readURL(urlLocation);
 		return new JSONObject(templateJson);
+		
+	}
+	public String getURLLocation(String resourceType){
+		
+		if(!templateMappings.containsKey(resourceType)){
+			throw new NullPointerException("Requested template doesn't exist...");
+		}
+		return templateMappings.get(resourceType);
 		
 	}
 	
