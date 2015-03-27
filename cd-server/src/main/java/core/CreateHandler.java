@@ -1,5 +1,8 @@
 package core;
 
+import java.util.Iterator;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.hp.hpl.jena.ontology.OntModel;
@@ -32,14 +35,14 @@ public class CreateHandler {
 		individual.setRDFType(ResourceFactory.createResource(resourceType));
 		//set prov entity type
 		individual.addRDFType(ResourceFactory.createResource("http://www.w3.org/ns/prov#Entity"));
+		
+		
 		//set version to be 1?
 		individual.setVersionInfo("1");
 		individual.addProperty(inDataset, ResourceFactory.createResource(fullDatasetID));
+		//add absolute location of rdfTemplate that is going to be used to create resource
 		individual.addProperty(rdfTemplate,RDFormTemplateProvider.getInstance().getURLLocation(resourceType));
 		
-		//output model as rdfjsonString and assing it to jsonResponse
-		JSONObject graph=new JSONObject(RDFSerializer.getRDFStringFromModel(resourceGraph, "RDF/JSON"));
-		jsonResponse.put("graph", graph );
 		
 		
 		//load template from file based on resourceType
@@ -47,9 +50,15 @@ public class CreateHandler {
 		JSONObject template=RDFormTemplateProvider.getInstance().getTemplate(resourceType);
 		jsonResponse.put("template", template);
 		
+		//add specific template constraints from root if exist
+		addTemplateConstraints(individual,template);
 		
-	
-		//assing to json object if fine
+
+		//output model as rdfjsonString and assing it to jsonResponse
+		JSONObject graph=new JSONObject(RDFSerializer.getRDFStringFromModel(resourceGraph, "RDF/JSON"));
+		jsonResponse.put("graph", graph );
+		
+		
 		
 		System.out.println(jsonResponse.toString(5));
 		return jsonResponse;
@@ -58,8 +67,50 @@ public class CreateHandler {
 	}
 	
 	public static void main (String [] args){
+		new CreateHandler().handleCreate("testdataset", "http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Question");
+	//	new CreateHandler().handleCreate("testdataset", "http://this.is.resource.type");
 		
-		new CreateHandler().handleCreate("testdataset", "http://this.is.resource.type");
+	}
+	
+	
+	
+	
+	private void addTemplateConstraints(OntResource individual, JSONObject template){
+		JSONObject root=findRootTemp(template);
+		if(!root.has("constraints")){
+			return;
+		}
+	
+		JSONObject constraints=root.getJSONObject("constraints");
+		Iterator<?> keys = constraints.keys();
+		while(keys.hasNext()){			
+			String prop=(String)keys.next();
+			Property p=ResourceFactory.createProperty(prop);
+			//only uri's allowed
+			individual.addProperty(p,ResourceFactory.createResource(constraints.getString(prop)));
+		}
+		
+		
+		
+	}
+	private JSONObject findRootTemp(JSONObject template){
+		String rootID=template.getString("root");
+		JSONArray a=template.getJSONArray("templates");
+		for(int i=0; i<a.length();i++){
+			if(a.getJSONObject(i).getString("id").equals(rootID)){
+				return a.getJSONObject(i);
+			}
+			
+		}
+		throw new NullPointerException("MISSING ROOT TEMPLATE");
+	}
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 	
@@ -75,4 +126,4 @@ public class CreateHandler {
 	
 	
 	
-}
+

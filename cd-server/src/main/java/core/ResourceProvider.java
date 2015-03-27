@@ -58,7 +58,8 @@ public class ResourceProvider {
 		
 	}
 	public static String generateResourceString(String ds){
-		
+		//Not needed anymore since everytime uniqueURI is created
+		/*
 	//	String data=NGHandler.getDataString(ds);
 		String resource="nores";
 		boolean exist=true;
@@ -70,6 +71,10 @@ public class ResourceProvider {
 			exist=Queries.ask(null,Queries.ASK_EXISTS,binds);
 		}
 		return resource;
+		*/
+		
+		return NGHandler.getResourceString(ds, Tools.generateID());
+		
 	}
 	
 	public static void main(String args[]){
