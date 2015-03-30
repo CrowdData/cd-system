@@ -50,6 +50,21 @@ public class Tools {
 		 }
 		 return uri;
 	}
+	
+	public static String getNewVersion(String uri) {	 
+		 if (uri.matches(".*\\d")) {
+			String version= uri.substring(uri.lastIndexOf("/")+1,uri.length());
+			String base= uri.substring(0,uri.lastIndexOf("/")+1);
+			int ver=Integer.parseInt(version);
+			ver++;
+			return base+ver;
+			
+		 }
+		 //is new resource not being updated
+		 return uri+"/1";
+	}
+	
+
 	public static ArrayList<Parameter> getParameters(Parameter... params){
 		ArrayList<Parameter> paraArray=new ArrayList<Parameter>();
 		for(Parameter p: params){
@@ -137,8 +152,14 @@ public class Tools {
 		*/
 	
 public static void main(String[]args){
+	System.out.println(
+Tools.getNewVersion("http://asdfa.com/asdfasdf/djfkwwlf/1"));
 	
-	System.out.println(Tools.generateID());
+	System.out.println(
+Tools.getNewVersion("http://asdfa.com/asdfasdf/djfkwwlf"));
+	
+	System.out.println(
+Tools.getNewVersion("http://asdfa.com/asdfasdf/djfkwwlf/1cd"));
 	
 	
 	
