@@ -125,15 +125,25 @@ public class DatasetResource {
 		Calendar sent=Calendar.getInstance();
 		sent.setTimeInMillis(reqJSON.getLong("timeSent"));
 		
-		r.addProperty(ResourceFactory.createProperty("http://purl.org/dc/terms/created"),XSDDateTime.getDateTime(sent),XSDDatatype.XSDdateTime);
+		r.addProperty(ResourceFactory.createProperty("http://rdfs.org/sioc/ns#created_at"),XSDDateTime.getDateTime(sent),XSDDatatype.XSDdateTime);
 		r.addProperty(ResourceFactory.createProperty("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/userid"), reqJSON.getString("userid"));
 		
 		
+		//Process id
+		
+		
+		
 		String templateID=reqJSON.getString("templateID");
-		//TODO: process add remove triples based on templateid, datasetid etc
+		//TODO: process add remove triples based on templateid, datasetid 
+		
+		
+		//renameBlankNodesIf exist to resourceURI
+		Tools.renameBlankNodes(m);
 		
 		//add it to repository
 		Repository.addModel(m,NGHandler.getDataString(ds));
+		
+		//m.listResourcesWithProperty(null);
 		
 		
 		try {

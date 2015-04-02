@@ -2,6 +2,7 @@ package core;
 
 import java.util.HashMap;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class RDFormTemplateProvider {
@@ -28,7 +29,7 @@ public class RDFormTemplateProvider {
 		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Response",defaultLocation+"response-template.json");
 		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Question",defaultLocation+"question-template.json");
 		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Disruption",defaultLocation+"disruption-template.json");
-		
+		provider.templateMappings.put("http://crowddata.abdn.ac.uk/def/incidents/Report",defaultLocation+"disruption-template-new.json");
 		
 	}
 	
@@ -37,9 +38,16 @@ public class RDFormTemplateProvider {
 
 		String urlLocation=getURLLocation(type);
 		String templateJson=URLReader.readURL(urlLocation);
-		return new JSONObject(templateJson);
+		JSONObject template=new JSONObject(templateJson);
+		Tools.checkForChoices(template);
+		return template;
 		
 	}
+	
+	
+	
+	
+	
 	public String getURLLocation(String resourceType){
 		
 		if(!templateMappings.containsKey(resourceType)){

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import org.apache.commons.codec.binary.Base64;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 import com.hp.hpl.jena.ontology.OntModel;
@@ -17,9 +19,13 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.NodeIterator;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.util.ResourceUtils;
 
 public class Tools {
 
@@ -40,6 +46,78 @@ public class Tools {
           return Base64.encodeBase64URLSafeString(buffer.array());
 	}
 
+	public static void renameBlankNodes(Model m) {
+		ResIterator r = m.listSubjects();
+		while (r.hasNext()) {
+			Resource res = r.next();
+			if (res.isAnon()) {
+				ResourceUtils.renameResource(
+						res,
+						"http://crowddata.abdn.ac.uk/resources/"
+								+ Tools.generateID());
+				System.out.println("Renamed blank node");
+			}
+		}
+
+	}
+	//recursive TODO check execution time server
+	static long time;
+	public static void buildSiblings(Model m){
+		NodeIterator it=m.listObjects();
+		while(it.hasNext()){
+		RDFNode r=	it.next();
+			if(r.isURIResource()){
+				long start=System.currentTimeMillis();
+				Model sibling=Queries.getDescribe(r.asResource().getURI(),null);
+				long end=System.currentTimeMillis();
+				time+=(end-start);
+				buildSiblings(sibling);
+				m.add(sibling);
+				
+			}
+			
+			
+		}
+	}
+	
+	public static void  checkForChoices(JSONObject template){
+		JSONArray a=template.getJSONArray("templates");
+		for(int i=0; i<a.length();i++){
+			JSONObject j=a.getJSONObject(i);
+			if(j.get("type").equals("choice")){
+			checkForChoice(j);
+			System.out.println("Is choice");
+		}
+		}	
+			
+		}
+	
+	private static void checkForChoice(JSONObject j){
+		String id=j.getString("id");
+		System.out.println("ID choice "+id);
+		if(id.equals("related_incident")){
+			System.out.println("Related incident stuff");
+			JSONArray a=DemandStuff.getRelatedIncidents();
+			if(a.length()>0){
+				System.out.println("Related incidentds NOT ZERO");
+				//remove invisible always first in styles
+				j.getJSONArray("styles").remove(0);
+				j.put("choices", a);
+			}
+			
+		}
+		
+	}
+	public static void changeRootTypes(JSONObject template,String type){
+		JSONArray a=template.getJSONArray("templates");
+		for(int i=0;i<a.length();i++){
+			JSONObject j=a.getJSONObject(i);
+			if (j.getString("type").equals("group")){
+				j.put("nodetype",type);
+			}
+		}
+	}
+	
 	
 	public static String getNamespace(String uri) {	 
 		 if (uri.contains("#")) {

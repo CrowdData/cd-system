@@ -66,23 +66,28 @@ public class IndividualResource {
 		JSONObject update=new JSONObject(jsonBody);
 		Model m=	RDFSerializer.inputToRDFType(update.getJSONObject("graph").toString(), "RDF/JSON");
 		
-		//createProvenance() wasDerivedFrom
-		Resource r=m.getResource(update.getString("resourceURI"));
+		//createProvenance() wasDerivedFrom remove derived from from previous resource
+		Resource r=m.getResource(update.getString("resourceURI"));		
 		Property wasDerivedFrom=ResourceFactory.createProperty("http://www.w3.org/ns/prov#wasDerivedFrom");
+		r.removeAll(wasDerivedFrom);
 		r.addProperty(wasDerivedFrom, ResourceFactory.createResource(update.getString("previousURI")));
 		//set new user making update
+		Calendar sent=Calendar.getInstance();
+		sent.setTimeInMillis(update.getLong("timeSent"));
+		r.removeAll(ResourceFactory.createProperty("http://rdfs.org/sioc/ns#created_at"));
+		r.addProperty(ResourceFactory.createProperty("http://rdfs.org/sioc/ns#created_at"),XSDDateTime.getDateTime(sent),XSDDatatype.XSDdateTime);
+		
+		
 		if(update.has("userid")){
-			r.removeAll(ResourceFactory.createProperty("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/userid"));
-			r.addProperty(ResourceFactory.createProperty("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/userid"), update.getString("userid"));			
-			r.addProperty(ResourceFactory.createProperty("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/userid"), "updatedUserID");	
+		r.removeAll(ResourceFactory.createProperty("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/userid"));
+		r.addProperty(ResourceFactory.createProperty("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/userid"), update.getString("userid"));			
 		}
 		Repository.addModel(m,update.getString("datasetPath"));
 		
 		return Response.ok().entity("{\"updated\":\"OK\"}").build();	
 		}
 		
-		
-	
+	 
 	
 	
 	

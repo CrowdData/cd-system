@@ -37,8 +37,6 @@ public class CreateHandler {
 		individual.addRDFType(ResourceFactory.createResource("http://www.w3.org/ns/prov#Entity"));
 		
 		
-		//set version to be 1?
-		individual.setVersionInfo("1");
 		individual.addProperty(inDataset, ResourceFactory.createResource(fullDatasetID));
 		//add absolute location of rdfTemplate that is going to be used to create resource
 		individual.addProperty(rdfTemplate,RDFormTemplateProvider.getInstance().getURLLocation(resourceType));
@@ -48,6 +46,9 @@ public class CreateHandler {
 		//load template from file based on resourceType
 												//should this be reosurcetype? questions and answers are same resource but different templates
 		JSONObject template=RDFormTemplateProvider.getInstance().getTemplate(resourceType);
+		//change group items ToBlanknodes
+		Tools.changeRootTypes(template, "BLANK");
+		
 		jsonResponse.put("template", template);
 		
 		//add specific template constraints from root if exist

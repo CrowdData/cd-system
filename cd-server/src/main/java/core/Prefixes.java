@@ -18,6 +18,7 @@ static{
 		prefixes.put("dcterms", "http://purl.org/dc/terms/");
 		prefixes.put("cd", "http://crowddata.abdn.ac.uk/ontologies/cd/0.1/");
 		prefixes.put("afn", "http://jena.hpl.hp.com/ARQ/function#");
+		prefixes.put("inc","http://crowddata.abdn.ac.uk/def/incidents/");
 		//blacklist for class description retrieval
 		blacklist.add("http://www.w3.org/2002/07/owl#");
 		blacklist.add("http://www.w3.org/2000/01/rdf-schema#");
