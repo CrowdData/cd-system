@@ -12,22 +12,13 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 public class DemandStuff {
 
 	
-	
-	
-	
-	
-	
 	public JSONArray getBusChoices(){
 		
 		String d2r="http://crowddata.abdn.ac.uk:8080/d2rq/sparql";
-		JSONArray choices=new JSONArray();
 		
 		ResultSet r=Repository.selectQuery(Queries.getBuses, d2r);
 		return getChoices(r);
-		
-		
-		
-		
+	
 	}
 	public static JSONArray getChoices(ResultSet r){
 		JSONArray choices=new JSONArray();
@@ -94,12 +85,12 @@ public class DemandStuff {
 	public JSONArray getIncidentStatusChoices()
 	{
 		Model m=ModelFactory.createDefaultModel();
-		m.read("http://crowddata.abdn.ac.uk/ontologies/incident.ttl");
+		m.read("http://crowddata.abdn.ac.uk/ontologies/event.n3");
 		
 		 String getTypeChoiceQeury=	"SELECT ?label ?value " +
 				"               WHERE " + 
 				"               { " + 
-				"               ?value a inc:IncidentStatus; " + 
+				"               ?value a event:Department; " + 
 				"               rdfs:label ?label; " + 
 				"               }";
 
@@ -113,9 +104,11 @@ public class DemandStuff {
 	
 	
 	
+	
+	
 	public static void main (String args[]){
 		JSONArray a=new DemandStuff().getRelatedIncidents();
-		JSONArray b=new DemandStuff().getIncidentTypeChoices();
+		JSONArray b=new DemandStuff().getIncidentStatusChoices();
 	//	for(int i=0; i<a.length();i++ ){
 	//		System.out.println(a.getJSONObject(i).toString(5));
 			

@@ -30,7 +30,7 @@ public class RDFormTemplateProvider {
 		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Question",defaultLocation+"question-template.json");
 		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Disruption",defaultLocation+"disruption-template.json");
 		provider.templateMappings.put("http://crowddata.abdn.ac.uk/def/incidents/Report",defaultLocation+"disruption-template-new.json");
-		
+		provider.templateMappings.put("http://crowddata.abdn.ac.uk/def/events/IITBEvent",defaultLocation+"event-template-new.json");
 	}
 	
 	public JSONObject getTemplate(String type){
