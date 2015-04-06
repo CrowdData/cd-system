@@ -135,7 +135,11 @@ public class DatasetResource {
 		
 		String templateID=reqJSON.getString("templateID");
 		//TODO: process add remove triples based on templateid, datasetid 
-		
+		if(reqJSON.has("questionID")){
+			Resource question=m.getResource(reqJSON.getString("questionID"));
+			question.addProperty(ResourceFactory.createProperty("http://rdfs.org/sioc/ns#has_reply"),r);				
+			r.addProperty(ResourceFactory.createProperty("http://rdfs.org/sioc/ns#reply_of"),question);	
+		}
 		
 		//renameBlankNodesIf exist to resourceURI
 		Tools.renameBlankNodes(m);
