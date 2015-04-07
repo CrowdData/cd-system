@@ -77,7 +77,6 @@ public class IndividualResource {
 		r.removeAll(ResourceFactory.createProperty("http://rdfs.org/sioc/ns#created_at"));
 		r.addProperty(ResourceFactory.createProperty("http://rdfs.org/sioc/ns#created_at"),XSDDateTime.getDateTime(sent),XSDDatatype.XSDdateTime);
 		
-		
 		if(update.has("userid")){
 		r.removeAll(ResourceFactory.createProperty("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/userid"));
 		r.addProperty(ResourceFactory.createProperty("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/userid"), update.getString("userid"));			
