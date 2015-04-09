@@ -60,7 +60,7 @@ public class Tools {
 		}
 
 	}
-	//recursive TODO check execution time server
+	//recursive  done check execution time server
 	static long time;
 	public static void buildSiblings(Model m){
 		NodeIterator it=m.listObjects();
@@ -91,13 +91,24 @@ public class Tools {
 		}	
 			
 		}
-	
+	//TODO rewrite to have rdftemplate id items unique and retrieve sparql query to get choices
 	private static void checkForChoice(JSONObject j){
 		String id=j.getString("id");
 		System.out.println("ID choice "+id);
 		if(id.equals("related_incident")){
 			System.out.println("Related incident stuff");
 			JSONArray a=DemandStuff.getRelatedIncidents();
+			if(a.length()>0){
+				System.out.println("Related incidentds NOT ZERO");
+				//remove invisible always first in styles
+				j.getJSONArray("styles").remove(0);
+				j.put("choices", a);
+			}
+			
+		}
+		else if(id.equals("related_event")){
+			System.out.println("Related event");
+			JSONArray a=DemandStuff.getRelatedEvents();
 			if(a.length()>0){
 				System.out.println("Related incidentds NOT ZERO");
 				//remove invisible always first in styles

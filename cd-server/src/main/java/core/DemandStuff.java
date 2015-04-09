@@ -62,7 +62,7 @@ public class DemandStuff {
 		
 		String location="http://crowddata.abdn.ac.uk/query/sparql";
 	
-		 String getTypeChoiceQeury=	"SELECT ?label ?value " +
+		 String getTypeChoiceQeury=	"SELECT ?label ?value FROM <http://crowddata.abdn.ac.uk/datasets/incidents/data/> " +
 				"               WHERE " + 
 				"               { " + 
 				"               ?value a inc:Incident; " + 
@@ -90,7 +90,7 @@ public class DemandStuff {
 		 String getTypeChoiceQeury=	"SELECT ?label ?value " +
 				"               WHERE " + 
 				"               { " + 
-				"               ?value a event:Department; " + 
+				"               ?value a ev:Department; " + 
 				"               rdfs:label ?label; " + 
 				"               }";
 
@@ -101,13 +101,34 @@ public class DemandStuff {
 		
 		
 	}
+	public static JSONArray getRelatedEvents()
+	{
+		String location="http://crowddata.abdn.ac.uk/query/sparql";
+		
+		 String getTypeChoiceQeury=	"SELECT ?label ?value FROM <http://crowddata.abdn.ac.uk/datasets/eventsv2/data/>" +
+				"               WHERE " + 
+				"               { " + 
+				"               ?value a ev:IITBEvent; " + 
+				"               dcterms:title ?label; . " + 
+				"               }";
+
+		 ParameterizedSparqlString query=new ParameterizedSparqlString();
+		 	query.setCommandText(getTypeChoiceQeury);	 	
+		 	
+		 	Queries.populateQuery(query,null);
+		
+		ResultSet r=Repository.selectQuery(query.asQuery().toString(),location);
+		return getChoices(r);
+		
+		
+	}
 	
 	
 	
 	
 	
 	public static void main (String args[]){
-		JSONArray a=new DemandStuff().getRelatedIncidents();
+		JSONArray a=new DemandStuff().getRelatedEvents();
 		JSONArray b=new DemandStuff().getIncidentStatusChoices();
 	//	for(int i=0; i<a.length();i++ ){
 	//		System.out.println(a.getJSONObject(i).toString(5));
