@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -11,11 +12,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.server.JSONP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import core.SchemaProvider;
+import core.SendMailTLS;
 import core.Tools;
+import core.UserHandler;
 @Path("user")
 public class PersonResource {
 
@@ -50,21 +54,14 @@ public class PersonResource {
 	}
 
 	@Path("create")
+	@JSONP(queryParam="callback")
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createDataset(String jsonObject) {
-		try{
-		JSONObject obj=new JSONObject(jsonObject);
-		// TODO: get key id from json;
-		// TODO: get key jsonld
-		// TODO: parse jsonld to model
-		// TODO: store user in user dedicated repository?
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response createUser(@FormParam("name")String name,@FormParam("email") String email) {
 		
-		}
-		catch(JSONException e){
-			return Response.serverError().entity(new JSONObject("{\"error:\" \"Check JSON Syntax could not be parsed\"}").toString()).build();
-		}
-		return	Response.ok().entity("{\"user_uri\":\"uri/to/user/profile\"").build();
+		String response=	UserHandler.createUser(name, email);
+		return	Response.ok().entity(response).build();	
+		
       
     }
 	

@@ -152,7 +152,9 @@ public class Tools {
 		 //is new resource not being updated
 		 return uri+"/1";
 	}
-	
+	public static String getResourceID(String resourceURI){
+		return resourceURI.substring(resourceURI.lastIndexOf("/")+1,resourceURI.length());
+	}
 
 	public static ArrayList<Parameter> getParameters(Parameter... params){
 		ArrayList<Parameter> paraArray=new ArrayList<Parameter>();
