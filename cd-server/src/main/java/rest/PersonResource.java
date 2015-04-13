@@ -81,11 +81,11 @@ public class PersonResource {
 		}
 		String id=UserHandler.getUserID(user);
 		if(id.equals(code)){
-			Message m=new Message(2,"Thank you your account has been verified. You may now access the IITB Life");
+			Message m=new Message(2,"Thank you, your account has been verified. You may now access the IITB Life.");
 			m.setAdditional(code);
 			return Response.ok(m).build();
 		}
-		return Response.serverError().entity(new Message(3,"Wrong activation code. Just fill out the registration form and we will send you a new one")).build();
+		return Response.serverError().entity(new Message(3,"This appears to be an incorrect activation code, please use the <a href=#register>registration form</a> above and we will send your activation code again.")).build();
 		
       
     }

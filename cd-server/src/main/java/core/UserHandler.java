@@ -70,8 +70,8 @@ static Resource EntityClass=ResourceFactory.createResource( "http://xmlns.com/fo
 	
 	public static void sendMail(String nameStr,String token,String emailStr){
 		
-		String body="Dear" +nameStr+",<br/><br/> please paste the following activation code (re)activate access to the IITB Life. <br/>"+
-		"<br/><br/> <b>Activation token</b> : "+token;
+		String body="Dear " +nameStr+",<br/><br/> please paste the following activation code into the app to access IITB Life. <br/>"+
+		"<br/><br/> <b>Activation code</b> : "+token;
 				
 		
 		SendMailTLS.sendMail(emailStr, "IITB Life Activation Code", body);
@@ -81,7 +81,7 @@ static Resource EntityClass=ResourceFactory.createResource( "http://xmlns.com/fo
 	
 	public static Model getUser(String email){
 		
-		String query="DESCRIBE ?user WHERE {?user <http://xmlns.com/foaf/0.1/email> <mailto:"+email+"> . }";
+		String query="DESCRIBE FROM <http://crowddata.abdn.ac.uk/datasets/users/data/> ?user WHERE {?user <http://xmlns.com/foaf/0.1/email> <mailto:"+email+"> . }";
 		Model m=Repository.describeQuery(query);
 		return m;
 	}
