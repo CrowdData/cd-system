@@ -23,7 +23,7 @@ static Property email=ResourceFactory.createProperty("http://xmlns.com/foaf/0.1/
 static Resource PersonClass=ResourceFactory.createResource("http://xmlns.com/foaf/0.1/Person");
 static Resource AgentClass=ResourceFactory.createResource( "http://xmlns.com/foaf/0.1/Agent");
 static Resource EntityClass=ResourceFactory.createResource( "http://xmlns.com/foaf/0.1/Entity");
-	
+static Resource provAgentClass=ResourceFactory.createResource( "http://www.w3.org/ns/prov#Agent");	
 
 	public static String createUser(String nameStr, String emailStr){
 		
@@ -40,7 +40,7 @@ static Resource EntityClass=ResourceFactory.createResource( "http://xmlns.com/fo
 		newUser.addProperty(RDF.type,PersonClass );
 		newUser.addProperty(RDF.type, AgentClass);
 		newUser.addProperty(RDF.type, EntityClass);
-		
+		newUser.addProperty(RDF.type, provAgentClass);
 		
 		newUser.addProperty(name, nameStr, XSDDatatype.XSDstring);
 		newUser.addProperty(email,ResourceFactory.createResource("mailto:"+emailStr));

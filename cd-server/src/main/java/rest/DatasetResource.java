@@ -126,7 +126,7 @@ public class DatasetResource {
 		sent.setTimeInMillis(reqJSON.getLong("timeSent"));
 		
 		r.addProperty(ResourceFactory.createProperty("http://rdfs.org/sioc/ns#created_at"),XSDDateTime.getDateTime(sent),XSDDatatype.XSDdateTime);
-		r.addProperty(ResourceFactory.createProperty("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/userid"), reqJSON.getString("userid"));
+		r.addProperty(ResourceFactory.createProperty("http://www.w3.org/ns/prov#wasAttributedTo"), ResourceFactory.createResource(NGHandler.getResourceString("users", reqJSON.getString("userid"))));
 		
 		
 		//Process id
