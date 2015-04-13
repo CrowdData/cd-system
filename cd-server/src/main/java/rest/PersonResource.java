@@ -77,11 +77,11 @@ public class PersonResource {
 		
 		Model user=UserHandler.getUser(email);
 		if(user.isEmpty()){
-			return Response.serverError().entity(new Message(1,"It appears you are not yet registered for IITB Life access, please use the <a href=#register>registration form</a> above to register.")).build();
+			return Response.serverError().entity(new Message(1,"It appears you are not yet registered in IITB Life, please use the <a href=#register>registration form</a> above to register.")).build();
 		}
 		String id=UserHandler.getUserID(user);
 		if(id.equals(code)){
-			Message m=new Message(2,"Thank you, your account has been verified. You may now access the IITB Life.");
+			Message m=new Message(2,"Thank you, your account has been verified. You may now access the IITB Life. Navigate to <a href='/dashboard'> homepage</a>.");
 			m.setAdditional(code);
 			return Response.ok(m).build();
 		}
