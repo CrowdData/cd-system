@@ -21,8 +21,8 @@ public class SendMailTLS {
 			HttpClient httpClient = new DefaultHttpClient();
 		 try {
 
-			   System.getProperties().put("http.proxyHost","proxy.abdn.ac.uk");
-			   System.getProperties().put("http.proxyPort",8080);
+			//   System.getProperties().put("http.proxyHost","proxy.abdn.ac.uk");
+			//   System.getProperties().put("http.proxyPort",8080);
 			    String mailrequest="http://homepages.abdn.ac.uk/s.beran/pages/mail.php";
 			    HttpPost request = new HttpPost(mailrequest);
 			  //  StringEntity params = new StringEntity(body);

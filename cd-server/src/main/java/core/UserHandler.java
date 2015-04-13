@@ -50,28 +50,31 @@ static Resource EntityClass=ResourceFactory.createResource( "http://xmlns.com/fo
 		
 		Repository.addModel(userModel, awaitinguserDS);
 		sendMail(nameStr,tokenID,emailStr);
-		return "The account has been created, to activate please check your email and follow the instructions.";
+		return "The account has been created, please check your email and paste activation code to the Activation form";
 	}
 		//only one
+		String userID=getUserID(user);
+		
+		sendMail(nameStr,userID,emailStr);
+		return "Your activation code has been sent to your email.";
+	}
+	
+	public static String getUserID(Model user){
 		ResIterator it=user.listSubjects();
 		String userURI=it.next().getURI();
 		String userID=Tools.getResourceID(userURI);
-		System.out.println(userID);
-		sendMail(nameStr,userID,emailStr);
-		return "It seems this email address was already registered, please check your email to reactivate.";
+		return userID;
 	}
-	
-		
 	
 	
 	
 	public static void sendMail(String nameStr,String token,String emailStr){
 		
-		String body="Dear" +nameStr+",<br/> please click on the following activation link to (re)activate site. <br/>"+
-		"<a href=http://crowddata.abdn.ac.uk/dashboard/verify.php?email="+emailStr+"&token="+token+">Confirm my address</a>"+
-				"<br/>";
+		String body="Dear" +nameStr+",<br/><br/> please paste the following activation code (re)activate access to the IITB Life. <br/>"+
+		"<br/><br/> <b>Activation token</b> : "+token;
+				
 		
-		SendMailTLS.sendMail(emailStr, "IITB Life Activation", body);
+		SendMailTLS.sendMail(emailStr, "IITB Life Activation Code", body);
 		
 		
 	}

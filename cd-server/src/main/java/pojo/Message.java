@@ -7,14 +7,19 @@ public class Message {
 	
 	int status;
 	String message;
-	
+	String additional;
 public Message(){}
 
 public Message(int status, String message){
 	this.message =message;
 	this.status=status;
 }
-	
+	public String getAdditional(){
+		return additional;
+	}
+	public void setAdditional(String ad){
+		additional=ad;
+	}
 	public int getStatus() {
 		return status;
 	}

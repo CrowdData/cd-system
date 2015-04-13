@@ -16,6 +16,10 @@ import org.glassfish.jersey.server.JSONP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pojo.Message;
+
+import com.hp.hpl.jena.rdf.model.Model;
+
 import core.SchemaProvider;
 import core.SendMailTLS;
 import core.Tools;
@@ -64,7 +68,27 @@ public class PersonResource {
 		
       
     }
-	
+	@Path("validate")
+	@JSONP(queryParam="callback")
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
+    public Response activate(@FormParam("code")String code,@FormParam("email2") String email) {
+		
+		Model user=UserHandler.getUser(email);
+		if(user.isEmpty()){
+			return Response.serverError().entity(new Message(1,"I am sorry, but your email have not been recognized, register first")).build();
+		}
+		String id=UserHandler.getUserID(user);
+		if(id.equals(code)){
+			Message m=new Message(2,"Thank you your account has been verified. You may now access the IITB Life");
+			m.setAdditional(code);
+			return Response.ok(m).build();
+		}
+		return Response.serverError().entity(new Message(3,"Wrong activation code. Just fill out the registration form and we will send you a new one")).build();
+		
+      
+    }
 	@Path("update")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
