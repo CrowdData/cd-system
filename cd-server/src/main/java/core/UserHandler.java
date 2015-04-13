@@ -50,7 +50,7 @@ static Resource EntityClass=ResourceFactory.createResource( "http://xmlns.com/fo
 		
 		Repository.addModel(userModel, awaitinguserDS);
 		sendMail(nameStr,tokenID,emailStr);
-		return "The account has been created, please check your email and paste activation code to the Activation form";
+		return "The account has been created, please check your email and paste activation code to the activation form.";
 	}
 		//only one
 		String userID=getUserID(user);
@@ -81,7 +81,7 @@ static Resource EntityClass=ResourceFactory.createResource( "http://xmlns.com/fo
 	
 	public static Model getUser(String email){
 		
-		String query="DESCRIBE FROM <http://crowddata.abdn.ac.uk/datasets/users/data/> ?user WHERE {?user <http://xmlns.com/foaf/0.1/email> <mailto:"+email+"> . }";
+		String query="DESCRIBE  ?user FROM <http://crowddata.abdn.ac.uk/datasets/users/data/> WHERE {?user <http://xmlns.com/foaf/0.1/email> <mailto:"+email+"> . }";
 		Model m=Repository.describeQuery(query);
 		return m;
 	}

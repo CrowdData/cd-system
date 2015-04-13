@@ -77,7 +77,7 @@ public class PersonResource {
 		
 		Model user=UserHandler.getUser(email);
 		if(user.isEmpty()){
-			return Response.serverError().entity(new Message(1,"I am sorry, but your email have not been recognized, register first")).build();
+			return Response.serverError().entity(new Message(1,"It appears you are not yet registered for IITB Life access, please use the <a href=#register>registration form</a> above to register.")).build();
 		}
 		String id=UserHandler.getUserID(user);
 		if(id.equals(code)){
