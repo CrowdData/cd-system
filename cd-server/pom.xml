@@ -32,7 +32,7 @@
 		<configuration>
 			<url>http://crowddata.abdn.ac.uk:8080/manager/text</url>
 			<server>TomcatServer</server>
-			<path>/test</path>
+			<path>/crowddata</path>
 		</configuration>
 	</plugin>
             
