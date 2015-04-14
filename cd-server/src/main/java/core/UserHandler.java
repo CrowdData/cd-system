@@ -50,7 +50,7 @@ static Resource provAgentClass=ResourceFactory.createResource( "http://www.w3.or
 		
 		Repository.addModel(userModel, awaitinguserDS);
 		sendMail(nameStr,tokenID,emailStr);
-		return "The account has been created, please check your email and paste activation code to the activation form.";
+		return "Your account has been created, please check your email and paste the activation code in to the activation form below.";
 	}
 		//only one
 		String userID=getUserID(user);
@@ -70,8 +70,8 @@ static Resource provAgentClass=ResourceFactory.createResource( "http://www.w3.or
 	
 	public static void sendMail(String nameStr,String token,String emailStr){
 		
-		String body="Dear " +nameStr+",<br/><br/> please paste the following activation code into the app to access IITB Life. <br/>"+
-		"<br/><br/> <b>Activation code</b> : "+token;
+		String body="Dear " +nameStr+",<br/><br/> Please paste the following activation code into the form on the IITB Life app to gain access to the system. <br/>"+
+		"<br/><br/> <b>Your activation code</b> : "+token;
 				
 		
 		SendMailTLS.sendMail(emailStr, "IITB Life Activation Code", body);
