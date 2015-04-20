@@ -12,7 +12,11 @@ import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.vocabulary.RDF;
-
+/**
+ * This class is responsible for handling user registration and activation requests
+ * @author Stanislav Beran
+ *
+ */
 public class UserHandler {
 static Model m=ModelFactory.createDefaultModel();	
 //public static HashMap<String,Resource> awaitingUsers=new HashMap<String,Resource>();

@@ -4,7 +4,12 @@ import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+/**
+ * 
+ * @author stan
+ * This class handles retrieval of RDForms templates from default location
+ *
+ */
 public class RDFormTemplateProvider {
 	static RDFormTemplateProvider provider=null;
 	static String defaultLocation="http://crowddata.abdn.ac.uk/templates/";
@@ -13,10 +18,16 @@ public class RDFormTemplateProvider {
 	static {
 		init();
 	}
-	
+	/**
+	 * 
+	 * @return RDFormTemplateProvider singleton instance
+	 */
 	public static RDFormTemplateProvider getInstance(){
 		return provider;
 	}
+	/**
+	 * Initializes this class when called for first time. TODO Retrieve templates from dedicated dataset.
+	 */
 	public static void init(){
 		
 		//TODO :get mappings from the fuseki 
@@ -32,7 +43,12 @@ public class RDFormTemplateProvider {
 		provider.templateMappings.put("http://crowddata.abdn.ac.uk/def/incidents/Report",defaultLocation+"disruption-template-new.json");
 		provider.templateMappings.put("http://crowddata.abdn.ac.uk/def/events/IITBEvent",defaultLocation+"event-template-new.json");
 	}
-	
+	/**
+	 * This method returns RDForm template based on the requested type and checks if multiple choices are existent for any of the templates
+	 * item.  
+	 * @param type - type of the resource 
+	 * @return JSONObject RDForm template
+	 */
 	public JSONObject getTemplate(String type){
 		
 
@@ -47,7 +63,11 @@ public class RDFormTemplateProvider {
 	
 	
 	
-	
+	/**
+	 *  Return absolute path of the location where RDForm is located
+	 * @param resourceType - type of the resource
+	 * @return String absolute path of the RDForm template 
+	 */
 	public String getURLLocation(String resourceType){
 		
 		if(!templateMappings.containsKey(resourceType)){

@@ -8,6 +8,11 @@ import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Provider;
 @Provider 
+/**
+ * Class responsible to handle cross domain requests, it attaches Acces-Control-Allow headers to each response
+ * @author stan
+ *
+ */
 public class CORSResponseFilter
 implements ContainerResponseFilter {
  

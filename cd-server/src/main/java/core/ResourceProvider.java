@@ -11,13 +11,18 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
-
+/**
+ * This class handles providing of a resource from our datastore 
+ * @author stan
+ *
+ */
 public class ResourceProvider {
 
-	/*
+	/**
 	 * This method describes resource only within current graph's data
 	 * 
 	 * @param uri - Resource uri
+	 * @param dsID - named graph to get resource from
 	 */
 
 	public Model getResource(String uri, String dsID) {
@@ -27,9 +32,9 @@ public class ResourceProvider {
 
 	}
 
-	/*
+	/**
 	 * This method searches for a resource in the whole dataset
-	 * deprecated using Queries getDescribe now
+	 * @deprecated using Queries getDescribe now
 	 * 
 	 * @param uri - Resource uri
 	 */

@@ -1,5 +1,9 @@
 package core;
-
+/**
+ * Class responsible for creating named graph strings
+ * @author stan
+ *
+ */
 public class NGHandler {
 	
 

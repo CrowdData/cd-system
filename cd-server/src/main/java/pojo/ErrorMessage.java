@@ -1,7 +1,11 @@
 package pojo;
 
 import javax.xml.bind.annotation.XmlRootElement;
-
+/**
+ * Error message pojo used when system throws exception to inform client 
+ * @author stan
+ *
+ */
 @XmlRootElement
 public class ErrorMessage {
 

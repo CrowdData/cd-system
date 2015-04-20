@@ -12,7 +12,11 @@ import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.util.ResourceUtils;
-
+/**
+ * Class responsible for handling client updates (not used)
+ * @author Stanislav Beran
+ *
+ */
 public class UpdateHandler {
 
 	Property inDataset = ResourceFactory
@@ -25,11 +29,11 @@ public class UpdateHandler {
 	public JSONObject handleUpdate(String resourceID) {
 		JSONObject jsonResponse = new JSONObject();
 
-		Model data = Queries.getDescribe(resourceID, null);
+		Model data = Queries.getDescribe(resourceID, null); 
 		
 		
 		long start=System.currentTimeMillis();
-		Tools.buildSiblings(data);
+		Tools.buildChildren(data);
 		long end=System.currentTimeMillis();
 		System.out.println("Total execution time:"+(end-start));
 		System.out.println("Queries execution time:"+Tools.time);

@@ -1,6 +1,7 @@
 package rest;
 
 import java.net.URI;
+
 import java.net.URISyntaxException;
 
 import javax.ws.rs.Consumes;
@@ -24,6 +25,11 @@ import core.SchemaProvider;
 import core.SendMailTLS;
 import core.Tools;
 import core.UserHandler;
+/**
+ * Person/User handler
+ * @author stan
+ *
+ */
 @Path("user")
 public class PersonResource {
 
@@ -87,28 +93,6 @@ public class PersonResource {
 		}
 		return Response.serverError().entity(new Message(3,"This appears to be an incorrect activation code, please use the <a href=#register>registration form</a> above and we will send your activation code again.")).build();
 		
-      
-    }
-	@Path("update")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateDataset() {
-	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/update").entity("Dataset updated").build();
-      
-    }
-	@Path("remove")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response remove() {
-	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/remove").entity("Dataset removed").build();
-      
-    }
-	
-	@Path("get")
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response getDataset(String json) {
-	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/get").entity("Dataset retrieved").build();
       
     }
 	

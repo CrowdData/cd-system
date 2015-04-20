@@ -17,7 +17,11 @@ import com.hp.hpl.jena.tdb.TDBFactory;
 import com.hp.hpl.jena.update.UpdateExecutionFactory;
 import com.hp.hpl.jena.update.UpdateFactory;
 import com.hp.hpl.jena.update.UpdateRequest;
-
+/**
+ * Class responsible for dealing with Fuseki datastore
+ * @author stan
+ *
+ */
 public class Repository {
 	
 	private static DatasetAccessor DS;
@@ -39,7 +43,9 @@ public class Repository {
 	}
 	*/
 	
-	
+	/**
+	 * Initialize when first called
+	 */
 	public static void createFusekiAccessors(){
 		System.out.println("Creating accessor for model...");
 		DS=DatasetAccessorFactory.createHTTP(Strings.FUSEKI_SERVICE_URI);

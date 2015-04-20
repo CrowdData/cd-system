@@ -4,9 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-/*
+/**
  * Modified example of url reader:
 https://docs.oracle.com/javase/tutorial/networking/urls/readingURL.html
+@author Stanislav Beran
 */
 public class URLReader {
 	

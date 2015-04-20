@@ -1,5 +1,14 @@
 package core;
-
+/**
+ *  TripleHolder class to hold arbitrary triples
+ *  @deprecated
+ *  @see core.Parameter
+ * @author Stanislav Beran
+ *
+ * @param <T> Subject 
+ * @param <U> Predicate
+ * @param <V> Object
+ */
 public class TripletHolder<T,U,V> {
 
 	T a=null;

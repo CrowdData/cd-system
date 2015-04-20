@@ -1,7 +1,11 @@
 package core;
 
 import com.hp.hpl.jena.rdf.model.Model;
-
+/**
+ * Class to retrieve description of a resource in "RDF/JSON" format from our datastore.
+ * @author Stanislav Beran
+ *
+ */
 public class RDFormGraphProvider {
 
 
@@ -12,7 +16,11 @@ private static Model getResourceData(String resource){
 	return Queries.getDescribe(resource, null);
 	
 }
-
+/**
+ * 
+ * @param resource - 
+ * @return	String representation of a resource from our Fuseki server instance.
+ */
 public static String getGraph(String resource){
 	
 	Model m=getResourceData(resource);

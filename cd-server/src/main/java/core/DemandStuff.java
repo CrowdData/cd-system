@@ -67,14 +67,11 @@ public class DemandStuff {
 				"               { " + 
 				"               ?value a inc:Incident; " + 
 				"               dcterms:title ?label; . " + 
-				"               }";
-
-		 ParameterizedSparqlString query=new ParameterizedSparqlString();
-		 	query.setCommandText(getTypeChoiceQeury);	 	
+				"               }";	
 		 	
-		 	Queries.populateQuery(query,null);
+		 	String query=Queries.populateQuery(getTypeChoiceQeury,null,false);
 		
-		ResultSet r=Repository.selectQuery(query.asQuery().toString(),location);
+		ResultSet r=Repository.selectQuery(query,location);
 		return getChoices(r);
 		
 		
@@ -112,12 +109,10 @@ public class DemandStuff {
 				"               dcterms:title ?label; . " + 
 				"               }";
 
-		 ParameterizedSparqlString query=new ParameterizedSparqlString();
-		 	query.setCommandText(getTypeChoiceQeury);	 	
-		 	
-		 	Queries.populateQuery(query,null);
 		
-		ResultSet r=Repository.selectQuery(query.asQuery().toString(),location);
+		 	String query=Queries.populateQuery(getTypeChoiceQeury,null,false);
+		
+		ResultSet r=Repository.selectQuery(query,location);
 		return getChoices(r);
 		
 		

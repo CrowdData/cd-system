@@ -39,15 +39,13 @@ import core.Tools;
 import core.XSDDateTime;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * dataset Resource class 
  */
 @Path("datasets")
 public class DatasetResource {
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
+     * Method returning void ontology in JSON-LD format 
+     * @return JSON-LD representation of Void ontology
      */
 	@Path("getvoid")
     @GET
@@ -71,7 +69,13 @@ public class DatasetResource {
 	return	Response.ok().header("Target","http://crowddata.abdn.ac.uk:8080/crowddata/dataset/getDataSchema").entity(jsonld).build();
       
     }*/
-	
+	/**
+	 * Method handling POST request to retrieve data for client to create resource
+	 * @param callback - for jsonp handling
+	 * @param ds - datasetid where the resource data from the client will go to
+	 * @param jsonData - additional information "resourceType" is class associated with the requested RDFform template
+	 * @return JSON representation containing datasetpath,datasetid,initialized rdf/json graph and resourceid
+	 */
 	@POST
 	@Path("{datasetid}")
 	@JSONP(queryParam="callback")
@@ -93,7 +97,15 @@ public class DatasetResource {
 		
 		
 	}
-	
+	/**
+	 * Method handling creation of resource
+	 * @param callback
+	 * @param ds
+	 * @param jsonData  
+	 * @param uriInfo   - will be used for provenance data
+	 * @param request   - will be used for provenance data
+	 * @return
+	 */
 	@Path("{datasetid}/create")
     @POST
     @JSONP(queryParam="callback")

@@ -29,7 +29,6 @@ package core;
 
 //package org.xmldap.util;
 
-import java.security.InvalidParameterException;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;

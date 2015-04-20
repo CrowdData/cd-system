@@ -10,14 +10,18 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
-
+/**
+ * Class responsible for parsing ResultSets
+ * @author stan
+ *
+ */
 public class ResultSetParser {
 
 	
 	
-	
-	/*
-	 * This method is tied to Query.SELECT_DESCRIBE_QUERY
+	/**
+	 * This method is tied to Queries.SELECT_DESCRIBE_QUERY
+	 * @return Model of the resource described
 	 */
 	public static Model parseDescribe(ResultSet result, String resourceURI) {
 
@@ -46,7 +50,7 @@ public class ResultSetParser {
 
 	}
 	
-	/*
+	/**
 	 * Given result set and parameter of the expected resource this method returns
 	 * List of resources as string - The method does not handle anonymous resources
 	 */
@@ -75,9 +79,9 @@ public class ResultSetParser {
 		
 		
 	}
-	/*
+	/**
 	 * Given result set and list of parameters of the expected resource this method returns
-	 * List of Hashmaps of binded values as RDFNode - The method does not handle anonymous resources
+	 * @return List of Hashmaps of binded values as RDFNode - The method does not handle anonymous resources
 	 */
 	public static ArrayList<HashMap<String,RDFNode>> getBindings(ResultSet result, String[] params){
 		ArrayList<HashMap<String,RDFNode>> resources=new ArrayList<HashMap<String,RDFNode>>();

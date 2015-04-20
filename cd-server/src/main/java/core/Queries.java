@@ -17,12 +17,27 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.update.UpdateAction;
-
+/**
+ * This class holds SPARQL Queries and methods required for creating,updating and retrieving data from Jena Models and our datastore.
+ * @author Stanislav Beran
+ *
+ */
 public class Queries {
 	//to get bindings for root element of parsing
+	/**
+	 * Used by RDFormParser
+	 * @deprecated
+	 * 
+	 */
 	static String[]TEMPLATE_SELECT_RESTRICTIONS_BINDINGS={"resource","resourceRestriction","restrictionProperty","exactly","min","max"};
+	/**
+	 * Used by NewFormParser.java
+	 */
 	static String[] TEMPLATE_SELECT_COMMENTS={"description", "label"};
-	//classType,resource
+	/**
+	 * Query used by NewFormParser/CopyOfNewFormParser to get descripiton and label of the class
+	 * for RDForm templates.
+	 */
 	static String TEMPLATE_SELECT_LABEL_COMMENT="SELECT * \r\n" + 
 			"WHERE{\r\n" + 
 			"?b0 a ?classType .\r\n" + 
@@ -33,6 +48,10 @@ public class Queries {
 			"}\r\n" + 
 			"\r\n" + 
 			"";
+	/**
+	 * Query used by NewFormParser/CopyOfNewFormParser to get descripiton and label of the property associated with a class
+	 * for RDForm templates.
+	 */
 	static String TEMPLATE_SELECT_LABEL_COMMENT_PROPERTY="SELECT * \r\n" + 
 			"WHERE{\r\n" + 
 			"?b0 a ?classType .\r\n" + 
@@ -43,7 +62,10 @@ public class Queries {
 			"}\r\n" + 
 			"\r\n" + 
 			"";
-	
+	/**
+	 * Not tested
+	 * Query to ask if choice exist for a particular property 
+	 */
 	static String TEMPLATE_ASK_CHOICE="ASK \r\n" + 
 			"WHERE{\r\n" + 
 			"?b0 a ?classType .\r\n" + 
@@ -55,7 +77,9 @@ public class Queries {
 			"}\r\n" + 
 			"\r\n" + 
 			"";
-	
+	/**
+	 * Query to get SPARQL query and endpoint where (label,value) choices are extracted from
+	 */
 	static String TEMPLATE_SELECT_QUERY_ENDPOINT="SELECT ?query ?endpoint \r\n" + 
 			"WHERE{\r\n" + 
 			"?b0 void:class ?resource .\r\n" + 
@@ -74,6 +98,10 @@ public class Queries {
 			"}\r\n" + 
 			"\r\n" + 
 			"";
+	/**
+	 * @deprecated
+	 * Used with old RDFormParser to determine restriction of a resource
+	 */
 	static String TEMPLATE_SELECT_RESTRICTIONS="SELECT * \r\n" + 
 			"WHERE{\r\n" + 
 			"?resource rdfs:subClassOf ?restriction .\r\n" + 
@@ -100,7 +128,9 @@ public class Queries {
 			"}}\r\n" + 
 			"";
 	
-	
+	/**
+	 * Trivial imitiation of DESCRIBE QUERY selects triples where resource is either subject or object
+	 */
 	static String SELECT_DESCRIBE_QUERY=
 	"SELECT ?p1 ?o1 ?s2 ?p2  WHERE {{ GRAPH ?graph {" + 
 			" " + 
@@ -113,10 +143,14 @@ public class Queries {
 			"}}" + 
 			"" + 
 			"";
-	
+	/**
+	 * Not used 
+	 */
 	static String ASK_EXISTS="ASK {?resource ?p ?o .}";
 	
-	
+	/**
+	 * Query to get choice label and uri of buses
+	 */
 	static String getBuses="PREFIX dc: <http://purl.org/dc/elements/1.1/> "+
             "PREFIX naptan: <http://transport.data.gov.uk/def/naptan/> "+
 			"SELECT ?label ?value " + 
@@ -129,9 +163,12 @@ public class Queries {
 
 
 
-/*
- * Query fuseki endpoint for specific resource only triples 
+/**
+ *  Query datastore for specific resource only triples 
  * which specifically contain resource as subject or object are returned.
+ * @param resource - IRI
+ * @param DS   - named graph of the dataset to be queried
+ * @return - ResultSet 
  */
 public static ResultSet describeQuery(String resource, String DS){
 	ParameterizedSparqlString query = new ParameterizedSparqlString();
@@ -149,8 +186,11 @@ public static ResultSet describeQuery(String resource, String DS){
 }
 
 
-/*
- * Original describe query, describing resource if model null query fuseki instance
+/**
+ * This method returns Model of a resourceURI, if Model m is null it queries the whole datastore.(all named graphs)
+ * @param resourceURI - IRI to be described
+ * @param m	- Model to be queried
+ * @return - Model representation of the described IRI
  */
 public static Model getDescribe(String resourceURI, Model m){
 	Resource res=ResourceFactory.createResource(resourceURI);
@@ -170,19 +210,32 @@ public static Model getDescribe(String resourceURI, Model m){
  	return out;
 	
 }
+/**
+ * Method handles ask queries
+ * @param m - model to be queried if null datastore is queried instead
+ * @param queryString - SPARQL Query template
+ * @param params	- Parameters to populate query
+ * @return boolean true or false
+ */
 public static boolean ask(Model m,String queryString,ArrayList<Parameter>params){
-	ParameterizedSparqlString query=new ParameterizedSparqlString();
- 	query.setCommandText(queryString);
- 	populateQuery(query,params);
+ 	String populatedQuery=populateQuery(queryString,params,false);
  	if(m!=null){
- 		QueryExecution qExec=QueryExecutionFactory.create(query.asQuery(),m);	
+ 		QueryExecution qExec=QueryExecutionFactory.create(populatedQuery,m);	
  	 	return qExec.execAsk();
  	}
  	
- 	return Repository.askQuery(query.asQuery().toString());
+ 	return Repository.askQuery(populatedQuery);
 }
-
-public static void populateQuery(ParameterizedSparqlString query,ArrayList<Parameter> params){
+/**
+ * Populate query with custom bindings and add default system prefixes to it. 
+ * @param queryString - SPARQL query template
+ * @param params     - parameters(custom bindings) for SPARQL template
+ * @param update 	- SPARQL UPDATE query ?
+ * @return populated query String with system defined prefixes
+ */
+public static String populateQuery(String queryString,ArrayList<Parameter> params,boolean update){
+	ParameterizedSparqlString query=new ParameterizedSparqlString();
+ 	query.setCommandText(queryString);
 	if(params!=null){
 	for(Parameter triplet: params){
 	 	//datatype exist assume it's literal
@@ -197,29 +250,45 @@ public static void populateQuery(ParameterizedSparqlString query,ArrayList<Param
 	}
 	 	 
 	 	 query.setNsPrefixes(Prefixes.prefixes);
+	 	 if(update){
+	 	 return query.asUpdate().toString();
+	 	 }
+	 	 return query.asQuery().toString();
 }
-
+/**
+ * Method return ResultSet of a select query if Model m is not provided it queries datastore
+ * @param m - model to be queried
+ * @param queryTemplate  - SPARQL query template
+ * @param params	- custom bindings @see Parameter
+ * @return
+ */
 public static ResultSet selectQueryModel(Model m,String queryTemplate,ArrayList<Parameter>params){
-	ParameterizedSparqlString query=new ParameterizedSparqlString();
- 	query.setCommandText(queryTemplate);	 	
- 	
- 	populateQuery(query,params);
+
+ 	String populatedQuery= populateQuery(queryTemplate,params,false);
  	//if no model query goes to FUSEKI TDB endpoint
  	 if(m==null){
- 		return Repository.selectQuery(query.asQuery().toString());
+ 		return Repository.selectQuery(populatedQuery);
  	}
  	 //query model
  	 else{
- 	QueryExecution qExec=QueryExecutionFactory.create(query.asQuery(),m);	
+ 	QueryExecution qExec=QueryExecutionFactory.create(populatedQuery,m);	
  	return qExec.execSelect();
  	 }
 
 }
-public static void updateModel(Model m,String queryTemplate,ArrayList<Parameter>params){
-	ParameterizedSparqlString query=new ParameterizedSparqlString();
- 	query.setCommandText(queryTemplate);	 
- 	populateQuery(query,params);
- 	UpdateAction.execute(query.asUpdate(), m);
+/**
+ * This method handles update queries, if Model m not provided update datastore
+ * @param m
+ * @param queryTemplate
+ * @param params
+ */
+public static void updateModel(Model m,String queryTemplate,ArrayList<Parameter>params){ 
+ 	String populatedQuery=populateQuery(queryTemplate,params,true);
+ 	if(m==null){
+ 		Repository.updateQuery(populatedQuery);
+ 		return;
+ 	}
+ 	UpdateAction.parseExecute(populatedQuery, m);
  	
 	
 	
@@ -266,5 +335,17 @@ public static Model getResourceDescription(String resourceURI,Model m){
 	
 
 }*/
-
+public static void main(String[] args){
+	Model m=ModelFactory.createDefaultModel();
+	String query="insert data { <a> <b> ?test . }";
+	Queries.updateModel(m, query,Tools.getParameters(new Parameter("test","uri",null)));
+	m.write(System.out,"TTL");
+	
+	
+	
+	
+	
+	
+	
+}
 }

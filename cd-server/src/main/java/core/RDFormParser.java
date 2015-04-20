@@ -14,7 +14,14 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-
+/**
+ * 
+ * @author Stanislav Beran
+ * @deprecated 
+ * Old class to handle generation of RDForms templates based on the defined schema
+ * @see NewFormParser.java
+ *
+ */
 public class RDFormParser {
 
 	

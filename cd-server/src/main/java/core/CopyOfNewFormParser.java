@@ -26,7 +26,12 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import com.hp.hpl.jena.vocabulary.XSD;
-
+/**
+ * This class handles generating RDForm templates from ontology. 
+ * 
+ * @author Stanislav Beran
+ *
+ */
 public class CopyOfNewFormParser {
 
 	
@@ -484,7 +489,7 @@ private JSONArray getChoiceArray(String query, String endpoint){
 
 public static void main (String[] args){
 	
-	System.out.println(CopyOfNewFormParser.getTemplates("http://crowddata.abdn.ac.uk/datasets/testdemand/schema/Demand", "testdemand",true).toString(5));
+	System.out.println(CopyOfNewFormParser.getTemplates("http://crowddata.abdn.ac.uk/def/incidents/Report", "incidents",false).toString(5));
 	
 	
 }

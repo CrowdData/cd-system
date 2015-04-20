@@ -3,7 +3,11 @@ package core;
 import java.util.ArrayList;
 
 import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
-
+/**
+ * 
+ * @author Stanislav Beran
+ *
+ */
 public class XSDTypes {
 
 	

@@ -1,5 +1,9 @@
 package pojo;
-
+/**
+ * Pojo class used with RDFormParser to set label and description of ITEM
+ * @author stan
+ *
+ */
 public class Description {
 
 	public String label;

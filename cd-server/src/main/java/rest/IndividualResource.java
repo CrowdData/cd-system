@@ -41,11 +41,16 @@ import core.UpdateHandler;
 import core.XSDDateTime;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * Individual resource class
  */
 @Path("resources")
 public class IndividualResource {
-  
+  /**
+   * POST handler to retrieve triples and additional data for requested resource
+   * @param callback
+   * @param json
+   * @return
+   */
 	@POST
 	@JSONP(queryParam="callback")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -56,7 +61,12 @@ public class IndividualResource {
 		return Response.ok().entity(response.toString()).build();	
 		}
 		
-		
+	/**
+	 * Update data 	
+	 * @param callback
+	 * @param jsonBody
+	 * @return
+	 */
 	@POST
 	@Path("update")
 	@JSONP(queryParam="callback")

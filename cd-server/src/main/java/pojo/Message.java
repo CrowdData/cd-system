@@ -1,7 +1,10 @@
 package pojo;
-
 import javax.xml.bind.annotation.XmlRootElement;
-
+/**
+ * Pojo class for message handling between server and client side
+ * @author Stanislav Beran
+ *
+ */
 @XmlRootElement
 public class Message {
 	
