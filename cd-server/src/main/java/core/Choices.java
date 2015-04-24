@@ -9,7 +9,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
-public class DemandStuff {
+public class Choices {
 
 	
 	public JSONArray getBusChoices(){
@@ -60,7 +60,7 @@ public class DemandStuff {
 	public static JSONArray getRelatedIncidents()
 	{
 		
-		String location="http://crowddata.abdn.ac.uk/query/sparql";
+		String location=Strings.FUSEKI_QUERY_URI;
 	
 		 String getTypeChoiceQeury=	"SELECT ?label ?value FROM <http://crowddata.abdn.ac.uk/datasets/incidents/data/> " +
 				"               WHERE " + 
@@ -100,7 +100,7 @@ public class DemandStuff {
 	}
 	public static JSONArray getRelatedEvents()
 	{
-		String location="http://crowddata.abdn.ac.uk/query/sparql";
+		String location=Strings.FUSEKI_QUERY_URI;
 		
 		 String getTypeChoiceQeury=	"SELECT ?label ?value FROM <http://crowddata.abdn.ac.uk/datasets/eventsv2/data/>" +
 				"               WHERE " + 
@@ -123,8 +123,8 @@ public class DemandStuff {
 	
 	
 	public static void main (String args[]){
-		JSONArray a=new DemandStuff().getRelatedEvents();
-		JSONArray b=new DemandStuff().getIncidentStatusChoices();
+		JSONArray a=new Choices().getRelatedEvents();
+		JSONArray b=new Choices().getIncidentStatusChoices();
 	//	for(int i=0; i<a.length();i++ ){
 	//		System.out.println(a.getJSONObject(i).toString(5));
 			

@@ -13,7 +13,10 @@ public class Strings {
 	public static String FUSEKI_SERVICE_URI="http://localhost:3030/crowddata/data";
 	public static String FUSEKI_QUERY_URI="http://crowddata.abdn.ac.uk/query/sparql";
 	public static String FUSEKI_UPDATE_URI="http://localhost:3030/crowddata/update";
-	
+	/**
+	 * template locations
+	 */
+	static String templateLocation="http://crowddata.abdn.ac.uk/templates/";
 	
 	
 	

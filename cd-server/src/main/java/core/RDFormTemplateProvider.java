@@ -12,7 +12,6 @@ import org.json.JSONObject;
  */
 public class RDFormTemplateProvider {
 	static RDFormTemplateProvider provider=null;
-	static String defaultLocation="http://crowddata.abdn.ac.uk/templates/";
 	HashMap<String,String> templateMappings;
 	
 	static {
@@ -34,14 +33,14 @@ public class RDFormTemplateProvider {
 		provider=new RDFormTemplateProvider();
 		
 		provider.templateMappings=new HashMap<String,String>();
-		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Demand",defaultLocation+"demand-template.json");
-		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Event",defaultLocation+"event-template.json");
-		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Feedback",defaultLocation+"feedback-template.json");
-		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Response",defaultLocation+"response-template.json");
-		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Question",defaultLocation+"question-template.json");
-		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Disruption",defaultLocation+"disruption-template.json");
-		provider.templateMappings.put("http://crowddata.abdn.ac.uk/def/incidents/Report",defaultLocation+"disruption-template-new.json");
-		provider.templateMappings.put("http://crowddata.abdn.ac.uk/def/events/IITBEvent",defaultLocation+"event-template-new.json");
+		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Demand",Strings.templateLocation+"demand-template.json");
+		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Event",Strings.templateLocation+"event-template.json");
+		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Feedback",Strings.templateLocation+"feedback-template.json");
+		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Response",Strings.templateLocation+"response-template.json");
+		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Question",Strings.templateLocation+"question-template.json");
+		provider.templateMappings.put("http://crowddata.abdn.ac.uk/ontologies/cd/0.1/Disruption",Strings.templateLocation+"disruption-template.json");
+		provider.templateMappings.put("http://crowddata.abdn.ac.uk/def/incidents/Report",Strings.templateLocation+"disruption-template-new.json");
+		provider.templateMappings.put("http://crowddata.abdn.ac.uk/def/events/IITBEvent",Strings.templateLocation+"event-template-new.json");
 	}
 	/**
 	 * This method returns RDForm template based on the requested type and checks if multiple choices are existent for any of the templates

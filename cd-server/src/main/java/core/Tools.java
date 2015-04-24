@@ -76,7 +76,7 @@ public class Tools {
 	 * describe query on parent resource only is not sufficient.
 	 * 
 	 * @param m
-	 *            - base model
+	 *            - resource represented as a model 
 	 */
 	public static void buildChildren(Model m) {
 		NodeIterator it = m.listObjects();
@@ -116,7 +116,7 @@ public class Tools {
 	}
 
 	/**
-	 * //TODO rewrite to have rdftemplate id items unique and retrieve sparql
+	 * TODO rewrite to have rdftemplate id items unique and retrieve sparql
 	 * query to get choices
 	 * 
 	 * @param j
@@ -126,7 +126,7 @@ public class Tools {
 		System.out.println("ID choice " + id);
 		if (id.equals("related_incident")) {
 			System.out.println("Related incident stuff");
-			JSONArray a = DemandStuff.getRelatedIncidents();
+			JSONArray a = Choices.getRelatedIncidents();
 			if (a.length() > 0) {
 				System.out.println("Related incidentds NOT ZERO");
 				// remove invisible always first in styles
@@ -136,9 +136,9 @@ public class Tools {
 
 		} else if (id.equals("related_event")) {
 			System.out.println("Related event");
-			JSONArray a = DemandStuff.getRelatedEvents();
+			JSONArray a = Choices.getRelatedEvents();
 			if (a.length() > 0) {
-				System.out.println("Related incidentds NOT ZERO");
+				System.out.println("Related events NOT ZERO");
 				// remove invisible always first in styles
 				j.getJSONArray("styles").remove(0);
 				j.put("choices", a);

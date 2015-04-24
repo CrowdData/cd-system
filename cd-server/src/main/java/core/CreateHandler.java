@@ -75,7 +75,11 @@ public class CreateHandler {
 	
 	
 	
-	
+	/**
+	 * This method is adding rdf types to the Individual (resource to be created) defined in the template
+	 * @param individual  newly created resource where the constraints types are to be added
+	 * @param template	  RDForm template root item 
+	 */
 	private void addTemplateConstraints(OntResource individual, JSONObject template){
 		JSONObject root=findRootTemp(template);
 		if(!root.has("constraints")){
@@ -94,6 +98,11 @@ public class CreateHandler {
 		
 		
 	}
+	/**
+	 * Get the root item of the RDF template
+	 * @param template - RDForm template json object
+	 * @return  RDForm template root item
+	 */
 	private JSONObject findRootTemp(JSONObject template){
 		String rootID=template.getString("root");
 		JSONArray a=template.getJSONArray("templates");
