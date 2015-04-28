@@ -101,3 +101,7 @@ local.properties
  
 # PDT-specific
 .buildpath
+
+
+#rdfdumps
+/data
