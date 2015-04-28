@@ -1,0 +1,39 @@
+@prefix :      <http://crowddata.abdn.ac.uk/def/events/> .
+@prefix user-schema: <http://crowddata.abdn.ac.uk/datasets/testdemand/schema/> .
+@prefix prov:  <http://www.w3.org/prov/ns#> .
+@prefix geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix form-requirements: <http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#> .
+@prefix void:  <http://rdfs.org/ns/void#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix sioc:  <http://rdfs.org/sioc/ns#> .
+@prefix user-ka: <http://crowddata.abdn.ac.uk/datasets/testdemand/ka/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix unnamed1: <http://t3.abdn.ac.uk/t3/ontologies/unnamed1#> .
+@prefix cd:    <http://crowddata.abdn.ac.uk/ontologies/cd/0.1/> .
+
+<http://crowddata.abdn.ac.uk/datasets/feedback/resource/8-X_TTn2Sc6iWRS_BCheKQ>
+        dcterms:abstract  "This is a very nice dashboard" ;
+        dcterms:created   "2015-03-27T12:56:06Z"^^xsd:dateTime ;
+        dcterms:creator   "David" ;
+        dcterms:date      "2015-03-27T12:58:58+00:00"^^xsd:date ;
+        foaf:account      "dcorsar@abdn" .
+
+<http://crowddata.abdn.ac.uk/datasets/feedback/resource/8uBkkRIbSnW_tCnxwPVg6g>
+        dcterms:abstract  "Works great as a web app on windows phone 📱. Able to submit data now." ;
+        dcterms:created   "2015-03-30T08:38:12Z"^^xsd:dateTime ;
+        dcterms:creator   "Sankranti " ;
+        dcterms:date      "2015-03-30T13:07:29+05:30"^^xsd:date ;
+        foaf:account      "sankrantijoshi@gmail.com" .
+
+<http://crowddata.abdn.ac.uk/datasets/feedback/resource/8D8ubzUlRven9_RQ61kPaw>
+        dcterms:abstract  "It's fine overall as a debut. About the sections I can't comment because I'm no more living there. But, I can suggest small refinement about GUI.  For each section you could add  picture apart from description. Similarly about introduction section you could start with adding IIT Logo, and background should not be plain white colour. I think all of these you might been planning. \n tum tum tracking is excellent, apart from this you could add directions for a given origin and destination by all modes including walk. " ;
+        dcterms:created   "2015-03-30T14:44:43Z"^^xsd:dateTime ;
+        dcterms:creator   "Sadguna Nuli " ;
+        dcterms:date      "2015-03-30T19:00:50+05:30"^^xsd:date ;
+        foaf:account      "findguna@gmail.com " .

@@ -1,0 +1,81 @@
+@prefix :      <http://crowddata.abdn.ac.uk/def/events/> .
+@prefix user-schema: <http://crowddata.abdn.ac.uk/datasets/testdemand/schema/> .
+@prefix prov:  <http://www.w3.org/prov/ns#> .
+@prefix geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix form-requirements: <http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#> .
+@prefix void:  <http://rdfs.org/ns/void#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix sioc:  <http://rdfs.org/sioc/ns#> .
+@prefix user-ka: <http://crowddata.abdn.ac.uk/datasets/testdemand/ka/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix unnamed1: <http://t3.abdn.ac.uk/t3/ontologies/unnamed1#> .
+@prefix cd:    <http://crowddata.abdn.ac.uk/ontologies/cd/0.1/> .
+
+<http://crowddata.abdn.ac.uk/datasets/questions/resource/L6mhGyICSoW6SOQglDiFOw>
+        dcterms:created   "2015-03-31T13:16:10Z"^^xsd:dateTime ;
+        sioc:content      "what is the best way to get from Main Gate to H12?" ;
+        sioc:has_creator  [ sioc:email  "d@c.c" ;
+                            sioc:name   "d" ;
+                            <http://www.w3.org/TR/rdf-schema/type>
+                                    sioc:User
+                          ] ;
+        sioc:has_reply    <http://crowddata.abdn.ac.uk/datasets/questions/resource/IwGFcAznSqCe04A23BJ0tw> , <http://crowddata.abdn.ac.uk/datasets/questions/resource/dlUpgrUzSzGb-r2wzAue3A> .
+
+<http://crowddata.abdn.ac.uk/resources/u16F4A3DSFefF2Lh2MNsOg>
+        a           sioc:User ;
+        sioc:email  "Once" ;
+        sioc:name   "Twice" .
+
+<http://crowddata.abdn.ac.uk/datasets/questions/resource/p4vyj6WITkOkAA-SE0Xj5w>
+        a                 <http://www.w3.org/ns/prov#Entity> , sioc:Post , cd:Question ;
+        cd:rdfTemplate    "http://crowddata.abdn.ac.uk/templates/question-template.json" ;
+        cd:userid         "19264229-aa89-cf11-ce38-25070bbe09d4" ;
+        void:inDataset    <http://crowddata.abdn.ac.uk/datasets/questions/data/> ;
+        sioc:content      "hh" ;
+        sioc:created_at   "2015-04-07T17:47:39Z"^^xsd:dateTime ;
+        sioc:has_creator  <http://crowddata.abdn.ac.uk/resources/u16F4A3DSFefF2Lh2MNsOg> .
+
+<http://crowddata.abdn.ac.uk/resources/9gxNvYHuTxueIh8LE1VJ8Q>
+        a           sioc:User ;
+        sioc:email  "s" ;
+        sioc:name   "D" .
+
+<http://crowddata.abdn.ac.uk/resources/6XBj-zxvRRKyhhFKmUZ9DQ>
+        a           sioc:User ;
+        sioc:email  "a" ;
+        sioc:name   "s" .
+
+<http://crowddata.abdn.ac.uk/datasets/questions/resource/DBKQI3mKRhyKcu51G0fWog>
+        a                 <http://www.w3.org/ns/prov#Entity> , sioc:Post , cd:Response ;
+        cd:rdfTemplate    "http://crowddata.abdn.ac.uk/templates/response-template.json" ;
+        cd:userid         "d9b2542e-fba8-2958-190c-1688e554884a" ;
+        void:inDataset    <http://crowddata.abdn.ac.uk/datasets/questions/data/> ;
+        sioc:content      "Not sure." ;
+        sioc:created_at   "2015-04-06T18:36:58Z"^^xsd:dateTime ;
+        sioc:has_creator  <http://crowddata.abdn.ac.uk/resources/9gxNvYHuTxueIh8LE1VJ8Q> .
+
+<http://crowddata.abdn.ac.uk/datasets/questions/resource/IwGFcAznSqCe04A23BJ0tw>
+        a                 <http://www.w3.org/ns/prov#Entity> , sioc:Post , cd:Response ;
+        cd:rdfTemplate    "http://crowddata.abdn.ac.uk/templates/response-template.json" ;
+        cd:userid         "d9b2542e-fba8-2958-190c-1688e554884a" ;
+        void:inDataset    <http://crowddata.abdn.ac.uk/datasets/questions/data/> ;
+        sioc:content      "Answer" ;
+        sioc:created_at   "2015-04-06T19:03:38Z"^^xsd:dateTime ;
+        sioc:has_creator  <http://crowddata.abdn.ac.uk/resources/6XBj-zxvRRKyhhFKmUZ9DQ> ;
+        sioc:reply_of     <http://crowddata.abdn.ac.uk/datasets/questions/resource/L6mhGyICSoW6SOQglDiFOw> .
+
+<http://crowddata.abdn.ac.uk/datasets/questions/resource/dlUpgrUzSzGb-r2wzAue3A>
+        dcterms:created   "2015-04-07T13:46:48Z"^^xsd:dateTime ;
+        sioc:content      "It is a straight path from main gate to H12. You can either catch TumTum bus no 2A or an auto from main gate " ;
+        sioc:has_creator  [ sioc:email  "lekshmyvv@iitb.ac.in" ;
+                            sioc:name   "Lekshmy " ;
+                            <http://www.w3.org/TR/rdf-schema/type>
+                                    sioc:User
+                          ] ;
+        sioc:reply_of     <http://crowddata.abdn.ac.uk/datasets/questions/resource/L6mhGyICSoW6SOQglDiFOw> .

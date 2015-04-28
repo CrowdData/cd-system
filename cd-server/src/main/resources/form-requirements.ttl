@@ -6,13 +6,47 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix cd: <http://crowddata.abdn.ac.uk/ontologies/cd/0.1/> .
+
+
+
 
 <http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements>
   rdf:type owl:Ontology ;
   owl:imports <http://rdfs.org/ns/void> ;
   owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
 .
+
+
+cd:sparqlQuery a owl:DatatypeProperty;
+rdfs:label "Sparql Query";
+rdfs:comment "Sparql SELECT Query to retrieve value and label instances for a particular property" .
+
+cd:sparqlEndpoint a owl:ObjectProperty;
+rdfs:label "Sparql Endpoint";
+rdfs:comment "Endpoint for SPARQL query to be executed from" .
+
+
 form-requirements:PropertyDescription
+  rdf:type rdfs:Class ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty rdfs:label ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty rdfs:comment ;
+    ] ;
+	
+.
+form-requirements:dataset
+  rdf:type owl:ObjectProperty ;
+  rdfs:range rdfs:Resource ;
+.
+
+form-requirements:ClassDescription
   rdf:type rdfs:Class ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;

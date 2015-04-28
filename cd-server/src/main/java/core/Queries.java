@@ -84,8 +84,8 @@ public class Queries {
 			"WHERE{\r\n" + 
 			"?b0 void:class ?resource .\r\n" + 
 			"?b0 void:property ?property .\r\n" + 
-			"?b0 cd:sparqlQuery ?query .} \r\n" + 
-			"?b0 cd:sparqlEndpoint ?endpoint .} \r\n" + 
+			"?b0 cd:sparqlQuery ?query . \r\n" + 
+			"?b0 cd:sparqlEndpoint ?endpoint . \r\n" + 
 			"}\r\n" + 
 			"\r\n" + 
 			"";

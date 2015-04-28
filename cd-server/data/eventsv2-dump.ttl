@@ -1,0 +1,222 @@
+@prefix :      <http://crowddata.abdn.ac.uk/def/events/> .
+@prefix user-schema: <http://crowddata.abdn.ac.uk/datasets/testdemand/schema/> .
+@prefix prov:  <http://www.w3.org/prov/ns#> .
+@prefix geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix form-requirements: <http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#> .
+@prefix void:  <http://rdfs.org/ns/void#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix sioc:  <http://rdfs.org/sioc/ns#> .
+@prefix user-ka: <http://crowddata.abdn.ac.uk/datasets/testdemand/ka/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix unnamed1: <http://t3.abdn.ac.uk/t3/ontologies/unnamed1#> .
+@prefix cd:    <http://crowddata.abdn.ac.uk/ontologies/cd/0.1/> .
+
+<http://crowddata.abdn.ac.uk/resources/CCHNrnIVRUCKxI00T5JCNg>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-19T13:24:00+05:30"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/resources/5c3SFonuS4mytK3q7JpfmA>
+        a          geo:SpatialThing ;
+        foaf:name  "Venue: ME 217 (Mechanical Engineering Department, 1st floor)" .
+
+<http://crowddata.abdn.ac.uk/resources/ZJZel1f8Qk--bvIHZNM-Wg>
+        a          geo:SpatialThing ;
+        foaf:name  " Kresit Seminar room, 3rd floor" .
+
+<http://crowddata.abdn.ac.uk/resources/JE5aBXEORq27udvM-G6ldA>
+        a          geo:SpatialThing ;
+        foaf:name  "GG Conference Room, EE Department." .
+
+<http://crowddata.abdn.ac.uk/datasets/eventsv2/resource/O839cfJEQ92YBwlrFI62PQ>
+        a                    :IITBEvent , event:Event , <http://www.w3.org/ns/prov#Entity> ;
+        :eventType           :Other_Event ;
+        :hasTag              "Library, Reading Hall, 24x7" ;
+        cd:rdfTemplate       "http://crowddata.abdn.ac.uk/templates/event-template-new.json" ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/upBwbl7LQ_uok5fhtMisHQ> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/CCHNrnIVRUCKxI00T5JCNg> ;
+        dcterms:description  "Reading hall has been inaugrated and can be used 24x7" ;
+        dcterms:title        "Inaugration of reading hall" ;
+        void:inDataset       <http://crowddata.abdn.ac.uk/datasets/eventsv2/data/> ;
+        sioc:created_at      "2015-04-22T08:55:51Z"^^xsd:dateTime ;
+        <http://www.w3.org/ns/prov#wasAttributedTo>
+                <http://crowddata.abdn.ac.uk/datasets/users/resource/e9TaA0dBTe-bvXvHjnVnrA> .
+
+<http://crowddata.abdn.ac.uk/datasets/eventsv2/resource/AFxdmUamTCSz8at6xbtncA>
+        a                    <http://www.w3.org/ns/prov#Entity> , :IITBEvent , event:Event ;
+        :department          :Computer_Science_and_Engineering_Dept._Related ;
+        :eventType           :Cultural_Event ;
+        :hasTag              "dance" ;
+        cd:rdfTemplate       "http://crowddata.abdn.ac.uk/templates/event-template-new.json" ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/KCGLfHAKTZ-IKEzyMXPZHg> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/eeKYvw2wTV2mLfDYNUa7_A> ;
+        dcterms:description  "this is a test event" ;
+        void:inDataset       <http://crowddata.abdn.ac.uk/datasets/eventsv2/data/> ;
+        sioc:created_at      "2015-04-14T18:19:57Z"^^xsd:dateTime ;
+        <http://www.w3.org/ns/prov#wasAttributedTo>
+                <http://crowddata.abdn.ac.uk/datasets/users/resource/d3e61d22-eac2-6025-7bb1-d899d9e1b7d3> .
+
+<http://crowddata.abdn.ac.uk/datasets/eventsv2/resource/zDXDOF9fTWSHZn7N45_KLg>
+        a                    event:Event , :IITBEvent , <http://www.w3.org/ns/prov#Entity> ;
+        :eventType           :Quiz , :Competition ;
+        :hasTag              "sun" , "joe" , "shine" ;
+        cd:rdfTemplate       "http://crowddata.abdn.ac.uk/templates/event-template-new.json" ;
+        cd:userid            "22da3adc-42c8-09a3-41bc-3029ed33fa14" ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/jUPhnkXUQE2eflwiwbz37g> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/EOxj92HqTUOCSf63bqnyjw> ;
+        dcterms:description  "this is a quiz thats a great compeittion about the life and times of sunshine joe" ;
+        void:inDataset       <http://crowddata.abdn.ac.uk/datasets/eventsv2/data/> ;
+        sioc:created_at      "2015-04-08T16:51:18Z"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/resources/eeKYvw2wTV2mLfDYNUa7_A>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-14T18:19:04+01:00"^^xsd:dateTime ;
+        <http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime>
+                "2015-04-14T18:19:04+01:00"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/resources/abh1tK3ZQLOBIMq86cbwaA>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-08T15:00:38+01:00"^^xsd:dateTime ;
+        <http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime>
+                "2015-05-07T15:00:00+01:00"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/resources/JjX3XfxbRoWDqUuA12caAg>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-20T16:00:00+05:30"^^xsd:dateTime ;
+        <http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime>
+                "2015-04-15T17:11:25+05:30"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/datasets/eventsv2/resource/XisJx9lzTH2dAoZBVS2bOg>
+        a                    <http://www.w3.org/ns/prov#Entity> , :IITBEvent , event:Event ;
+        :eventType           :Screening_Film ;
+        cd:rdfTemplate       "http://crowddata.abdn.ac.uk/templates/event-template-new.json" ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/qlXn-G3tTESaqGZJCGAiwA> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/lIrrj-kkQv68t9ParN65pA> ;
+        dcterms:description  "Movie Title: Ida\nDirector:    Paweł Pawlikowski\nWriter:      Rebecca Lenkiewicz\n             Paweł Pawlikowski\n\nLanguage: Polish\nRuntime:  82 mins\nGenre:    Drama\n" ;
+        dcterms:title        "IDC Thursday Film Screening" ;
+        void:inDataset       <http://crowddata.abdn.ac.uk/datasets/eventsv2/data/> ;
+        sioc:created_at      "2015-04-23T07:46:49Z"^^xsd:dateTime ;
+        <http://www.w3.org/ns/prov#wasAttributedTo>
+                <http://crowddata.abdn.ac.uk/datasets/users/resource/Y2LiNjhSQgCdq70Q-97HIA> .
+
+<http://crowddata.abdn.ac.uk/resources/jUPhnkXUQE2eflwiwbz37g>
+        a          geo:SpatialThing ;
+        foaf:name  "somewere on campus" .
+
+<http://crowddata.abdn.ac.uk/resources/mXZ5FkhIRMWyVfRUCeP-ow>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-23T15:30:00+05:30"^^xsd:dateTime ;
+        <http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime>
+                "2015-04-23T00:00:00+05:30"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/resources/lIrrj-kkQv68t9ParN65pA>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-23T21:00:00+05:30"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/resources/fQH3khaiQeyXYr-0T9c03g>
+        a          geo:SpatialThing ;
+        foaf:name  "ME 217 (Mechanical Engineering Department, 1st floor)" .
+
+<http://crowddata.abdn.ac.uk/resources/oLppl9R5TvK4iLpo6epEyA>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-26T16:00:00+05:30"^^xsd:dateTime ;
+        <http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime>
+                "2015-04-26T20:30:00+05:30"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/datasets/eventsv2/resource/sxIt6QD3SbOikddgnuExrw>
+        a                    event:Event , <http://www.w3.org/ns/prov#Entity> , :IITBEvent ;
+        :department          :Mechanical_Engineering_Dept._Related ;
+        :eventType           :Lecture ;
+        :hasTag              "\"Towards Ubiquitous Cost-competitive Solar Power\"" ;
+        cd:rdfTemplate       "http://crowddata.abdn.ac.uk/templates/event-template-new.json" ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/fQH3khaiQeyXYr-0T9c03g> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/JjX3XfxbRoWDqUuA12caAg> ;
+        dcterms:description  "\"Towards Ubiquitous Cost-competitive Solar Power\" by Professor Ranga\nPitchumani, Advanced Materials and Technologies Laboratory, Department of\nMechanical Engineering, Virginia Tech, USA\n" ;
+        dcterms:title        "SEMINAR BY PROF. RANGA PITCHUMANI" ;
+        void:inDataset       <http://crowddata.abdn.ac.uk/datasets/eventsv2/data/> ;
+        sioc:created_at      "2015-04-15T12:43:07Z"^^xsd:dateTime ;
+        <http://www.w3.org/ns/prov#wasAttributedTo>
+                <http://crowddata.abdn.ac.uk/datasets/users/resource/Y2LiNjhSQgCdq70Q-97HIA> .
+
+<http://crowddata.abdn.ac.uk/resources/KCGLfHAKTZ-IKEzyMXPZHg>
+        a          geo:SpatialThing ;
+        foaf:name  "big office on the corner" .
+
+<http://crowddata.abdn.ac.uk/resources/qlXn-G3tTESaqGZJCGAiwA>
+        a          geo:SpatialThing ;
+        foaf:name  "IDC AUDITORIUM" .
+
+<http://crowddata.abdn.ac.uk/datasets/eventsv2/resource/8seNwsy-SOy0rlL8-ntAPQ>
+        a                    <http://www.w3.org/ns/prov#Entity> , event:Event , :IITBEvent ;
+        :department          :Electrical_Engineering_Dept._Related ;
+        :eventType           :Talk ;
+        :hasTag              "Choosing amongst heterogeneous servers: Mean field and propagation of chaos" ;
+        cd:rdfTemplate       "http://crowddata.abdn.ac.uk/templates/event-template-new.json" ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/JE5aBXEORq27udvM-G6ldA> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/mXZ5FkhIRMWyVfRUCeP-ow> ;
+        dcterms:description  "Seminar" ;
+        dcterms:title        " Talk by Ravi Mazumdar" ;
+        void:inDataset       <http://crowddata.abdn.ac.uk/datasets/eventsv2/data/> ;
+        sioc:created_at      "2015-04-22T12:40:02Z"^^xsd:dateTime ;
+        <http://www.w3.org/ns/prov#wasAttributedTo>
+                <http://crowddata.abdn.ac.uk/datasets/users/resource/Y2LiNjhSQgCdq70Q-97HIA> .
+
+<http://crowddata.abdn.ac.uk/resources/lSvn1iQZRuiI7fPMXKQ0xw>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-20T16:00:00+05:30"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/resources/EOxj92HqTUOCSf63bqnyjw>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-09T16:50:00+01:00"^^xsd:dateTime ;
+        <http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime>
+                "2015-04-12T16:50:00+01:00"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/datasets/eventsv2/resource/Dz7B8rDOQhCfrM3EePeh8w>
+        a                    event:Event , <http://www.w3.org/ns/prov#Entity> , :IITBEvent ;
+        :department          :Industrial_Design_Center_Related ;
+        :eventType           :Festival , :Competition ;
+        :hasTag              "film making" , "photography" ;
+        :more_info           "http://link.to.registration"^^xsd:anyURI , "http://link.to.updates"^^xsd:anyURI ;
+        cd:rdfTemplate       "http://crowddata.abdn.ac.uk/templates/event-template-new.json" ;
+        cd:userid            "a5422477-6299-3dc6-ca34-2b565a95b5f2" ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/M1Rqt-VsQIaan_goTzUtOg> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/abh1tK3ZQLOBIMq86cbwaA> ;
+        dcterms:description  "Details of the event long description" ;
+        void:inDataset       <http://crowddata.abdn.ac.uk/datasets/eventsv2/data/> ;
+        sioc:created_at      "2015-04-08T15:02:25Z"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/datasets/eventsv2/resource/LMDrwEYqTMah_vXmEo8ylw>
+        a                    :IITBEvent , event:Event , <http://www.w3.org/ns/prov#Entity> ;
+        :eventType           :Musical_Performance ;
+        :hasTag              "cultural event" ;
+        cd:rdfTemplate       "http://crowddata.abdn.ac.uk/templates/event-template-new.json" ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/ZJZel1f8Qk--bvIHZNM-Wg> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/oLppl9R5TvK4iLpo6epEyA> ;
+        dcterms:description  "Hindustani classical performance by the students of Mrs. Taposhi Das. This is the first ever performance by her students, and aims to  showcase their training in classical music and give them exposure to performing on stage. Prof Malshe will also give a live lecture-cum-demo in classical music on this occasion." ;
+        dcterms:title        "Classical Music Performance by students of Mrs Taposhi Das" ;
+        void:inDataset       <http://crowddata.abdn.ac.uk/datasets/eventsv2/data/> ;
+        sioc:created_at      "2015-04-22T12:43:47Z"^^xsd:dateTime ;
+        <http://www.w3.org/ns/prov#wasAttributedTo>
+                <http://crowddata.abdn.ac.uk/datasets/users/resource/Y2LiNjhSQgCdq70Q-97HIA> .
+
+<http://crowddata.abdn.ac.uk/resources/M1Rqt-VsQIaan_goTzUtOg>
+        a          geo:SpatialThing ;
+        foaf:name  "Hostel 14" .
+
+<http://crowddata.abdn.ac.uk/resources/upBwbl7LQ_uok5fhtMisHQ>
+        a          geo:SpatialThing ;
+        foaf:name  "Library" .

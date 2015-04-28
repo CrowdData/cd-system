@@ -1,0 +1,173 @@
+@prefix :      <http://crowddata.abdn.ac.uk/def/events/> .
+@prefix user-schema: <http://crowddata.abdn.ac.uk/datasets/testdemand/schema/> .
+@prefix prov:  <http://www.w3.org/prov/ns#> .
+@prefix geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix form-requirements: <http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#> .
+@prefix void:  <http://rdfs.org/ns/void#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix sioc:  <http://rdfs.org/sioc/ns#> .
+@prefix user-ka: <http://crowddata.abdn.ac.uk/datasets/testdemand/ka/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix unnamed1: <http://t3.abdn.ac.uk/t3/ontologies/unnamed1#> .
+@prefix cd:    <http://crowddata.abdn.ac.uk/ontologies/cd/0.1/> .
+
+<http://crowddata.abdn.ac.uk/resources/00sisVVJQOqgt4cCkBVWkA>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-24T14:00:00+05:30"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/resources/MJlJUEZeTmCtTYijcDkiPg>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-20T16:40:38+05:30"^^xsd:dateTime ;
+        <http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime>
+                "2015-04-25T16:40:00+05:30"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/resources/BSL0Sp07SWSGeOr4XX8mkA>
+        a                    <http://crowddata.abdn.ac.uk/def/incidents/Incident> ;
+        <http://crowddata.abdn.ac.uk/def/incidents/hasStatus>
+                <http://crowddata.abdn.ac.uk/def/incidents/Future> ;
+        <http://crowddata.abdn.ac.uk/def/incidents/incidentType>
+                <http://crowddata.abdn.ac.uk/def/incidents/PowerOutage> ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/Vp4u1E97SN2s6EVZU1N9QQ> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/TWl_49SSQBuaTM_RMXmrXQ> ;
+        dcterms:description  "The power supply disturbance in the following area due to cable connection works near H-8 Bicycle shop feeder pillar by M/s Jhansi" ;
+        dcterms:title        "10 minutes disturbance two times(2 pm & 3:30 Pm)" .
+
+<http://crowddata.abdn.ac.uk/datasets/incidents/resource/JyOc-WojQEeBXjtzBHVrcg>
+        a                  <http://www.w3.org/ns/prov#Entity> , <http://crowddata.abdn.ac.uk/def/incidents/Report> , sioc:Post ;
+        cd:rdfTemplate     "http://crowddata.abdn.ac.uk/templates/disruption-template-new.json" ;
+        void:inDataset     <http://crowddata.abdn.ac.uk/datasets/incidents/data/> ;
+        sioc:created_at    "2015-04-17T12:48:57Z"^^xsd:dateTime ;
+        <http://www.w3.org/ns/prov#wasAttributedTo>
+                <http://crowddata.abdn.ac.uk/datasets/users/resource/Y2LiNjhSQgCdq70Q-97HIA> ;
+        foaf:primaryTopic  <http://crowddata.abdn.ac.uk/resources/FlSzbvVZTxSZlqv6OJRSjQ> .
+
+<http://crowddata.abdn.ac.uk/resources/a-78q9-hSaGx_MD7kErHKg>
+        a                    <http://crowddata.abdn.ac.uk/def/incidents/Incident> ;
+        <http://crowddata.abdn.ac.uk/def/incidents/hasStatus>
+                <http://crowddata.abdn.ac.uk/def/incidents/Active> ;
+        <http://crowddata.abdn.ac.uk/def/incidents/incidentType>
+                <http://crowddata.abdn.ac.uk/def/incidents/ParkingRestriction> ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/PgW_YVa8SuuAE7z13NkGrA> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/MJlJUEZeTmCtTYijcDkiPg> ;
+        dcterms:description  "long " ;
+        dcterms:title        "civil dept" .
+
+<http://crowddata.abdn.ac.uk/resources/_VQOCtOxQImWpX_Fj7CEQw>
+        a          geo:SpatialThing ;
+        foaf:name  "Chemical and Chemistry Annex building" .
+
+<http://crowddata.abdn.ac.uk/resources/MogwWpMrRmy2ueqYK_Iy5Q>
+        a                    <http://crowddata.abdn.ac.uk/def/incidents/Incident> ;
+        <http://crowddata.abdn.ac.uk/def/incidents/hasStatus>
+                <http://crowddata.abdn.ac.uk/def/incidents/Active> ;
+        <http://crowddata.abdn.ac.uk/def/incidents/incidentType>
+                <http://crowddata.abdn.ac.uk/def/incidents/PowerOutage> ;
+        <http://crowddata.abdn.ac.uk/def/incidents/relatedIncident>
+                <http://crowddata.abdn.ac.uk/resources/FlSzbvVZTxSZlqv6OJRSjQ> ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/3Q16oD96SkabxH1V1BwLUQ> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/Re44GhKURMmM3V7CXgOcJg> ;
+        dcterms:description  "Power supply will not be available in SAIF dept. Busbar area for adding connecting cables" ;
+        dcterms:title        "Power supply cut " .
+
+<http://crowddata.abdn.ac.uk/resources/3Q16oD96SkabxH1V1BwLUQ>
+        a          geo:SpatialThing ;
+        foaf:name  "SAIF dept." .
+
+<http://crowddata.abdn.ac.uk/resources/FlSzbvVZTxSZlqv6OJRSjQ>
+        a                    <http://crowddata.abdn.ac.uk/def/incidents/Incident> ;
+        <http://crowddata.abdn.ac.uk/def/incidents/hasStatus>
+                <http://crowddata.abdn.ac.uk/def/incidents/Future> ;
+        <http://crowddata.abdn.ac.uk/def/incidents/incidentType>
+                <http://crowddata.abdn.ac.uk/def/incidents/PowerOutage> ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/_VQOCtOxQImWpX_Fj7CEQw> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/xIonjlHDSs-0vIz_bNRyqw> ;
+        dcterms:description  "The power supply will not be available due to cable shifting works" ;
+        dcterms:title        "Power Outage" .
+
+<http://crowddata.abdn.ac.uk/datasets/incidents/resource/Mbbqw4K1S1SmVjUmvPDICA>
+        a                  <http://www.w3.org/ns/prov#Entity> , <http://crowddata.abdn.ac.uk/def/incidents/Report> , sioc:Post ;
+        cd:rdfTemplate     "http://crowddata.abdn.ac.uk/templates/disruption-template-new.json" ;
+        void:inDataset     <http://crowddata.abdn.ac.uk/datasets/incidents/data/> ;
+        sioc:created_at    "2015-04-23T07:36:26Z"^^xsd:dateTime ;
+        <http://www.w3.org/ns/prov#wasAttributedTo>
+                <http://crowddata.abdn.ac.uk/datasets/users/resource/Y2LiNjhSQgCdq70Q-97HIA> ;
+        foaf:primaryTopic  <http://crowddata.abdn.ac.uk/resources/BSL0Sp07SWSGeOr4XX8mkA> .
+
+<http://crowddata.abdn.ac.uk/resources/PgW_YVa8SuuAE7z13NkGrA>
+        a          geo:SpatialThing ;
+        foaf:name  "civil " .
+
+<http://crowddata.abdn.ac.uk/resources/Re44GhKURMmM3V7CXgOcJg>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-22T13:21:51+05:30"^^xsd:dateTime ;
+        <http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime>
+                "2015-04-22T13:21:51+05:30"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/resources/l36JS1wXSrCFLG7HIX4jnw>
+        a          geo:SpatialThing ;
+        foaf:name  "Hostel 8,11,staff hostel,Health office,Gymkhana opp. H-8 Pumps" .
+
+<http://crowddata.abdn.ac.uk/datasets/incidents/resource/PVkLKpxmSN6x8ijUVhPBFg>
+        a                  <http://www.w3.org/ns/prov#Entity> , <http://crowddata.abdn.ac.uk/def/incidents/Report> , sioc:Post ;
+        cd:rdfTemplate     "http://crowddata.abdn.ac.uk/templates/disruption-template-new.json" ;
+        void:inDataset     <http://crowddata.abdn.ac.uk/datasets/incidents/data/> ;
+        sioc:created_at    "2015-04-23T07:31:44Z"^^xsd:dateTime ;
+        <http://www.w3.org/ns/prov#wasAttributedTo>
+                <http://crowddata.abdn.ac.uk/datasets/users/resource/Y2LiNjhSQgCdq70Q-97HIA> ;
+        foaf:primaryTopic  <http://crowddata.abdn.ac.uk/resources/R6gO3gnlQHOd6ay9ImoNow> .
+
+<http://crowddata.abdn.ac.uk/resources/R6gO3gnlQHOd6ay9ImoNow>
+        a                    <http://crowddata.abdn.ac.uk/def/incidents/Incident> ;
+        <http://crowddata.abdn.ac.uk/def/incidents/hasStatus>
+                <http://crowddata.abdn.ac.uk/def/incidents/Future> ;
+        <http://crowddata.abdn.ac.uk/def/incidents/incidentType>
+                <http://crowddata.abdn.ac.uk/def/incidents/PowerOutage> ;
+        event:place          <http://crowddata.abdn.ac.uk/resources/l36JS1wXSrCFLG7HIX4jnw> ;
+        event:time           <http://crowddata.abdn.ac.uk/resources/00sisVVJQOqgt4cCkBVWkA> ;
+        dcterms:description  "The power supply disturbance in the following area due to cable connection works near H-8 Bicycle shop feeder pillar by M/s Jhansi." ;
+        dcterms:title        "10 minutes disturbance two times(2 pm & 3:30 Pm)" .
+
+<http://crowddata.abdn.ac.uk/datasets/incidents/resource/_s9MDqktQu20v1DAqV1WnA>
+        a                  <http://www.w3.org/ns/prov#Entity> , <http://crowddata.abdn.ac.uk/def/incidents/Report> , sioc:Post ;
+        cd:rdfTemplate     "http://crowddata.abdn.ac.uk/templates/disruption-template-new.json" ;
+        void:inDataset     <http://crowddata.abdn.ac.uk/datasets/incidents/data/> ;
+        sioc:created_at    "2015-04-22T08:53:08Z"^^xsd:dateTime ;
+        <http://www.w3.org/ns/prov#wasAttributedTo>
+                <http://crowddata.abdn.ac.uk/datasets/users/resource/e9TaA0dBTe-bvXvHjnVnrA> ;
+        foaf:primaryTopic  <http://crowddata.abdn.ac.uk/resources/MogwWpMrRmy2ueqYK_Iy5Q> .
+
+<http://crowddata.abdn.ac.uk/resources/xIonjlHDSs-0vIz_bNRyqw>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-19T12:00:00+05:30"^^xsd:dateTime ;
+        <http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime>
+                "2015-04-19T17:30:00+05:30"^^xsd:dateTime .
+
+<http://crowddata.abdn.ac.uk/datasets/incidents/resource/YbBqCbOsTeCJSc6o4Lk-1A>
+        a                  <http://www.w3.org/ns/prov#Entity> , <http://crowddata.abdn.ac.uk/def/incidents/Report> , sioc:Post ;
+        cd:rdfTemplate     "http://crowddata.abdn.ac.uk/templates/disruption-template-new.json" ;
+        void:inDataset     <http://crowddata.abdn.ac.uk/datasets/incidents/data/> ;
+        sioc:created_at    "2015-04-20T12:13:12Z"^^xsd:dateTime ;
+        <http://www.w3.org/ns/prov#wasAttributedTo>
+                <http://crowddata.abdn.ac.uk/datasets/users/resource/Y2LiNjhSQgCdq70Q-97HIA> ;
+        foaf:primaryTopic  <http://crowddata.abdn.ac.uk/resources/a-78q9-hSaGx_MD7kErHKg> .
+
+<http://crowddata.abdn.ac.uk/resources/Vp4u1E97SN2s6EVZU1N9QQ>
+        a          geo:SpatialThing ;
+        foaf:name  "Hostel 8,11,staff hostel,Health office,Gymkhana opp. H-8 Pumps" .
+
+<http://crowddata.abdn.ac.uk/resources/TWl_49SSQBuaTM_RMXmrXQ>
+        a       <http://purl.org/NET/c4dm/timeline.owl#Interval> ;
+        <http://purl.org/NET/c4dm/timeline.owl#beginsAtDateTime>
+                "2015-04-24T14:00:00+05:30"^^xsd:dateTime ;
+        <http://purl.org/NET/c4dm/timeline.owl#endsAtDateTime>
+                "2015-04-23T15:30:00+05:30"^^xsd:dateTime .

@@ -27,7 +27,8 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import com.hp.hpl.jena.vocabulary.XSD;
 /**
- * This class handles generating RDForm templates from ontology. 
+ * This class handles generating RDForm templates from ontology. Main addition from NewFormParser is attempt to dynamicaly retrieve
+ * choices for RDF templates. 
  * 
  * @author Stanislav Beran
  *
@@ -88,16 +89,18 @@ public class CopyOfNewFormParser {
 		String schemaKA=NGHandler.getKAString(datasetNS);
 		Model intermediate=ModelFactory.createDefaultModel();
 		if(Repository.exists(schemaDS)){
-			intermediate.add(Repository.getModel(schemaDS));
-			
+		//	intermediate.add(Repository.getModel(schemaDS));
+			intermediate.read("http://crowddata.abdn.ac.uk/genform/demand-schema-example.ttl");
+			intermediate.read("http://crowddata.abdn.ac.uk/genform/demand-ka-example.ttl");
 		}
 		else{
 			throw new IllegalArgumentException(String.format("Schema for %s dataset doesn't exist",datasetNS));
 		}
 		if(Repository.exists(schemaKA)){
-			intermediate.add(Repository.getModel(schemaKA));
+		//	intermediate.add(Repository.getModel(schemaKA));
+		intermediate.read("http://crowddata.abdn.ac.uk/genform/demand-ka.ttl");
 		}
-		//imports are handled by making inference graph
+		//imports are handled by making inference graph, therefore any external imports must be defined in schema.
 		
 		model=ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_RDFS_INF, intermediate);
 		model.writeAll(System.out,"TTL");
@@ -126,6 +129,10 @@ public class CopyOfNewFormParser {
 			JSONObject cardinality=getCardinality(previousClass,prop);
 			if(cardinality.has("min")||cardinality.has("max")||cardinality.has("pref")){
 				template.put("cardinality", cardinality);
+			}
+			//if no cardinality constraints default is 0 with prefered 1
+			else{
+			 
 			}
 			template.put("property", prop.getURI());
 		}
@@ -186,6 +193,11 @@ public class CopyOfNewFormParser {
 					if(superclass.asRestriction().isMinCardinalityRestriction()){
 						int min=superclass.asRestriction().asMinCardinalityRestriction().getMinCardinality();
 						j.put("min", min);
+					}
+					//default cardinality
+					if(!(j.has("max")||j.has("min"))){
+						j.put("min", 0);
+						j.put("pref", 1);
 					}
 			}
 			}
@@ -248,18 +260,25 @@ public void convertProperty(OntProperty p,OntClass c, String ds){
 	if(cardinality.has("max")||cardinality.has("min")){
 		template.put("cardinality", cardinality);
 	}
+	
 	if(isChoice(p.getURI(), c.getURI())){
 		System.out.println("Property is choice.");
 		JSONArray array=getChoices(p.getURI(), c.getURI());
 		template.put("choices", array);
-		
-		
-		
+		template.put("type","choice");
+		template.put("nodetype", "RESOURCE");
+		if(isSame(array.getJSONObject(0))){
+			template.put("nodetype", "ONLY_LITERAL");
+		}
+		templates.put(template);
+		return;	
 	}
+	
+	
 	
 	Resource range=getRange(c,p);
 	if(range==null){
-	//	throw new NullPointerException("Range is neither overriden nor provided by the property.");
+		//throw new NullPointerException("Range is neither overriden nor provided by the property.");
 	}
 	System.out.println("Checking if "+p.getURI()+" is datatypeproperty");
 	if(range!=null && (p.isDatatypeProperty() ||isDatatypeResource(range))){
@@ -382,16 +401,7 @@ if(bindings.size()!=0){
 }
 	
 	
-public void loadSchemas(String ds){
-	
-	Model base=ModelFactory.createDefaultModel();
-	base.read("http://localhost/ontologies/user-ka.ttl");
-	base.read("http://localhost/ontologies/user-schema.ttl");
-	
-	model=ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM_RDFS_INF, base);
 
-	
-}
 	
 /*
  * Should work for both, property and class descriptions
@@ -420,10 +430,9 @@ return ResultSetParser.getBindings(r, Queries.TEMPLATE_SELECT_COMMENTS);
 }
 public boolean isChoice(String property, String resource){
 	ArrayList<Parameter> param=new ArrayList<Parameter>();
-	param.add(new Parameter("classType","http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#PropertyDescription",null));
 	param.add(new Parameter("property",property,null));
 	param.add(new Parameter("resource",resource,null));
-	param.add(new Parameter("choice","true",XSDDatatype.XSDboolean));
+	//param.add(new Parameter("choice","true",XSDDatatype.XSDboolean));
 	return Queries.ask(model,Queries.TEMPLATE_ASK_CHOICE,param);
 	//check query , check ontology boolean have no quotes. 
 }
@@ -436,7 +445,7 @@ public JSONArray getChoices(String property, String resource){
 	if(r.hasNext()){		
 	QuerySolution sol=r.next();
 	String query=sol.get("query").asLiteral().getString();
-	String endpoint=sol.get("endpoint").asLiteral().getString();
+	String endpoint=sol.get("endpoint").asResource().getURI();
 	
 	return getChoiceArray(query,endpoint);	
 		
@@ -457,8 +466,8 @@ private JSONArray getChoiceArray(String query, String endpoint){
 	while(r.hasNext()){
 		QuerySolution s=r.next();
 		JSONObject obj=new JSONObject();
-		RDFNode value=s.getResource("value");
-		RDFNode label=s.getResource("label");
+		RDFNode value=s.get("value");
+		RDFNode label=s.get("label");
 		if(value==null || label==null){
 			throw new NullPointerException("Label or Value is empty check you sparql query and ensure it contains label value bindings.");
 		}
@@ -470,10 +479,10 @@ private JSONArray getChoiceArray(String query, String endpoint){
 			System.out.println("Choice Lexical Form of value"+obj.getString("value"));
 		}
 		if(label.isResource()){
-			obj.put("label", value.asResource().getURI());
+			obj.put("label", label.asResource().getURI());
 		}
 		if(label.isLiteral()){
-			obj.put("label",value.asLiteral().getLexicalForm());
+			obj.put("label",label.asLiteral().getLexicalForm());
 			System.out.println("Choice Lexical Form of value"+obj.getString("value"));
 		}
 		
@@ -489,7 +498,7 @@ private JSONArray getChoiceArray(String query, String endpoint){
 
 public static void main (String[] args){
 	
-	System.out.println(CopyOfNewFormParser.getTemplates("http://crowddata.abdn.ac.uk/def/incidents/Report", "incidents",false).toString(5));
+	System.out.println(CopyOfNewFormParser.getTemplates("http://crowddata.abdn.ac.uk/datasets/testdemand/schema/Demand", "demandv2",true).toString(5));
 	
 	
 }

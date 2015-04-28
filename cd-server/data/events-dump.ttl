@@ -1,0 +1,72 @@
+@prefix :      <http://crowddata.abdn.ac.uk/def/events/> .
+@prefix user-schema: <http://crowddata.abdn.ac.uk/datasets/testdemand/schema/> .
+@prefix prov:  <http://www.w3.org/prov/ns#> .
+@prefix geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix form-requirements: <http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#> .
+@prefix void:  <http://rdfs.org/ns/void#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix sioc:  <http://rdfs.org/sioc/ns#> .
+@prefix user-ka: <http://crowddata.abdn.ac.uk/datasets/testdemand/ka/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix unnamed1: <http://t3.abdn.ac.uk/t3/ontologies/unnamed1#> .
+@prefix cd:    <http://crowddata.abdn.ac.uk/ontologies/cd/0.1/> .
+
+<http://crowddata.abdn.ac.uk/datasets/events/resource/hfTrsgYiQVykKJyFNrdIQw>
+        dcterms:abstract    "TITLE: One (Broad) Hammer and Three Nails\n\nSPEAKER: Prof. Nikhil Karamchandani, Electrical Engineering, IIT Bombay\n\nVENUE: Seminar Hall 21, VMCC" ;
+        dcterms:created     "2015-03-28T10:23:35Z"^^xsd:dateTime ;
+        dcterms:dateEnd     "2015-04-01T00:00:00"^^xsd:date ;
+        dcterms:dateStart   "2015-04-01T15:30:00+05:30"^^xsd:date ;
+        dcterms:title       "Electrical Engineering Colloquium " ;
+        dcterms:titleEvent  "Electrical Engineering Dept. Related" ;
+        foaf:homepage       <https://www.ee.iitb.ac.in/web/home> .
+
+<http://crowddata.abdn.ac.uk/datasets/events/resource/L6CEZO1BSXKR7QSAk5SZ4w>
+        dcterms:abstract    "Timings: 8:30 PM - 9:45 PM (Gates open at 8:00 PM)\nVenue: Open Air Theatre (OAT), Student Activity Centre (SAC)" ;
+        dcterms:created     "2015-03-31T11:22:17Z"^^xsd:dateTime ;
+        dcterms:dateEnd     "2015-03-31T15:51:30+05:30"^^xsd:date ;
+        dcterms:dateStart   "2015-03-31T15:51:30+05:30"^^xsd:date ;
+        dcterms:title       "PAF #4 - 'AAHUTI' by Hostels 4, 6, 13, 15C, Tansa" ;
+        dcterms:titleEvent  "IIT - Related" ;
+        foaf:homepage       <http://en.wikipedia.org/wiki/Performing_Arts_Festival> .
+
+<http://crowddata.abdn.ac.uk/datasets/events/resource/PtWh8i_RR3ODEYb4I4eQVQ>
+        dcterms:abstract    "no idea" ;
+        dcterms:created     "2015-03-31T10:23:33Z"^^xsd:dateTime ;
+        dcterms:dateEnd     "2015-03-29T14:50:00+05:30"^^xsd:date ;
+        dcterms:dateStart   "2015-03-29T14:50:00+05:30"^^xsd:date ;
+        dcterms:title       "workshop" ;
+        dcterms:titleEvent  "IIT - Related" ;
+        foaf:homepage       <http://www.metastudio.org/52e27a8d7d9d33131d4a773c/page/551544f8109bad609f07154e> .
+
+<http://crowddata.abdn.ac.uk/datasets/events/resource/GHwhvt6VSKOQE-MhCNLqVA>
+        dcterms:abstract    "Venue: Open Air Theatre (OAT), Student Activity Centre (SAC)" ;
+        dcterms:created     "2015-03-28T09:47:51Z"^^xsd:dateTime ;
+        dcterms:dateEnd     "2015-03-28T21:45:00+05:30"^^xsd:date ;
+        dcterms:dateStart   "2015-03-28T20:30:00+05:30"^^xsd:date ;
+        dcterms:title       "third PAF of this season 'Discovery of INDYA'" ;
+        dcterms:titleEvent  "IIT - Related" ;
+        foaf:homepage       <http://en.wikipedia.org/wiki/Performing_Arts_Festival> .
+
+<http://crowddata.abdn.ac.uk/datasets/events/resource/I_1SqPyFT9SBPzhYUOmdcQ>
+        dcterms:abstract    "IP Challenges in Frugal Innovation" ;
+        dcterms:created     "2015-03-28T09:31:08Z"^^xsd:dateTime ;
+        dcterms:dateEnd     "2015-03-28T17:45:00+05:30"^^xsd:date ;
+        dcterms:dateStart   "2015-03-27T09:15:00+05:30"^^xsd:date ;
+        dcterms:title       "4th National IPR Researchers' Confluence" ;
+        dcterms:titleEvent  "SOM - Related" ;
+        foaf:homepage       <http://www.som.iitb.ac.in/joomla/index.php> .
+
+<http://crowddata.abdn.ac.uk/datasets/events/resource/SFgzxmNtQkWCAn8Z-5hUcw>
+        dcterms:abstract    "A workshop on Turtle Blocks is organised by Gnowledgelab- Homi Bhabha Centre for Science Education" ;
+        dcterms:created     "2015-03-28T10:19:21Z"^^xsd:dateTime ;
+        dcterms:dateEnd     "2015-03-29T18:00:00+05:30"^^xsd:date ;
+        dcterms:dateStart   "2015-03-29T15:00:00+05:30"^^xsd:date ;
+        dcterms:title       "Workshop on Turtle Blocks" ;
+        dcterms:titleEvent  "IIT - Related" ;
+        foaf:homepage       <http://www.metastudio.org/52e27a8d7d9d33131d4a773c/page/551544f8109bad609f07154e> .

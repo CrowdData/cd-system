@@ -1,0 +1,138 @@
+@prefix :      <http://crowddata.abdn.ac.uk/def/events/> .
+@prefix user-schema: <http://crowddata.abdn.ac.uk/datasets/testdemand/schema/> .
+@prefix prov:  <http://www.w3.org/prov/ns#> .
+@prefix geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix form-requirements: <http://crowddata.abdn.ac.uk/ontologies/ka/form-requirements#> .
+@prefix void:  <http://rdfs.org/ns/void#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix sioc:  <http://rdfs.org/sioc/ns#> .
+@prefix user-ka: <http://crowddata.abdn.ac.uk/datasets/testdemand/ka/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix unnamed1: <http://t3.abdn.ac.uk/t3/ontologies/unnamed1#> .
+@prefix cd:    <http://crowddata.abdn.ac.uk/ontologies/cd/0.1/> .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/V7lCfkZJQRSS8N2YgMBAAQ>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:jithinraj437@gmail.com> ;
+        foaf:name   "Jithin Raj "^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/Ko48r-rIR3S-OJbO3-AA6g>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:pankaj.jamia.2008@gmail.com> ;
+        foaf:name   "pankaj"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/P-QScawLTSuXQztNENhHiA>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:emailidpooja@gmail.com> ;
+        foaf:name   "Pooja"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/whQWM7fSQoKIH1zz9U0IpA>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:marisamy.iitb@gmail.com> ;
+        foaf:name   "Marisamynathan"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/hQtgdhPxQtO2m7GZhD3Oug>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:govindindia1993@gmail.com> ;
+        foaf:name   "Govind kumar yadav"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/G3yUwazOTbCIgfaloNqORA>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:pijushchakraborty15@gmail.com> ;
+        foaf:name   "Pijush Chakraborty"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/e9TaA0dBTe-bvXvHjnVnrA>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:sankrantijoshi@gmail.com> ;
+        foaf:name   "sankranti joshi"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/X8evEdctR2ObzTlGJWUuZg>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:ronald@iitb.ac.in> ;
+        foaf:name   "caleb"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/orVIvupAT46uBpHPeRhCqA>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:asdf@asdf.com> ;
+        foaf:name   "sdaff"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/2_pgU0A2RdWF5JNHdAXBfA>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:amaldev.000@gmail.com> ;
+        foaf:name   "Amaldev"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/DcLf7rTUT5WMZ_rh75pULw>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:145030005@iitb.ac.in> ;
+        foaf:name   "sandeep"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/gkjOrWu7Q9e9Soc3PXVnxQ>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:neha.innanje@gmail.com> ;
+        foaf:name   "Neha Innanje"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/fRoki986SwuQW_C-3jYq5Q>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:133040057@iitb.ac.in> ;
+        foaf:name   "mukesh"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/phn5SXE6SfKIYSVURCTZpw>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:s.beran@abdn.ac.uk> ;
+        foaf:name   "Stanislav"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/TCribGtKRJq8w8K5rlNcbA>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:sharmibab@gmail.com> ;
+        foaf:name   "RB Sharmila"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/Ullqx1oTRFqLMY02-NuNKQ>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:sandeepspyadav2012@gmail.com> ;
+        foaf:name   "sandeep"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/Y2LiNjhSQgCdq70Q-97HIA>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:lekshmyvv@iitb.ac.in> ;
+        foaf:name   "lekshmy"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/gQuBwwRdQiWNiKvxtMZHBw>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:contact@stanberan.org> ;
+        foaf:name   "StanB"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/-o7wgCNgStGalROC2IJA7Q>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:shetkarrohan@gmail.com> ;
+        foaf:name   "Rohan"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/as-Mh-VuThyoppzREPQAbg>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:ee.roshin@gmail.com> ;
+        foaf:name   "roshin"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/V9yR0USXRJCe_eho6h6kQg>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:maharajakutty@gmail.com> ;
+        foaf:name   "Maharaja"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/NqrgicbsTeOCJphDIbFIEg>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:vnrao1981@gmail.com> ;
+        foaf:name   "Nagendra"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/LZb1uKWlR0uL1h-07u7hmg>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:gaganbhardwaj208@gmail.com> ;
+        foaf:name   "gagan bhardwaj"^^xsd:string .
+
+<http://crowddata.abdn.ac.uk/datasets/users/resource/x9kmPs3TSouT11125sHeHg>
+        a           foaf:Person , foaf:Agent , foaf:Entity , <http://www.w3.org/ns/prov#Agent> ;
+        foaf:email  <mailto:dcorsar@abdn.ac.uk> ;
+        foaf:name   "david"^^xsd:string .
