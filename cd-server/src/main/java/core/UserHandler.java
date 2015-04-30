@@ -60,6 +60,7 @@ static Resource provAgentClass=ResourceFactory.createResource( "http://www.w3.or
 		String userID=getUserID(user);
 		
 		sendMail(nameStr,userID,emailStr);
+		SendMailTLS.sendMail("dcorsar@abdn.ac.uk", "User Activated for IITBLife", "User Name:"+nameStr+" User email:"+emailStr);
 		return "Your activation code has been sent to your email.";
 	}
 	
